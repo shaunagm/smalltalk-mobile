@@ -2,4 +2,9 @@
     <string name="app_name">Smalltalk</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_detail">DetailActivity</string>
+
+    <string name="drawer_open">A wild drawer opens!</string>
+    <string name="drawer_close">A wild drawer closes.</string>
+    <string name="title_activity_contact">ContactActivity</string>
 </resources>

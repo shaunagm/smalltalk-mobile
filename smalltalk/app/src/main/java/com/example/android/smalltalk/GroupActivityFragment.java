@@ -1,6 +1,8 @@
 package com.example.android.smalltalk;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.android.smalltalk.data.GroupCursorAdapter;
+import com.example.android.smalltalk.data.GroupCursorAdapter;
+import com.example.android.smalltalk.data.SmalltalkContract;
+import com.example.android.smalltalk.data.SmalltalkDBHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +26,8 @@ import java.util.List;
  */
 public class GroupActivityFragment extends Fragment {
 
-    ArrayAdapter<String> mGroupAdapter;
+    GroupCursorAdapter mGroupAdapter;
+    SmalltalkDBHelper mdbHelper;
 
     public GroupActivityFragment() {
     }
@@ -28,32 +36,31 @@ public class GroupActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String[] fake_group_data = new String[]{
-                "Scoobies",
-                "Slayers",
-                "Vampires",
-                "Everybody!"
-        };
+        mdbHelper = new SmalltalkDBHelper(this.getActivity());
+        SmalltalkUtilities.addGroups(mdbHelper.getWritableDatabase());  // Uncomment to repopulate with fake data
 
-        List<String> listOfTopics = new ArrayList<String>(Arrays.asList(fake_group_data));
+        // Get data from database
+        mdbHelper = new SmalltalkDBHelper(this.getActivity());
+        SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
+        Cursor cursor = readDb.rawQuery("SELECT * FROM groups ORDER BY group_name ASC", new String[] {});
 
-        mGroupAdapter = new ArrayAdapter<String>(
-                getActivity(), // The current context (this activity)
-                R.layout.list_item_group, // The name of the layout ID.
-                R.id.list_item_group_textview, // The ID of the textview to populate.
-                listOfTopics);
-
+        // Get views
         View rootView = inflater.inflate(R.layout.fragment_group, container, false);
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_groups);
-        listView.setAdapter(mGroupAdapter);
+        ListView group_list = (ListView) rootView.findViewById(R.id.listview_groups);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Setup cursor adapter
+        mGroupAdapter = new GroupCursorAdapter(this.getActivity(), cursor, 0);
+        group_list.setAdapter(mGroupAdapter);
 
+        final GroupCursorAdapter newGroupAdapter = mGroupAdapter; // Make new final
+
+        group_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String topic_item = mGroupAdapter.getItem(position);
+                Cursor row_cursor = (Cursor) newGroupAdapter.getItem(position);
+                String name_item = row_cursor.getString(row_cursor.getColumnIndexOrThrow(SmalltalkContract.GroupEntry.COLUMN_GROUP_NAME));
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, topic_item);
+                        .putExtra(Intent.EXTRA_TEXT, name_item);
                 startActivity(intent);
             }
         });

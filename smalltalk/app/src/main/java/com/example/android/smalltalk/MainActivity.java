@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.v4.app.ActionBarDrawerToggle;
 
+import com.example.android.smalltalk.SmalltalkUtilities;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // SmalltalkUtilities.exportDB(getActivity()); // For debug purposes, because adb doesn't let you view databases with unrooted phones! >:(
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
