@@ -26,7 +26,7 @@ import java.util.List;
 public class TopicActivityFragment extends Fragment {
 
     TopicCursorAdapter mTopicAdapter;
-    SmalltalkDBHelper mdbHelper;
+    SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
 
     public TopicActivityFragment() {
     }
@@ -35,13 +35,9 @@ public class TopicActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mdbHelper = new SmalltalkDBHelper(this.getActivity());
-        SmalltalkUtilities.addTopics(mdbHelper.getWritableDatabase());  // Uncomment to repopulate with fake data
-
         // Get data from database
-        mdbHelper = new SmalltalkDBHelper(this.getActivity());
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        Cursor cursor = readDb.rawQuery("SELECT * FROM topics ORDER BY topic_name ASC", new String[] {});
+        Cursor cursor = readDb.rawQuery("SELECT * FROM topics ORDER BY name ASC", new String[] {});
 
         // Get views
         View rootView = inflater.inflate(R.layout.fragment_topic, container, false);
@@ -57,9 +53,11 @@ public class TopicActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor row_cursor = (Cursor) newTopicAdapter.getItem(position);
-                String name_item = row_cursor.getString(row_cursor.getColumnIndexOrThrow(SmalltalkContract.TopicEntry.COLUMN_TOPIC_NAME));
+                String item_type = "topics";
+                Integer item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow(SmalltalkContract.TopicEntry._ID));
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, name_item);
+                        .putExtra("item_id", item_id)
+                        .putExtra("item_type", item_type);
                 startActivity(intent);
             }
         });

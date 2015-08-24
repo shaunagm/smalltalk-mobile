@@ -27,7 +27,7 @@ import java.util.List;
 public class GroupActivityFragment extends Fragment {
 
     GroupCursorAdapter mGroupAdapter;
-    SmalltalkDBHelper mdbHelper;
+    SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
 
     public GroupActivityFragment() {
     }
@@ -36,13 +36,9 @@ public class GroupActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mdbHelper = new SmalltalkDBHelper(this.getActivity());
-        SmalltalkUtilities.addGroups(mdbHelper.getWritableDatabase());  // Uncomment to repopulate with fake data
-
         // Get data from database
-        mdbHelper = new SmalltalkDBHelper(this.getActivity());
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        Cursor cursor = readDb.rawQuery("SELECT * FROM groups ORDER BY group_name ASC", new String[] {});
+        Cursor cursor = readDb.rawQuery("SELECT * FROM groups ORDER BY name ASC", new String[] {});
 
         // Get views
         View rootView = inflater.inflate(R.layout.fragment_group, container, false);
@@ -58,9 +54,11 @@ public class GroupActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor row_cursor = (Cursor) newGroupAdapter.getItem(position);
-                String name_item = row_cursor.getString(row_cursor.getColumnIndexOrThrow(SmalltalkContract.GroupEntry.COLUMN_GROUP_NAME));
+                String item_type = "groups";
+                Integer item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow(SmalltalkContract.GroupEntry._ID));
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, name_item);
+                        .putExtra("item_id", item_id)
+                        .putExtra("item_type", item_type);
                 startActivity(intent);
             }
         });

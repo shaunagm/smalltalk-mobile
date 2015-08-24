@@ -28,8 +28,8 @@ public class ContactCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        TextView contactName = (TextView) view.findViewById(R.id.list_item_name_textview);
-        TextView contactDetails = (TextView) view.findViewById(R.id.list_item_details_textview);
+        TextView contactName = (TextView) view.findViewById(R.id.list_item_contact_textview);
+        TextView contactDetails = (TextView) view.findViewById(R.id.list_item_contact_details_textview);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_CONTACT_NAME));
         String details = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_CONTACT_DETAILS));

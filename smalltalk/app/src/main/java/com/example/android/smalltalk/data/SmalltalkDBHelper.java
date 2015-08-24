@@ -11,6 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.android.smalltalk.data.SmalltalkContract.ContactEntry;
 import com.example.android.smalltalk.data.SmalltalkContract.TopicEntry;
 import com.example.android.smalltalk.data.SmalltalkContract.GroupEntry;
+import com.example.android.smalltalk.data.SmalltalkContract.ContactGroupJunction;
+import com.example.android.smalltalk.data.SmalltalkContract.TopicContactJunction;
+import com.example.android.smalltalk.data.SmalltalkContract.TopicGroupJunction;
+
 
 /**
  * Manages a local database for weather data.
@@ -22,7 +26,19 @@ public class SmalltalkDBHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "smalltalk.db";
 
-    public SmalltalkDBHelper(Context context) {
+    private static SmalltalkDBHelper sInstance;
+
+    public static synchronized SmalltalkDBHelper getInstance(Context context) {
+
+        // Use the application context, which will ensure that you don't accidentally leak an
+        // Activity's context. See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new SmalltalkDBHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    private SmalltalkDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -49,6 +65,41 @@ public class SmalltalkDBHelper extends SQLiteOpenHelper {
                 GroupEntry.COLUMN_GROUP_DETAILS + " TEXT NOT NULL, " +
                 " UNIQUE (" + GroupEntry.COLUMN_GROUP_NAME + ") ON CONFLICT REPLACE);";
         sqLiteDatabase.execSQL(SQL_CREATE_GROUPS_TABLE);
+
+        final String SQL_CREATE_CONTACTGROUPJUNCTION_TABLE = "CREATE TABLE " + ContactGroupJunction.TABLE_NAME + " (" +
+                ContactGroupJunction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ContactGroupJunction.COLUMN_CONTACT_KEY + " INTEGER NOT NULL, " +
+                ContactGroupJunction.COLUMN_GROUP_KEY + " INTEGER NOT NULL, " +
+                " FOREIGN KEY (" + ContactGroupJunction.COLUMN_CONTACT_KEY + ") REFERENCES " +
+                ContactEntry.TABLE_NAME + " (" + ContactEntry._ID + "), " +
+                " FOREIGN KEY (" + ContactGroupJunction.COLUMN_GROUP_KEY + ") REFERENCES " +
+                GroupEntry.TABLE_NAME + " (" + GroupEntry._ID + "), " +
+                "UNIQUE (" + ContactGroupJunction.COLUMN_CONTACT_KEY +  ", " + ContactGroupJunction.COLUMN_GROUP_KEY + "));";
+        sqLiteDatabase.execSQL(SQL_CREATE_CONTACTGROUPJUNCTION_TABLE);
+
+        final String SQL_CREATE_TOPICCONTACTJUNCTION_TABLE = "CREATE TABLE " + TopicContactJunction.TABLE_NAME + " (" +
+                TopicContactJunction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TopicContactJunction.COLUMN_TOPIC_KEY + " INTEGER NOT NULL, " +
+                TopicContactJunction.COLUMN_CONTACT_KEY + " INTEGER NOT NULL, " +
+                " FOREIGN KEY (" + TopicContactJunction.COLUMN_TOPIC_KEY + ") REFERENCES " +
+                TopicEntry.TABLE_NAME + " (" + TopicEntry._ID + "), " +
+                " FOREIGN KEY (" + TopicContactJunction.COLUMN_CONTACT_KEY + ") REFERENCES " +
+                ContactEntry.TABLE_NAME + " (" + ContactEntry._ID + "), " +
+                "UNIQUE (" + TopicContactJunction.COLUMN_TOPIC_KEY +  ", " + TopicContactJunction.COLUMN_CONTACT_KEY + "));";
+
+        sqLiteDatabase.execSQL(SQL_CREATE_TOPICCONTACTJUNCTION_TABLE);
+
+        final String SQL_CREATE_TOPICGROUPJUNCTION_TABLE = "CREATE TABLE " + TopicGroupJunction.TABLE_NAME + " (" +
+                TopicGroupJunction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TopicGroupJunction.COLUMN_TOPIC_KEY + " INTEGER NOT NULL, " +
+                TopicGroupJunction.COLUMN_GROUP_KEY + " INTEGER NOT NULL, " +
+                " FOREIGN KEY (" + TopicGroupJunction.COLUMN_TOPIC_KEY + ") REFERENCES " +
+                TopicEntry.TABLE_NAME + " (" + TopicEntry._ID + "), " +
+                " FOREIGN KEY (" + TopicGroupJunction.COLUMN_GROUP_KEY + ") REFERENCES " +
+                GroupEntry.TABLE_NAME + " (" + GroupEntry._ID + "), " +
+                "UNIQUE (" + TopicGroupJunction.COLUMN_TOPIC_KEY +  ", " + TopicGroupJunction.COLUMN_GROUP_KEY + "));";
+
+        sqLiteDatabase.execSQL(SQL_CREATE_TOPICGROUPJUNCTION_TABLE);
     }
 
     @Override

@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.support.v4.app.ActionBarDrawerToggle;
 
 import com.example.android.smalltalk.SmalltalkUtilities;
+import com.example.android.smalltalk.data.SmalltalkDBHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // SmalltalkUtilities.exportDB(getActivity()); // For debug purposes, because adb doesn't let you view databases with unrooted phones! >:(
+//        SmalltalkUtilities.exportDB(this); // For debug purposes, because adb doesn't let you view databases with unrooted phones! >:(
+//        this.deleteDatabase("smalltalk.db");
+//        SmalltalkUtilities.populateDB(this);
+        SmalltalkDBHelper.getInstance(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

@@ -39,7 +39,7 @@ import java.util.List;
 public class ContactActivityFragment extends Fragment {
 
     ContactCursorAdapter mContactAdapter;
-    SmalltalkDBHelper mdbHelper;
+    SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
 
     public ContactActivityFragment() {
     }
@@ -48,13 +48,9 @@ public class ContactActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mdbHelper = new SmalltalkDBHelper(this.getActivity());
-        SmalltalkUtilities.addContacts(mdbHelper.getWritableDatabase());  // Uncomment to repopulate with fake data
-
         // Get data from database
-
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        Cursor cursor = readDb.rawQuery("SELECT * FROM contacts ORDER BY contact_name ASC", new String[] {});
+        Cursor cursor = readDb.rawQuery("SELECT * FROM contacts ORDER BY name ASC", new String[] {});
 
         // Get views
         View rootView = inflater.inflate(R.layout.fragment_contact, container, false);
@@ -70,9 +66,11 @@ public class ContactActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor row_cursor = (Cursor) newContactAdapter.getItem(position);
-                String name_item = row_cursor.getString(row_cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_CONTACT_NAME));
+                String item_type = "contacts";
+                Integer item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow(ContactEntry._ID));
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, name_item);
+                        .putExtra("item_id", item_id)
+                        .putExtra("item_type", item_type);
                 startActivity(intent);
             }
         });

@@ -29,7 +29,7 @@ public class GroupCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         TextView groupName = (TextView) view.findViewById(R.id.list_item_group_textview);
-        TextView groupDetails = (TextView) view.findViewById(R.id.list_item_details_textview);
+        TextView groupDetails = (TextView) view.findViewById(R.id.list_item_group_details_textview);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow(GroupEntry.COLUMN_GROUP_NAME));
         String details = cursor.getString(cursor.getColumnIndexOrThrow(GroupEntry.COLUMN_GROUP_DETAILS));

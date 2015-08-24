@@ -18,41 +18,60 @@ public class SmalltalkContract {
             return time.setJulianDay(julianDay);
         }
 
-        /* Inner class that defines the table contents of the contacts table */
         public static final class ContactEntry implements BaseColumns {
 
             public static final String TABLE_NAME = "contacts";
 
             // Name of contact
-            public static final String COLUMN_CONTACT_NAME = "contact_name";
+            public static final String COLUMN_CONTACT_NAME = "name";
             // Details about contact
-            public static final String COLUMN_CONTACT_DETAILS = "contact_details";
+            public static final String COLUMN_CONTACT_DETAILS = "details";
 
         }
 
-        /* Inner class that defines the table contents of the topics table */
         public static final class TopicEntry implements BaseColumns {
 
             public static final String TABLE_NAME = "topics";
 
-
             // Name of contact
-            public static final String COLUMN_TOPIC_NAME = "topic_name";
+            public static final String COLUMN_TOPIC_NAME = "name";
             // Details about contact
-            public static final String COLUMN_TOPIC_DETAILS = "topic_details";
+            public static final String COLUMN_TOPIC_DETAILS = "details";
 
         }
 
-        /* Inner class that defines the table contents of the topics table */
         public static final class GroupEntry implements BaseColumns {
 
             public static final String TABLE_NAME = "groups";
 
-
             // Name of contact
-            public static final String COLUMN_GROUP_NAME = "group_name";
+            public static final String COLUMN_GROUP_NAME = "name";
             // Details about contact
-            public static final String COLUMN_GROUP_DETAILS = "group_details";
+            public static final String COLUMN_GROUP_DETAILS = "details";
+
+        }
+
+        public static final class ContactGroupJunction implements BaseColumns {
+
+            public static final String TABLE_NAME = "contact_group";
+            public static final String COLUMN_CONTACT_KEY = "contact_id";
+            public static final String COLUMN_GROUP_KEY = "group_id";
+
+        }
+
+        public static final class TopicContactJunction implements BaseColumns {
+
+            public static final String TABLE_NAME = "topic_contact";
+            public static final String COLUMN_TOPIC_KEY = "topic_id";
+            public static final String COLUMN_CONTACT_KEY = "contact_id";
+
+        }
+
+        public static final class TopicGroupJunction implements BaseColumns {
+
+            public static final String TABLE_NAME = "topic_group";
+            public static final String COLUMN_TOPIC_KEY = "topic_id";
+            public static final String COLUMN_GROUP_KEY = "group_id";
 
         }
 

@@ -1,13 +1,64 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.smalltalk.DetailActivityFragment">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.smalltalk.DetailActivityFragment"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView
+        android:text="AHHHA"
+        android:id="@+id/detail_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="BOOOO"
+        android:id="@+id/detail_item_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="BOOOO"
+        android:id="@+id/detail_item_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="CONTACTS"
+        android:id="@+id/detail_item_contact_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/detail_text"/>
+        android:visibility="invisible"/>
 
-</RelativeLayout>
+    <ListView
+        android:id="@+id/listview_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="GROUPS"
+        android:id="@+id/detail_item_group_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <ListView
+        android:id="@+id/listview_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="TOPICS"
+        android:id="@+id/detail_item_topic_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <ListView
+        android:id="@+id/listview_topics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
