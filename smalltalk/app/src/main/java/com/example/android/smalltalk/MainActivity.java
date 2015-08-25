@@ -1,28 +1,29 @@
 package com.example.android.smalltalk;
 
-import android.app.Activity;
-import android.app.FragmentManager;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.v4.app.Fragment;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.widget.Spinner;
 
-import com.example.android.smalltalk.SmalltalkUtilities;
+import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 
 public class MainActivity extends AppCompatActivity {
 
+    SmalltalkDBHelper mdbHelper;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -35,12 +36,12 @@ public class MainActivity extends AppCompatActivity {
 //        SmalltalkUtilities.exportDB(this); // For debug purposes, because adb doesn't let you view databases with unrooted phones! >:(
 //        this.deleteDatabase("smalltalk.db");
 //        SmalltalkUtilities.populateDB(this);
-        SmalltalkDBHelper.getInstance(this);
+        mdbHelper = SmalltalkDBHelper.getInstance(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDrawerOptions = new String[] {"Topics", "Contacts", "Groups"};
+        mDrawerOptions = new String[] {"Topics", "Contacts", "Groups", "Add New"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -133,12 +134,65 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, groupFragment)
                         .commit();
+                break;
+            case 3:
+                AddDataFragment dataFragment = new AddDataFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, dataFragment)
+                        .commit();
+                break;
         }
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
+
+    public void add_new_item(View view) {
+
+        final Spinner typeSpinner = (Spinner) findViewById(R.id.new_item_type_spinner);
+        String item_type = typeSpinner.getSelectedItem().toString();
+
+        final EditText nameField = (EditText) findViewById(R.id.new_item_form_name);
+        String item_name = nameField.getText().toString();
+
+        final EditText detailsField = (EditText) findViewById(R.id.new_item_form_details);
+        String item_details = detailsField.getText().toString();
+
+        SQLiteDatabase db = mdbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        long newID = 0;
+
+        switch (item_type) {
+            case "Contact":
+                values.put(SmalltalkContract.ContactEntry.COLUMN_CONTACT_NAME, item_name);
+                values.put(SmalltalkContract.ContactEntry.COLUMN_CONTACT_DETAILS, item_details);
+                newID = db.insert(SmalltalkContract.ContactEntry.TABLE_NAME, null, values);
+                db.close();
+                break;
+            case "Topic":
+                values.put(SmalltalkContract.GroupEntry.COLUMN_GROUP_NAME, item_name);
+                values.put(SmalltalkContract.GroupEntry.COLUMN_GROUP_DETAILS, item_details);
+                newID = db.insert(SmalltalkContract.GroupEntry.TABLE_NAME, null, values);
+                db.close();
+                break;
+            case "Group":
+                values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_NAME, item_name);
+                values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_DETAILS, item_details);
+                newID = db.insert(SmalltalkContract.TopicEntry.TABLE_NAME, null, values);
+                db.close();
+                break;
+        }
+
+        String item_type_reformatted = item_type.toLowerCase().concat("s");
+        Intent intent = new Intent(this, DetailActivity.class)
+                .putExtra("item_id", (int) newID)
+                .putExtra("item_type", item_type_reformatted);
+        startActivity(intent);
+
+    }
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

@@ -13,6 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/edit_item_button"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_item_button"
+        android:onClick="edit_item"
+        android:layout_width="match_parent">
+    </Button>
+
     <TextView
         android:text="BOOOO"
         android:id="@+id/detail_item_details"

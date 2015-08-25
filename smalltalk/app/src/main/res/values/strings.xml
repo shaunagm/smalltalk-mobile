@@ -7,4 +7,21 @@
     <string name="drawer_open">A wild drawer opens!</string>
     <string name="drawer_close">A wild drawer closes.</string>
     <string name="title_activity_contact">ContactActivity</string>
+
+
+    <string name="edit_item_button">Edit</string>
+
+    <!-- New item form inputs -->
+    <string name="new_item_form_title">Add An Item</string>
+    <string name="new_item_form_name_hint">Item Name</string>
+    <string name="new_item_form_details_hint">Item Description</string>
+
+    <string name="new_item_type_prompt">What kind of item?</string>
+    <string name="new_item_type_1">Contact</string>
+    <string name="new_item_type_2">Group</string>
+    <string name="new_item_type_3">Topic</string>
+
+    <string name="new_item_save_button">Save item!</string>
+    <string name="title_activity_base">BaseActivity</string>
+
 </resources>
