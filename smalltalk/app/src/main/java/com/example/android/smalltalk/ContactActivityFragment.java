@@ -39,7 +39,7 @@ import java.util.List;
 public class ContactActivityFragment extends Fragment {
 
     ContactCursorAdapter mContactAdapter;
-    SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
+    SmalltalkDBHelper mdbHelper;
 
     public ContactActivityFragment() {
     }
@@ -49,6 +49,7 @@ public class ContactActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Get data from database
+        mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
         Cursor cursor = readDb.rawQuery("SELECT * FROM contacts ORDER BY name ASC", new String[] {});
 

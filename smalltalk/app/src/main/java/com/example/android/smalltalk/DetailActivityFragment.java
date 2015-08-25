@@ -23,7 +23,7 @@ import com.example.android.smalltalk.data.TopicCursorAdapter;
  */
 public class DetailActivityFragment extends Fragment {
 
-    SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
+    SmalltalkDBHelper mdbHelper;
     ContactCursorAdapter mContactAdapter;
     TopicCursorAdapter mTopicAdapter;
     GroupCursorAdapter mGroupAdapter;
@@ -36,6 +36,7 @@ public class DetailActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        mdbHelper = SmalltalkDBHelper.getInstance(this.getActivity());
 
         // The detail Activity called via intent.  Inspect the intent for forecast data.
         Intent intent = getActivity().getIntent();
@@ -56,6 +57,8 @@ public class DetailActivityFragment extends Fragment {
                     .setText(cursor.getString(cursor.getColumnIndexOrThrow("details")));
             ((TextView) rootView.findViewById(R.id.detail_item_type))
                     .setText(item_type);
+            ((TextView) rootView.findViewById(R.id.detail_item_id_secret))
+                    .setText(item_id_as_string);
 
 
             if (!item_type.equals("contacts")) {

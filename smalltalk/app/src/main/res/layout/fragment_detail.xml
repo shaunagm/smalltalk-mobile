@@ -8,6 +8,13 @@
     android:paddingLeft="16dp">
 
     <TextView
+        android:text="None"
+        android:id="@+id/detail_item_id_secret"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <TextView
         android:text="AHHHA"
         android:id="@+id/detail_item_name"
         android:layout_width="match_parent"

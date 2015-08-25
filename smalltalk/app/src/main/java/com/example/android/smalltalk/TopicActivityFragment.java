@@ -26,7 +26,7 @@ import java.util.List;
 public class TopicActivityFragment extends Fragment {
 
     TopicCursorAdapter mTopicAdapter;
-    SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
+    SmalltalkDBHelper mdbHelper;
 
     public TopicActivityFragment() {
     }
@@ -36,6 +36,7 @@ public class TopicActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Get data from database
+        mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
         Cursor cursor = readDb.rawQuery("SELECT * FROM topics ORDER BY name ASC", new String[] {});
 

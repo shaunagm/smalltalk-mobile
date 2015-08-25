@@ -1,0 +1,62 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/edit_data_form">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/new_item_form_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_item_form_title"
+            android:textSize="10pt">
+        </TextView>
+
+        <TextView
+            android:text="None"
+            android:id="@+id/detail_item_id_secret"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+
+        <Spinner
+            android:id="@+id/new_item_type_spinner"
+            android:layout_height="wrap_content"
+            android:prompt="@string/new_item_type_prompt"
+            android:layout_width="match_parent"
+            android:entries="@array/new_item_type"
+            android:spinnerMode="dropdown">
+        </Spinner>
+
+        <EditText
+            android:id="@+id/new_item_form_name"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_item_form_name_hint"
+            android:inputType="textPersonName"
+            android:layout_width="fill_parent">
+        </EditText>
+
+        <EditText
+            android:id="@+id/new_item_form_details"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_item_form_details_hint"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:layout_width="fill_parent"
+            android:gravity="bottom">
+        </EditText>
+
+        <Button
+            android:id="@+id/new_item_save_button"
+            android:layout_height="wrap_content"
+            android:text="@string/new_item_save_button"
+            android:onClick="update_item"
+            android:layout_width="match_parent">
+        </Button>
+
+    </LinearLayout>
+
+</ScrollView>

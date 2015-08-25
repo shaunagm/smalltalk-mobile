@@ -27,7 +27,7 @@ import java.util.List;
 public class GroupActivityFragment extends Fragment {
 
     GroupCursorAdapter mGroupAdapter;
-    SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
+    SmalltalkDBHelper mdbHelper;
 
     public GroupActivityFragment() {
     }
@@ -37,6 +37,7 @@ public class GroupActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Get data from database
+        mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
         Cursor cursor = readDb.rawQuery("SELECT * FROM groups ORDER BY name ASC", new String[] {});
 
