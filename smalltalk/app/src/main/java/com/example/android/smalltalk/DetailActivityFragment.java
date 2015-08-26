@@ -9,14 +9,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ExpandableListView.OnChildClickListener;
 
 import com.example.android.smalltalk.data.ContactCursorAdapter;
+import com.example.android.smalltalk.data.ExpandableCheckboxAdapter;
 import com.example.android.smalltalk.data.GroupCursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.TopicCursorAdapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -27,6 +37,8 @@ public class DetailActivityFragment extends Fragment {
     ContactCursorAdapter mContactAdapter;
     TopicCursorAdapter mTopicAdapter;
     GroupCursorAdapter mGroupAdapter;
+    ExpandableListView mExpandableListView;
+    ExpandableCheckboxAdapter mExpandableCheckboxAdapter;
 
     public DetailActivityFragment() {
     }
@@ -38,16 +50,15 @@ public class DetailActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         mdbHelper = SmalltalkDBHelper.getInstance(this.getActivity());
 
-        // The detail Activity called via intent.  Inspect the intent for forecast data.
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra("item_type") && intent.hasExtra("item_id")) {
+
             String item_type = intent.getStringExtra("item_type");
-            Integer item_id = intent.getIntExtra("item_id", 99);
-            String item_id_as_string = item_id.toString();
+            String item_id = intent.getStringExtra("item_id");
 
             SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
             String queryString = String.format("SELECT * FROM %s WHERE _ID = %s LIMIT 1;",
-                    item_type, item_id_as_string);
+                    item_type, item_id);
             Cursor cursor = readDb.rawQuery(queryString, new String[]{});
             cursor.moveToNext();
 
@@ -58,111 +69,96 @@ public class DetailActivityFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.detail_item_type))
                     .setText(item_type);
             ((TextView) rootView.findViewById(R.id.detail_item_id_secret))
-                    .setText(item_id_as_string);
+                    .setText(item_id);
 
+            mExpandableListView = (ExpandableListView) rootView.findViewById(R.id.expandable_list_view);
+            ArrayList<String> list_headers = new ArrayList<String>();
+            HashMap<String, List<String>> list_items = new HashMap();
 
             if (!item_type.equals("contacts")) {
-
-                ((TextView) rootView.findViewById(R.id.detail_item_contact_title)).setVisibility(View.VISIBLE);
 
                 String ContactQueryString;
                 if (item_type.equals("topics")) {
                     ContactQueryString = String.format("SELECT * FROM contacts WHERE _ID IN ( SELECT " +
-                            "contact_id FROM topic_contact WHERE topic_id = %s);", item_id_as_string);
+                            "contact_id FROM topic_contact WHERE topic_id = %s);", item_id);
                 } else {
                     ContactQueryString = String.format("SELECT * FROM contacts WHERE _ID IN ( SELECT " +
-                            "contact_id FROM contact_group WHERE group_id = %s);", item_id_as_string);
+                            "contact_id FROM contact_group WHERE group_id = %s);", item_id);
                 };
                 Cursor contact_cursor = readDb.rawQuery(ContactQueryString, new String[]{});
 
-                ListView contact_list = (ListView) rootView.findViewById(R.id.listview_contacts);
-                mContactAdapter = new ContactCursorAdapter(this.getActivity(), contact_cursor, 0);
-                contact_list.setAdapter(mContactAdapter);
+                ArrayList<String> contact_items = new ArrayList<String>();
+                int columnIndex=contact_cursor.getColumnIndex("name");
+                while(contact_cursor.moveToNext()) {
+                    contact_items.add(contact_cursor.getString(columnIndex)); //add the item
+                }
 
-                final ContactCursorAdapter newContactAdapter = mContactAdapter; // Make new final
-                contact_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Cursor row_cursor = (Cursor) newContactAdapter.getItem(position);
-                        String item_type = "contacts";
-                        Integer item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow(SmalltalkContract.ContactEntry._ID));
-                        Intent intent = new Intent(getActivity(), DetailActivity.class)
-                                .putExtra("item_id", item_id)
-                                .putExtra("item_type", item_type);
-                        startActivity(intent);
-                    }
-                });
+                list_headers.add("Contacts");
+                list_items.put("Contacts", contact_items);
             };
 
             if (!item_type.equals("groups")) {
 
-                ((TextView) rootView.findViewById(R.id.detail_item_group_title)).setVisibility(View.VISIBLE);
-
                 String GroupQueryString;
                 if (item_type.equals("topics")) {
                     GroupQueryString = String.format("SELECT * FROM groups WHERE _ID IN ( SELECT " +
-                            "group_id FROM topic_group WHERE topic_id = %s);", item_id_as_string);
+                            "group_id FROM topic_group WHERE topic_id = %s);", item_id);
                 } else {
                     GroupQueryString = String.format("SELECT * FROM groups WHERE _ID IN ( SELECT " +
-                            "group_id FROM contact_group WHERE contact_id = %s);", item_id_as_string);
+                            "group_id FROM contact_group WHERE contact_id = %s);", item_id);
                 };
                 Cursor group_cursor = readDb.rawQuery(GroupQueryString, new String[]{});
 
-                ListView group_list = (ListView) rootView.findViewById(R.id.listview_groups);
-                mGroupAdapter = new GroupCursorAdapter(this.getActivity(), group_cursor, 0);
-                group_list.setAdapter(mGroupAdapter);
+                ArrayList<String> group_items = new ArrayList<String>();
+                int columnIndex=group_cursor.getColumnIndex("name");
+                while(group_cursor.moveToNext()) {
+                    group_items.add(group_cursor.getString(columnIndex)); //add the item
+                }
 
-                final GroupCursorAdapter newGroupAdapter = mGroupAdapter; // Make new final
-                group_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Cursor row_cursor = (Cursor) newGroupAdapter.getItem(position);
-                        String item_type = "groups";
-                        Integer item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow(SmalltalkContract.GroupEntry._ID));
-                        Intent intent = new Intent(getActivity(), DetailActivity.class)
-                                .putExtra("item_id", item_id)
-                                .putExtra("item_type", item_type);
-                        startActivity(intent);
-                    }
-                });
+                list_headers.add("Groups");
+                list_items.put("Groups", group_items);
+
             };
 
             if (!item_type.equals("topics")) {
 
-                ((TextView) rootView.findViewById(R.id.detail_item_topic_title)).setVisibility(View.VISIBLE);
-
                 String TopicQueryString;
                 if (item_type.equals("contacts")) {
                     TopicQueryString = String.format("SELECT * FROM topics WHERE _ID IN ( SELECT " +
-                            "topic_id FROM topic_contact WHERE contact_id = %s);", item_id_as_string);
+                            "topic_id FROM topic_contact WHERE contact_id = %s);", item_id);
                 } else {
                     TopicQueryString = String.format("SELECT * FROM topics WHERE _ID IN ( SELECT " +
-                            "topic_id FROM topic_group WHERE group_id = %s);", item_id_as_string);
+                            "topic_id FROM topic_group WHERE group_id = %s);", item_id);
                 };
                 Cursor topic_cursor = readDb.rawQuery(TopicQueryString, new String[]{});
 
-                ListView topic_list = (ListView) rootView.findViewById(R.id.listview_topics);
-                mTopicAdapter = new TopicCursorAdapter(this.getActivity(), topic_cursor, 0);
-                topic_list.setAdapter(mTopicAdapter);
+                ArrayList<String> topic_items = new ArrayList<String>();
+                int columnIndex=topic_cursor.getColumnIndex("name");
+                while(topic_cursor.moveToNext()) {
+                    topic_items.add(topic_cursor.getString(columnIndex)); //add the item
+                }
 
-                final TopicCursorAdapter newTopicAdapter = mTopicAdapter; // Make new final
-                topic_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Cursor row_cursor = (Cursor) newTopicAdapter.getItem(position);
-                        String item_type = "topics";
-                        Integer item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow(SmalltalkContract.TopicEntry._ID));
-                        Intent intent = new Intent(getActivity(), DetailActivity.class)
-                                .putExtra("item_id", item_id)
-                                .putExtra("item_type", item_type);
-                        startActivity(intent);
-                    }
-                });
+                list_headers.add("Topics");
+                list_items.put("Topics", topic_items);
             };
+            mExpandableCheckboxAdapter = new ExpandableCheckboxAdapter(this.getActivity(), list_headers, list_items);
+            mExpandableListView.setAdapter(mExpandableCheckboxAdapter);
+            final ArrayList<String> new_list_headers = list_headers;
+            final HashMap<String, List<String>> new_list_items = list_items;
 
+            mExpandableListView.setOnChildClickListener(new OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View view,
+                                            int groupPosition, int childPosition, long id) {
+                    String item_type = new_list_headers.get(groupPosition);
+                    String item_name = new_list_items.get(item_type).get(childPosition);
+                    SmalltalkUtilities.goToDetailViewGivenNameAndType(view.getContext(),
+                           item_name, item_type);
+                    return false;
+                }
+            });
 
         };
-
         return rootView;
     }
 }

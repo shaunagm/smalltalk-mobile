@@ -5,6 +5,7 @@ package com.example.android.smalltalk.data;
  */
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -111,4 +112,13 @@ public class SmalltalkDBHelper extends SQLiteOpenHelper {
 //        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContactEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
+
+    // get groups cursor given item
+    // get contacts cursor given item
+    // get topics cursor given item
+
+    // get item_names given item cursor (call cursor and switch to array
+
+    // get item_cursor given info
+
 }

@@ -2,6 +2,8 @@ package com.example.android.smalltalk;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.widget.Toast;
@@ -93,8 +95,6 @@ public class SmalltalkUtilities {
 
     }
 
-
-
     public static void populateDB(Context context) {
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase db = mdbHelper.getWritableDatabase();
@@ -160,6 +160,37 @@ public class SmalltalkUtilities {
             values.put(SmalltalkContract.TopicGroupJunction.COLUMN_GROUP_KEY, mTGJGroups[i]);
             long newID = db.insert(SmalltalkContract.TopicGroupJunction.TABLE_NAME, null, values);
         }
+    }
+
+    public static void goToDetailView(Context context, Cursor row_cursor, String item_type) {
+        int item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow("_id"));
+        Intent intent = new Intent(context, DetailActivity.class)
+                .putExtra("item_id", Integer.toString(item_id))
+                .putExtra("item_type", item_type.toLowerCase());
+        context.startActivity(intent);
+    }
+
+    public static void goToDetailViewGivenNameAndType(Context context, String item_name, String item_type) {
+        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
+        Cursor cursor = getItemCursorGivenTypeAndName(context, item_type, item_name);
+        cursor.moveToNext();
+        goToDetailView(context, cursor, item_type);
+    }
+
+    public static Cursor getItemCursorGivenTypeAndID(Context context, String item_type, String id) {
+        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
+        SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
+        String queryString = String.format("SELECT * FROM %s WHERE _ID = %s LIMIT 1;",
+                item_type, id);
+        return readDb.rawQuery(queryString, new String[]{});
+    }
+
+    public static Cursor getItemCursorGivenTypeAndName(Context context, String item_type, String name) {
+        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
+        SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
+        String queryString = String.format("SELECT * FROM %s WHERE name = '%s' LIMIT 1;",
+                item_type.toLowerCase(), name);
+        return readDb.rawQuery(queryString, new String[]{});
     }
 
 }

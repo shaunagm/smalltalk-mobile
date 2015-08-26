@@ -40,40 +40,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:text="CONTACTS"
-        android:id="@+id/detail_item_contact_title"
+    <ExpandableListView
+        android:id="@+id/expandable_list_view"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
-
-    <ListView
-        android:id="@+id/listview_contacts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="GROUPS"
-        android:id="@+id/detail_item_group_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
-
-    <ListView
-        android:id="@+id/listview_groups"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="TOPICS"
-        android:id="@+id/detail_item_topic_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
-
-    <ListView
-        android:id="@+id/listview_topics"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:divider="#A4C739"
+        android:dividerHeight="0.5dp" />
 
 </LinearLayout>

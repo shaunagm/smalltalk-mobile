@@ -3,6 +3,7 @@ package com.example.android.smalltalk;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.example.android.smalltalk.data.ContactCursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 
@@ -186,4 +188,5 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 }
