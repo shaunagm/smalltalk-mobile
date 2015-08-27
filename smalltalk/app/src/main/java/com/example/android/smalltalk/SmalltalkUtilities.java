@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 
 /**
  * Created by shauna on 8/20/15.
@@ -174,15 +175,7 @@ public class SmalltalkUtilities {
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         Cursor cursor = getItemCursorGivenTypeAndName(context, item_type, item_name);
         cursor.moveToNext();
-        goToDetailView(context, cursor, item_type);
-    }
-
-    public static Cursor getItemCursorGivenTypeAndID(Context context, String item_type, String id) {
-        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
-        SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        String queryString = String.format("SELECT * FROM %s WHERE _ID = %s LIMIT 1;",
-                item_type, id);
-        return readDb.rawQuery(queryString, new String[]{});
+        goToDetailView(context, cursor, item_type.replace("s",""));
     }
 
     public static Cursor getItemCursorGivenTypeAndName(Context context, String item_type, String name) {
@@ -192,5 +185,6 @@ public class SmalltalkUtilities {
                 item_type.toLowerCase(), name);
         return readDb.rawQuery(queryString, new String[]{});
     }
+
 
 }

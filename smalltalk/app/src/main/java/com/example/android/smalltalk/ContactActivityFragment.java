@@ -67,7 +67,7 @@ public class ContactActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor row_cursor = (Cursor) newContactAdapter.getItem(position);
-                SmalltalkUtilities.goToDetailView(view.getContext(), row_cursor, "contacts");
+                SmalltalkUtilities.goToDetailView(view.getContext(), row_cursor, "contact");
             }
         });
 

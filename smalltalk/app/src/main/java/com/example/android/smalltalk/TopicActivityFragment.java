@@ -54,7 +54,7 @@ public class TopicActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor row_cursor = (Cursor) newTopicAdapter.getItem(position);
-                SmalltalkUtilities.goToDetailView(view.getContext(), row_cursor, "topics");
+                SmalltalkUtilities.goToDetailView(view.getContext(), row_cursor, "topic");
             }
         });
 

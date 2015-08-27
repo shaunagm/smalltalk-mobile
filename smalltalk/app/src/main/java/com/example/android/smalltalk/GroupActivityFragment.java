@@ -55,7 +55,7 @@ public class GroupActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor row_cursor = (Cursor) newGroupAdapter.getItem(position);
-                SmalltalkUtilities.goToDetailView(view.getContext(), row_cursor, "groups");
+                SmalltalkUtilities.goToDetailView(view.getContext(), row_cursor, "group");
             }
         });
 

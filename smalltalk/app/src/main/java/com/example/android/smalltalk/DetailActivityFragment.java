@@ -21,6 +21,7 @@ import com.example.android.smalltalk.data.ExpandableCheckboxAdapter;
 import com.example.android.smalltalk.data.GroupCursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
+import com.example.android.smalltalk.data.SmalltalkObject;
 import com.example.android.smalltalk.data.TopicCursorAdapter;
 
 import java.util.ArrayList;
@@ -55,17 +56,14 @@ public class DetailActivityFragment extends Fragment {
 
             String item_type = intent.getStringExtra("item_type");
             String item_id = intent.getStringExtra("item_id");
-
-            SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-            String queryString = String.format("SELECT * FROM %s WHERE _ID = %s LIMIT 1;",
-                    item_type, item_id);
-            Cursor cursor = readDb.rawQuery(queryString, new String[]{});
+            SmalltalkObject current_object = new SmalltalkObject(getActivity(), item_id, item_type);
+            Cursor cursor = current_object.getRowCursor(getActivity());
             cursor.moveToNext();
 
             ((TextView) rootView.findViewById(R.id.detail_item_name))
-                    .setText(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+                    .setText(current_object.getName());
             ((TextView) rootView.findViewById(R.id.detail_item_details))
-                    .setText(cursor.getString(cursor.getColumnIndexOrThrow("details")));
+                    .setText(current_object.getDetails());
             ((TextView) rootView.findViewById(R.id.detail_item_type))
                     .setText(item_type);
             ((TextView) rootView.findViewById(R.id.detail_item_id_secret))
@@ -75,72 +73,24 @@ public class DetailActivityFragment extends Fragment {
             ArrayList<String> list_headers = new ArrayList<String>();
             HashMap<String, List<String>> list_items = new HashMap();
 
-            if (!item_type.equals("contacts")) {
-
-                String ContactQueryString;
-                if (item_type.equals("topics")) {
-                    ContactQueryString = String.format("SELECT * FROM contacts WHERE _ID IN ( SELECT " +
-                            "contact_id FROM topic_contact WHERE topic_id = %s);", item_id);
-                } else {
-                    ContactQueryString = String.format("SELECT * FROM contacts WHERE _ID IN ( SELECT " +
-                            "contact_id FROM contact_group WHERE group_id = %s);", item_id);
-                };
-                Cursor contact_cursor = readDb.rawQuery(ContactQueryString, new String[]{});
-
-                ArrayList<String> contact_items = new ArrayList<String>();
-                int columnIndex=contact_cursor.getColumnIndex("name");
-                while(contact_cursor.moveToNext()) {
-                    contact_items.add(contact_cursor.getString(columnIndex)); //add the item
-                }
-
+            if (!item_type.equals("contact")) {
+                ArrayList<String> contact_items = current_object.getRelatedNames(getActivity(), "contacts");
                 list_headers.add("Contacts");
                 list_items.put("Contacts", contact_items);
             };
 
-            if (!item_type.equals("groups")) {
-
-                String GroupQueryString;
-                if (item_type.equals("topics")) {
-                    GroupQueryString = String.format("SELECT * FROM groups WHERE _ID IN ( SELECT " +
-                            "group_id FROM topic_group WHERE topic_id = %s);", item_id);
-                } else {
-                    GroupQueryString = String.format("SELECT * FROM groups WHERE _ID IN ( SELECT " +
-                            "group_id FROM contact_group WHERE contact_id = %s);", item_id);
-                };
-                Cursor group_cursor = readDb.rawQuery(GroupQueryString, new String[]{});
-
-                ArrayList<String> group_items = new ArrayList<String>();
-                int columnIndex=group_cursor.getColumnIndex("name");
-                while(group_cursor.moveToNext()) {
-                    group_items.add(group_cursor.getString(columnIndex)); //add the item
-                }
-
+            if (!item_type.equals("group")) {
+                ArrayList<String> group_items = current_object.getRelatedNames(getActivity(), "groups");
                 list_headers.add("Groups");
                 list_items.put("Groups", group_items);
-
             };
 
-            if (!item_type.equals("topics")) {
-
-                String TopicQueryString;
-                if (item_type.equals("contacts")) {
-                    TopicQueryString = String.format("SELECT * FROM topics WHERE _ID IN ( SELECT " +
-                            "topic_id FROM topic_contact WHERE contact_id = %s);", item_id);
-                } else {
-                    TopicQueryString = String.format("SELECT * FROM topics WHERE _ID IN ( SELECT " +
-                            "topic_id FROM topic_group WHERE group_id = %s);", item_id);
-                };
-                Cursor topic_cursor = readDb.rawQuery(TopicQueryString, new String[]{});
-
-                ArrayList<String> topic_items = new ArrayList<String>();
-                int columnIndex=topic_cursor.getColumnIndex("name");
-                while(topic_cursor.moveToNext()) {
-                    topic_items.add(topic_cursor.getString(columnIndex)); //add the item
-                }
-
+            if (!item_type.equals("topic")) {
+                ArrayList<String> topic_items = current_object.getRelatedNames(getActivity(), "topics");
                 list_headers.add("Topics");
                 list_items.put("Topics", topic_items);
             };
+
             mExpandableCheckboxAdapter = new ExpandableCheckboxAdapter(this.getActivity(), list_headers, list_items);
             mExpandableListView.setAdapter(mExpandableCheckboxAdapter);
             final ArrayList<String> new_list_headers = list_headers;

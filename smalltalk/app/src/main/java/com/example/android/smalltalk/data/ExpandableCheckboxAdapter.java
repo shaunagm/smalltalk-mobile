@@ -27,21 +27,39 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> mListDataChild; // Change ExpListChildItems to relevant data group
     private ArrayList<String> mListDataGroup; //Can change arraylist as needed
     private HashMap<Integer, boolean[]> mChildCheckStates; // Hashmap for keeping track of our checkbox check states
+    private HashMap<Integer, List<String>> mChildIds; // Hashmap for keeping track of out child view IDs
     private ChildViewHolder childViewHolder;
     private GroupViewHolder groupViewHolder;
     private String groupText;
     private String childText;
+    private String childId;
+    private Boolean mEditViewBoolean;
+    private SmalltalkObject mObject; // Integer for keeping track of the main object ID.
 
-    public ExpandableCheckboxAdapter(Context context,
-                                          ArrayList<String> listDataGroup, HashMap<String, List<String>> listDataChild) {
+    public ExpandableCheckboxAdapter(Context context, ArrayList<String> listDataGroup, HashMap<String,
+            List<String>> listDataChild) {
 
         mContext = context;
+        mEditViewBoolean = false;
         mListDataGroup = listDataGroup;
         mListDataChild = listDataChild;
-
-        // Initialize our hashmap containing our check states here
         mChildCheckStates = new HashMap<Integer, boolean[]>();
     }
+
+    public ExpandableCheckboxAdapter(Context context, RelatedObjectMap object_map, SmalltalkObject object) {
+
+        mContext = context;
+        mEditViewBoolean = true;
+        mListDataGroup = object_map.header_names;
+        mListDataChild = object_map.child_names;
+        mChildCheckStates = object_map.child_checked_states;
+        mChildIds = object_map.child_ids;
+        mObject = object;
+
+    }
+
+
+
 
     @Override
     public int getGroupCount() {
@@ -92,6 +110,7 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
 
         TextView mChildText;
         CheckBox mCheckBox;
+        TextView mChildId;
     }
 
     @Override
@@ -144,6 +163,8 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
             childViewHolder.mCheckBox = (CheckBox) convertView
                     .findViewById(R.id.expandable_list_item_checkbox);
 
+            childViewHolder.mChildId = (TextView) convertView .findViewById(R.id.expandable_list_item_edit_secret_id);
+
             convertView.setTag(R.layout.expandable_list_items, childViewHolder);
 
         } else {
@@ -153,6 +174,15 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
         }
 
         childViewHolder.mChildText.setText(childText);
+
+        if (mEditViewBoolean) {
+            childId = mChildIds.get(mGroupPosition).get(mChildPosition);
+            childViewHolder.mChildId.setText(childId);
+        }
+
+        if (mEditViewBoolean == true) {
+            childViewHolder.mCheckBox.setVisibility(View.VISIBLE);
+        }
 
         childViewHolder.mCheckBox.setOnCheckedChangeListener(null);
 
@@ -170,17 +200,23 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                String item_type = mListDataGroup.get(mGroupPosition);
+                String item_id = mChildIds.get(mGroupPosition).get(mChildPosition);
+
                 if (isChecked) {
 
                     boolean getChecked[] = mChildCheckStates.get(mGroupPosition);
                     getChecked[mChildPosition] = isChecked;
                     mChildCheckStates.put(mGroupPosition, getChecked);
+                    mObject.addRelationship(mContext, item_type, item_id);
 
                 } else {
 
                     boolean getChecked[] = mChildCheckStates.get(mGroupPosition);
                     getChecked[mChildPosition] = isChecked;
                     mChildCheckStates.put(mGroupPosition, getChecked);
+                    mObject.removeRelationship(mContext, item_type, item_id);
+
                 }
             }
         });

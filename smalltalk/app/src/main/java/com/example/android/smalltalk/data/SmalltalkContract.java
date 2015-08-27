@@ -61,7 +61,7 @@ public class SmalltalkContract {
 
         public static final class TopicContactJunction implements BaseColumns {
 
-            public static final String TABLE_NAME = "topic_contact";
+            public static final String TABLE_NAME = "contact_topic";
             public static final String COLUMN_TOPIC_KEY = "topic_id";
             public static final String COLUMN_CONTACT_KEY = "contact_id";
 
@@ -69,7 +69,7 @@ public class SmalltalkContract {
 
         public static final class TopicGroupJunction implements BaseColumns {
 
-            public static final String TABLE_NAME = "topic_group";
+            public static final String TABLE_NAME = "group_topic";
             public static final String COLUMN_TOPIC_KEY = "topic_id";
             public static final String COLUMN_GROUP_KEY = "group_id";
 
