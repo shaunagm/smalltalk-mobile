@@ -132,6 +132,7 @@ public class SmalltalkUtilities {
             ContentValues values = new ContentValues();
             values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_NAME, mTopicNames[i]);
             values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_DETAILS, mTopicDetails[i]);
+            values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_URI, "http://www.whatever.com");
             long newID = db.insert(SmalltalkContract.TopicEntry.TABLE_NAME, null, values);
         }
     }
@@ -148,6 +149,8 @@ public class SmalltalkUtilities {
     public static void addTopicContactRelationships(SQLiteDatabase db) {
         for(int i=0; i < mTCJTopics.length; i++) {
             ContentValues values = new ContentValues();
+            values.put(SmalltalkContract.TopicContactJunction.COLUMN_ARCHIVE, false);
+            values.put(SmalltalkContract.TopicContactJunction.COLUMN_STAR, false);
             values.put(SmalltalkContract.TopicContactJunction.COLUMN_TOPIC_KEY, mTCJTopics[i]);
             values.put(SmalltalkContract.TopicContactJunction.COLUMN_CONTACT_KEY, mTCJContacts[i]);
             long newID = db.insert(SmalltalkContract.TopicContactJunction.TABLE_NAME, null, values);

@@ -21,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.android.smalltalk.data.ExpandableCheckboxAdapter;
-import com.example.android.smalltalk.data.RelatedObjectMap;
 import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
@@ -51,7 +50,7 @@ public class EditActivity extends BaseActivity {
             String item_type = intent.getStringExtra("item_type");
             String item_id = intent.getStringExtra("item_id");
             SmalltalkObject current_object = new SmalltalkObject(this, item_id, item_type);
-            Cursor cursor = current_object.getRowCursor(this);
+            Cursor cursor = current_object.getRowCursor();
             cursor.moveToNext();
 
             EditText nameField = (EditText) findViewById(R.id.new_item_form_name);
@@ -66,34 +65,14 @@ public class EditActivity extends BaseActivity {
             TextView secret_id_view = (TextView) findViewById(R.id.detail_item_id_secret);
             secret_id_view.setText(item_id);
 
+            if (item_type.equals("topic")) {
+                EditText URIField = (EditText) findViewById(R.id.new_item_form_uri);
+                URIField.setText(current_object.getURI());
+                URIField.setVisibility(View.VISIBLE);
+            }
+
             ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view);
-
-            RelatedObjectMap object_map = new RelatedObjectMap();
-            
-            if (!item_type.equals("contact")) {
-
-                object_map.addHeaderNames("Contacts");
-                object_map.addNamesAndIDs("Contacts", current_object.getAllItemsNamesAndIDs(this, "contacts"));
-                object_map.addPrecheckedList("Contacts", current_object.getRelatedNames(this, "contacts"));
-                
-            };
-
-            if (!item_type.equals("group")) {
-
-                object_map.addHeaderNames("Groups");
-                object_map.addNamesAndIDs("Groups", current_object.getAllItemsNamesAndIDs(this, "groups"));
-                object_map.addPrecheckedList("Groups", current_object.getRelatedNames(this, "groups"));
-            };
-
-            if (!item_type.equals("topic")) {
-
-                object_map.addHeaderNames("Topics");
-                object_map.addNamesAndIDs("Topics", current_object.getAllItemsNamesAndIDs(this, "topics"));
-                object_map.addPrecheckedList("Topics", current_object.getRelatedNames(this, "topics"));
-                
-            };
-
-            ExpandableCheckboxAdapter eCA = new ExpandableCheckboxAdapter(this, object_map, current_object);
+            ExpandableCheckboxAdapter eCA = new ExpandableCheckboxAdapter(this, current_object, true);
             expandableListView.setAdapter(eCA);
         }
     }
@@ -115,17 +94,14 @@ public class EditActivity extends BaseActivity {
         String item_id = idField.getText().toString();
 
         SmalltalkObject object_to_update = new SmalltalkObject(this, item_id, item_type);
-        object_to_update.updateObject(this, item_name, item_details);
 
-//        // Now take care of relationships
-//        final ExpandableListView headerField = (ExpandableListView) findViewById(R.id.expandable_list_view);
-//
-//        for (int i = 0; i < headerField.getChildCount(); i++)
-//        {
-//            View current_view = headerField.getChildAt(i);
-//            int spacewaste = 1;
-//        }
-//
+        if (item_type.equals("topic")) {
+            final EditText uriField = (EditText) findViewById(R.id.new_item_form_uri);
+            String item_uri = uriField.getText().toString();
+            object_to_update.updateObject(item_name, item_details, item_uri);
+        } else {
+            object_to_update.updateObject(item_name, item_details);
+        }
 
         Intent intent = new Intent(this, DetailActivity.class)
                 .putExtra("item_id", item_id)

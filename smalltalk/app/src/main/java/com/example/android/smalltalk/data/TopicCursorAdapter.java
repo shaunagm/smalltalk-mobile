@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.android.smalltalk.R;
 import com.example.android.smalltalk.data.SmalltalkContract.TopicEntry;
 
+import org.w3c.dom.Text;
+
 public class TopicCursorAdapter extends CursorAdapter {
     public TopicCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
@@ -29,12 +31,15 @@ public class TopicCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         TextView topicName = (TextView) view.findViewById(R.id.list_item_topic_textview);
+        TextView topicURI = (TextView) view.findViewById(R.id.list_item_topic_URI_textview);
         TextView topicDetails = (TextView) view.findViewById(R.id.list_item_topic_details_textview);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow(TopicEntry.COLUMN_TOPIC_NAME));
+        String URI = cursor.getString(cursor.getColumnIndexOrThrow(TopicEntry.COLUMN_TOPIC_URI));
         String details = cursor.getString(cursor.getColumnIndexOrThrow(TopicEntry.COLUMN_TOPIC_DETAILS));
 
         topicName.setText(name);
+        topicURI.setText(URI);
         topicDetails.setText(details);
     }
 

@@ -12,6 +12,11 @@
     <string name="edit_item_button">Edit</string>
     <string name="edit_item_form_title">Edit Item</string>
 
+    <string name="dont_show_message">Don\'t show this dialog again.</string>
+    <string name="dialog_proceed">Go ahead.</string>
+    <string name="dialog_exceptions">Select exceptions.</string>
+
+
     <!-- New item form inputs -->
     <string name="new_item_form_title">Add An Item</string>
     <string name="new_item_form_name_hint">Item Name</string>

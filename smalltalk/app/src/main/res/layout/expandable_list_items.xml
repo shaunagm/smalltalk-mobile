@@ -14,10 +14,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"/>
+    <ImageButton
+        android:id="@+id/small_star_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/small_star_off"
+        android:visibility="gone"/>
+    <ImageButton
+        android:id="@+id/small_archive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/small_archive_off"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/expandable_list_item_edit_secret_id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"/>
+
 
 </LinearLayout>

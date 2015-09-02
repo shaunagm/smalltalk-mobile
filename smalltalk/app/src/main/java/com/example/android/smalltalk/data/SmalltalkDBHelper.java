@@ -49,21 +49,24 @@ public class SmalltalkDBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_CONTACTS_TABLE = "CREATE TABLE " + ContactEntry.TABLE_NAME + " (" +
                 ContactEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ContactEntry.COLUMN_CONTACT_NAME + " TEXT NOT NULL, " +
-                ContactEntry.COLUMN_CONTACT_DETAILS + " TEXT NOT NULL, " +
+                ContactEntry.COLUMN_CONTACT_DETAILS + " TEXT DEFAULT '', " +
                 " UNIQUE (" + ContactEntry.COLUMN_CONTACT_NAME + ") ON CONFLICT REPLACE);";
         sqLiteDatabase.execSQL(SQL_CREATE_CONTACTS_TABLE);
         
         final String SQL_CREATE_TOPICS_TABLE = "CREATE TABLE " + TopicEntry.TABLE_NAME + " (" +
                 TopicEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TopicEntry.COLUMN_TOPIC_NAME + " TEXT NOT NULL, " +
-                TopicEntry.COLUMN_TOPIC_DETAILS + " TEXT NOT NULL, " +
+                TopicEntry.COLUMN_TOPIC_DETAILS + " TEXT DEFAULT '', " +
+                TopicEntry.COLUMN_TOPIC_URI + " TEXT DEFAULT '', " +
+                TopicEntry.COLUMN_STAR + " INTEGER DEFAULT 0, "  +
+                TopicEntry.COLUMN_ARCHIVE + " INTEGER DEFAULT 0, "  +
                 " UNIQUE (" + TopicEntry.COLUMN_TOPIC_NAME + ") ON CONFLICT REPLACE);";
         sqLiteDatabase.execSQL(SQL_CREATE_TOPICS_TABLE);
         
         final String SQL_CREATE_GROUPS_TABLE = "CREATE TABLE " + GroupEntry.TABLE_NAME + " (" +
                 GroupEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 GroupEntry.COLUMN_GROUP_NAME + " TEXT NOT NULL, " +
-                GroupEntry.COLUMN_GROUP_DETAILS + " TEXT NOT NULL, " +
+                GroupEntry.COLUMN_GROUP_DETAILS + " TEXT DEFAULT '', " +
                 " UNIQUE (" + GroupEntry.COLUMN_GROUP_NAME + ") ON CONFLICT REPLACE);";
         sqLiteDatabase.execSQL(SQL_CREATE_GROUPS_TABLE);
 
@@ -80,6 +83,10 @@ public class SmalltalkDBHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_TOPICCONTACTJUNCTION_TABLE = "CREATE TABLE " + TopicContactJunction.TABLE_NAME + " (" +
                 TopicContactJunction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TopicContactJunction.COLUMN_STAR + " INTEGER DEFAULT 0, "  +
+                TopicContactJunction.COLUMN_STAR_LOCK + " INTEGER DEFAULT 0, "  +
+                TopicContactJunction.COLUMN_ARCHIVE + " INTEGER DEFAULT 0, "  +
+                TopicContactJunction.COLUMN_ARCHIVE_LOCK + " INTEGER DEFAULT 0, "  +
                 TopicContactJunction.COLUMN_TOPIC_KEY + " INTEGER NOT NULL, " +
                 TopicContactJunction.COLUMN_CONTACT_KEY + " INTEGER NOT NULL, " +
                 " FOREIGN KEY (" + TopicContactJunction.COLUMN_TOPIC_KEY + ") REFERENCES " +
@@ -94,6 +101,10 @@ public class SmalltalkDBHelper extends SQLiteOpenHelper {
                 TopicGroupJunction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TopicGroupJunction.COLUMN_TOPIC_KEY + " INTEGER NOT NULL, " +
                 TopicGroupJunction.COLUMN_GROUP_KEY + " INTEGER NOT NULL, " +
+                TopicGroupJunction.COLUMN_STAR + " INTEGER DEFAULT 0, "  +
+                TopicGroupJunction.COLUMN_STAR_LOCK + " INTEGER DEFAULT 0, "  +
+                TopicGroupJunction.COLUMN_ARCHIVE + " INTEGER DEFAULT 0, "  +
+                TopicGroupJunction.COLUMN_ARCHIVE_LOCK + " INTEGER DEFAULT 0, "  +
                 " FOREIGN KEY (" + TopicGroupJunction.COLUMN_TOPIC_KEY + ") REFERENCES " +
                 TopicEntry.TABLE_NAME + " (" + TopicEntry._ID + "), " +
                 " FOREIGN KEY (" + TopicGroupJunction.COLUMN_GROUP_KEY + ") REFERENCES " +
@@ -112,13 +123,5 @@ public class SmalltalkDBHelper extends SQLiteOpenHelper {
 //        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContactEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
-
-    // get groups cursor given item
-    // get contacts cursor given item
-    // get topics cursor given item
-
-    // get item_names given item cursor (call cursor and switch to array
-
-    // get item_cursor given info
 
 }

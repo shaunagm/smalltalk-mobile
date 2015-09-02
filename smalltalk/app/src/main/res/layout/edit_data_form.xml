@@ -39,7 +39,17 @@
         android:layout_height="wrap_content"
         android:hint="@string/new_item_form_name_hint"
         android:inputType="textPersonName"
-        android:layout_width="fill_parent">
+        android:layout_width="fill_parent"
+        android:maxLength="100">
+    </EditText>
+
+    <EditText
+        android:id="@+id/new_item_form_uri"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_item_form_name_hint"
+        android:inputType="textUri"
+        android:layout_width="fill_parent"
+        android:maxLength="100">
     </EditText>
 
     <EditText

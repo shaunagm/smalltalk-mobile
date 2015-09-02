@@ -20,6 +20,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <ImageButton
+        android:id="@+id/star_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/star_off"
+        android:onClick="toggle_star"
+        android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/archive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/archive_off"
+        android:onClick="toggle_archive"
+        android:visibility="gone"/>
+
     <Button
         android:id="@+id/edit_item_button"
         android:layout_height="wrap_content"
@@ -33,6 +49,13 @@
         android:id="@+id/detail_item_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="BOOOO"
+        android:id="@+id/detail_item_uri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <TextView
         android:text="BOOOO"

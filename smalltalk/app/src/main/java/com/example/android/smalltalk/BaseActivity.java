@@ -1,10 +1,14 @@
 package com.example.android.smalltalk;
 
+import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -15,13 +19,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.smalltalk.data.ContactCursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
+import com.example.android.smalltalk.data.SmalltalkObject;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -143,6 +156,50 @@ public class BaseActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    public SmalltalkObject getObjectFromView(View view) {
+        TextView item_id_view = (TextView) findViewById(R.id.detail_item_id_secret);
+        String item_id = item_id_view.getText().toString();
+
+        TextView item_type_view = (TextView) findViewById(R.id.detail_item_type);
+        String item_type = item_type_view.getText().toString();
+
+        return new SmalltalkObject(this, item_id, item_type);
+    }
+
+    public void toggle(View view, String type) {
+
+        SmalltalkObject current_object = getObjectFromView(view);
+        int status = current_object.toggleStatus(type);
+        switch (type) {
+            case "star":
+                ImageButton sButton = (ImageButton) view.findViewById(R.id.star_button);
+                if (status == 1) {
+                    sButton.setImageResource(R.drawable.star_on);
+                } else {
+                    sButton.setImageResource(R.drawable.star_off);
+                }
+                break;
+            case "archive":
+                ImageButton aButton = (ImageButton) view.findViewById(R.id.archive_button);
+                if (status == 1) {
+                    aButton.setImageResource(R.drawable.archive_on);
+                } else {
+                    aButton.setImageResource(R.drawable.archive_off);
+                }
+                break;
+        }
+    }
+
+    public void toggle_star(View view) {
+        toggle(view, "star");
+    }
+
+    public void toggle_archive(View view) {
+        toggle(view, "archive");
+    }
+
+
+
     public void add_new_item(View view) {
 
         mdbHelper = SmalltalkDBHelper.getInstance(this);
@@ -174,6 +231,9 @@ public class BaseActivity extends AppCompatActivity {
                 db.close();
                 break;
             case "Topic":
+                final EditText uriField= (EditText) findViewById(R.id.new_item_form_uri);
+                String item_uri = uriField.getText().toString();
+                values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_URI, item_uri);
                 values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_NAME, item_name);
                 values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_DETAILS, item_details);
                 newID = db.insert(SmalltalkContract.TopicEntry.TABLE_NAME, null, values);
@@ -181,10 +241,9 @@ public class BaseActivity extends AppCompatActivity {
                 break;
         }
 
-        String item_type_reformatted = item_type.toLowerCase().concat("s");
         Intent intent = new Intent(this, DetailActivity.class)
-                .putExtra("item_id", (int) newID)
-                .putExtra("item_type", item_type_reformatted);
+                .putExtra("item_id", Long.toString(newID))
+                .putExtra("item_type", item_type.toLowerCase());
         startActivity(intent);
 
     }

@@ -1,6 +1,7 @@
 package com.example.android.smalltalk.data;
 
 import android.content.Context;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,14 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.smalltalk.R;
 import com.example.android.smalltalk.SmalltalkUtilities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,61 +27,80 @@ import java.util.List;
 public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
-    private HashMap<String, List<String>> mListDataChild; // Change ExpListChildItems to relevant data group
-    private ArrayList<String> mListDataGroup; //Can change arraylist as needed
-    private HashMap<Integer, boolean[]> mChildCheckStates; // Hashmap for keeping track of our checkbox check states
-    private HashMap<Integer, List<String>> mChildIds; // Hashmap for keeping track of out child view IDs
-    private ChildViewHolder childViewHolder;
-    private GroupViewHolder groupViewHolder;
-    private String groupText;
-    private String childText;
-    private String childId;
+    private SmalltalkObject mObject;
     private Boolean mEditViewBoolean;
-    private SmalltalkObject mObject; // Integer for keeping track of the main object ID.
 
-    public ExpandableCheckboxAdapter(Context context, ArrayList<String> listDataGroup, HashMap<String,
-            List<String>> listDataChild) {
+    private ArrayList<String> mGroupNames; // Group names (rename!)
+    private HashMap<String, List<String>> mChildNames; // Hashmap of child names
+    private HashMap<String, List<String>> mChildIDs; // Hashmap of child IDs
+    private HashMap<String, boolean[]> mCheckStates; // Hashmap for checkbox check states
 
-        mContext = context;
-        mEditViewBoolean = false;
-        mListDataGroup = listDataGroup;
-        mListDataChild = listDataChild;
-        mChildCheckStates = new HashMap<Integer, boolean[]>();
-    }
-
-    public ExpandableCheckboxAdapter(Context context, RelatedObjectMap object_map, SmalltalkObject object) {
+    public ExpandableCheckboxAdapter(Context context, SmalltalkObject current_object, Boolean is_edit_view) {
 
         mContext = context;
-        mEditViewBoolean = true;
-        mListDataGroup = object_map.header_names;
-        mListDataChild = object_map.child_names;
-        mChildCheckStates = object_map.child_checked_states;
-        mChildIds = object_map.child_ids;
-        mObject = object;
+        mObject = current_object;
+        mEditViewBoolean = is_edit_view;
 
+        mGroupNames = new ArrayList<String>(Arrays.asList(mObject.getRelatedHeaders()));
+
+        // Initialize!
+        mChildNames = new HashMap<String, List<String>>();
+        mChildIDs = new HashMap<String, List<String>>();
+        mCheckStates = new HashMap<String, boolean[]>();
+
+
+        if (!mEditViewBoolean) {
+
+            for (String group : mGroupNames) {
+                Pair names_and_ids = mObject.getRelatedNamesAndIDs(group);
+                ArrayList<String> child_names = (ArrayList<String>) names_and_ids.first;
+                ArrayList<String> child_ids = (ArrayList<String>) names_and_ids.second;
+                mChildNames.put(group, child_names);
+                mChildIDs.put(group, child_ids);
+            }
+
+        } else {
+
+            for (String group : mGroupNames) {
+                Pair names_and_ids = mObject.getAllItemsNamesAndIDs(group);
+                ArrayList<String> child_names = (ArrayList<String>) names_and_ids.first;
+                ArrayList<String> child_ids = (ArrayList<String>) names_and_ids.second;
+                mChildNames.put(group, child_names);
+                mChildIDs.put(group, child_ids);
+
+                // Compare related names with all names to get a boolean of checked states
+                List<String> related_names = mObject.getRelatedNames(group);
+                boolean[] is_checked_array = new boolean[child_names.size()];
+                for (int i = 0; i < child_names.size(); i++) {
+                    if (related_names.contains(child_names.get(i))) {
+                        is_checked_array[i] = true;
+                    } else {
+                        is_checked_array[i] = false;
+                    }
+                }
+                mCheckStates.put(group, is_checked_array);
+            }
+        }
     }
-
-
-
 
     @Override
     public int getGroupCount() {
-        return mListDataGroup.size();
+        return mGroupNames.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mListDataChild.get(mListDataGroup.get(groupPosition)).size();
+        return mChildNames.get(mGroupNames.get(groupPosition)).size();
     }
 
     @Override
     public String getGroup(int groupPosition) {
-        return mListDataGroup.get(groupPosition);
+        return mGroupNames.get(groupPosition);
     }
 
     @Override
     public String getChild(int groupPosition, int childPosition) {
-        return mListDataChild.get(mListDataGroup.get(groupPosition)).get(childPosition);
+        return mChildNames.get(mGroupNames.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -89,6 +111,10 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
+    }
+
+    public String getChildDBId(int groupPosition, int childPosition) {
+        return mChildIDs.get(mGroupNames.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -111,31 +137,31 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
         TextView mChildText;
         CheckBox mCheckBox;
         TextView mChildId;
+        ImageButton mStar;
+        ImageButton mArchive;
     }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-
-        groupText = getGroup(groupPosition);
+        
+        GroupViewHolder groupViewHolder;
 
         if (convertView == null) {
 
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.expandable_list_headers, null);
-
             groupViewHolder = new GroupViewHolder(); // Initialize the GroupViewHolder defined at the bottom of this document
-
             groupViewHolder.mGroupText = (TextView) convertView.findViewById(R.id.expandable_list_header);
-
             convertView.setTag(groupViewHolder);
+
         } else {
 
             groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
 
-        groupViewHolder.mGroupText.setText(groupText);
+        groupViewHolder.mGroupText.setText(getGroup(groupPosition));
 
         return convertView;
     }
@@ -143,85 +169,124 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final int mGroupPosition = groupPosition;
-        final int mChildPosition = childPosition;
+        // Set some vars
+        final String childText = getChild(groupPosition, childPosition);
+        final String groupText = getGroup(groupPosition);
+        final String item_id = mChildIDs.get(groupText).get(childPosition);
+        final int group_position = groupPosition;
+        final int child_position = childPosition;
 
-        childText = getChild(mGroupPosition, mChildPosition);
-        groupText = getGroup(groupPosition);
+        ChildViewHolder childViewHolder;
 
+        // Inflate the view
         if (convertView == null) {
-
             LayoutInflater inflater = (LayoutInflater) this.mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.expandable_list_items, null);
 
             childViewHolder = new ChildViewHolder();
-
-            childViewHolder.mChildText = (TextView) convertView
-                    .findViewById(R.id.expandable_list_item);
-
-            childViewHolder.mCheckBox = (CheckBox) convertView
-                    .findViewById(R.id.expandable_list_item_checkbox);
-
+            childViewHolder.mChildText = (TextView) convertView.findViewById(R.id.expandable_list_item);
+            childViewHolder.mCheckBox = (CheckBox) convertView.findViewById(R.id.expandable_list_item_checkbox);
             childViewHolder.mChildId = (TextView) convertView .findViewById(R.id.expandable_list_item_edit_secret_id);
+            childViewHolder.mStar = (ImageButton) convertView.findViewById(R.id.small_star_button);
+            childViewHolder.mArchive = (ImageButton) convertView.findViewById(R.id.small_archive_button);
 
-            convertView.setTag(R.layout.expandable_list_items, childViewHolder);
-
+            convertView.setTag(childViewHolder);
         } else {
-
-            childViewHolder = (ChildViewHolder) convertView
-                    .getTag(R.layout.expandable_list_items);
+            childViewHolder = (ChildViewHolder) convertView.getTag();
+            // If re-using a view, make sure the star & archive options are returned to invisibility.
+            childViewHolder.mArchive.setVisibility(View.GONE);
+            childViewHolder.mStar.setVisibility(View.GONE);
         }
 
+        // Set universal view elements
         childViewHolder.mChildText.setText(childText);
+        childViewHolder.mChildId.setText(item_id);
 
+        // If edit view, handle checkbox logic
         if (mEditViewBoolean) {
-            childId = mChildIds.get(mGroupPosition).get(mChildPosition);
-            childViewHolder.mChildId.setText(childId);
-        }
 
-        if (mEditViewBoolean == true) {
             childViewHolder.mCheckBox.setVisibility(View.VISIBLE);
-        }
 
-        childViewHolder.mCheckBox.setOnCheckedChangeListener(null);
-
-        if (mChildCheckStates.containsKey(mGroupPosition)) {
-            boolean getChecked[] = mChildCheckStates.get(mGroupPosition);
-            childViewHolder.mCheckBox.setChecked(getChecked[mChildPosition]);
-        } else {
-            boolean getChecked[] = new boolean[getChildrenCount(mGroupPosition)];
-            mChildCheckStates.put(mGroupPosition, getChecked);
-            childViewHolder.mCheckBox.setChecked(false);
-        }
-
-        childViewHolder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                String item_type = mListDataGroup.get(mGroupPosition);
-                String item_id = mChildIds.get(mGroupPosition).get(mChildPosition);
-
-                if (isChecked) {
-
-                    boolean getChecked[] = mChildCheckStates.get(mGroupPosition);
-                    getChecked[mChildPosition] = isChecked;
-                    mChildCheckStates.put(mGroupPosition, getChecked);
-                    mObject.addRelationship(mContext, item_type, item_id);
-
-                } else {
-
-                    boolean getChecked[] = mChildCheckStates.get(mGroupPosition);
-                    getChecked[mChildPosition] = isChecked;
-                    mChildCheckStates.put(mGroupPosition, getChecked);
-                    mObject.removeRelationship(mContext, item_type, item_id);
-
-                }
+            if (mCheckStates.containsKey(groupText)) {
+                boolean getChecked[] = mCheckStates.get(groupText);
+                childViewHolder.mCheckBox.setChecked(getChecked[childPosition]);
+            } else {
+                boolean getChecked[] = new boolean[getChildrenCount(groupPosition)];
+                mCheckStates.put(groupText, getChecked);
+                childViewHolder.mCheckBox.setChecked(false);
             }
-        });
 
-        return convertView;
+            childViewHolder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    boolean getChecked[] = mCheckStates.get(groupText);
+                    getChecked[child_position] = isChecked;
+                    mCheckStates.put(groupText, getChecked);
+
+                    if (isChecked) {
+                        mObject.addRelationship(groupText, item_id);
+                    } else {
+                        mObject.removeRelationship(groupText, item_id);
+                    }
+                }
+            });
+
+        } else {
+
+            // If Topic view, handle star & archive logic
+            String[] typeStrings = {groupText.toLowerCase().replace("s", ""), mObject.getType()};
+            if (Arrays.asList(typeStrings).contains("topic")) {
+
+                childViewHolder.mStar.setVisibility(View.VISIBLE);
+                childViewHolder.mStar.setImageResource(mObject.getImageResourceStatus("star", groupText, item_id));
+
+                childViewHolder.mStar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mObject.toggleRelationshipStatus("star", groupText, item_id);
+                        ImageButton star_button = (ImageButton) view;
+                        star_button.setImageResource(mObject.getImageResourceStatus("star", groupText, item_id));
+                    }
+                });
+
+                childViewHolder.mStar.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        mObject.toggleRelationshipStatus("star_lock", groupText, item_id);
+                        ImageButton star_button = (ImageButton) view;
+                        star_button.setImageResource(mObject.getImageResourceStatus("star", groupText, item_id));
+                        return true;
+                    }
+                });
+
+                childViewHolder.mArchive.setVisibility(View.VISIBLE);
+                childViewHolder.mArchive.setImageResource(mObject.getImageResourceStatus("archive", groupText, item_id));
+
+                childViewHolder.mArchive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mObject.toggleRelationshipStatus("archive", groupText, item_id);
+                        ImageButton archive_button = (ImageButton) view;
+                        archive_button.setImageResource(mObject.getImageResourceStatus("archive", groupText, item_id));
+                    }
+                });
+
+                childViewHolder.mArchive.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        mObject.toggleRelationshipStatus("archive_lock", groupText, item_id);
+                        ImageButton archive_button = (ImageButton) view;
+                        archive_button.setImageResource(mObject.getImageResourceStatus("archive", groupText, item_id));
+
+                        return true;
+                    }
+                });
+            }
+        }
+            return convertView;
     }
 
 }
