@@ -22,16 +22,16 @@
 
     <ImageButton
         android:id="@+id/star_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/star_off"
         android:onClick="toggle_star"
         android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/archive_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/archive_off"
         android:onClick="toggle_archive"
         android:visibility="gone"/>
@@ -42,6 +42,21 @@
         android:text="@string/edit_item_button"
         android:onClick="edit_item"
         android:layout_width="match_parent">
+    </Button>
+
+    <Button
+        android:id="@+id/show_archived_relationships"
+        android:layout_height="wrap_content"
+        android:text="Show archived relationships"
+        android:layout_width="match_parent">
+    </Button>
+
+    <Button
+        android:id="@+id/show_through_relationships"
+        android:layout_height="wrap_content"
+        android:text="Include topics through groups"
+        android:layout_width="match_parent"
+        android:visibility="gone">
     </Button>
 
     <TextView

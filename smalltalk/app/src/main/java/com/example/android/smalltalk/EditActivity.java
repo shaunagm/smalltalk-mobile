@@ -38,7 +38,7 @@ public class EditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.base_layout);
         super.onCreateDrawer();
 
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.content_frame);
@@ -72,7 +72,7 @@ public class EditActivity extends BaseActivity {
             }
 
             ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view);
-            ExpandableCheckboxAdapter eCA = new ExpandableCheckboxAdapter(this, current_object, true);
+            ExpandableCheckboxAdapter eCA = new ExpandableCheckboxAdapter(this, current_object, true, 0, 0);
             expandableListView.setAdapter(eCA);
         }
     }

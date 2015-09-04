@@ -1,16 +1,12 @@
 package com.example.android.smalltalk;
 
-import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,19 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.smalltalk.data.ContactCursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
@@ -90,39 +80,35 @@ public class BaseActivity extends AppCompatActivity {
 
     public void selectItem(int position) {
 
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        String list_type = "";
 
         switch (position) {
             case 0:
-                TopicActivityFragment topicFragment = new TopicActivityFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, topicFragment)
-                        .commit();
+                list_type = "topics";
                 break;
             case 1:
-                ContactActivityFragment contactFragment = new ContactActivityFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, contactFragment)
-                        .commit();
+                list_type = "contacts";
                 break;
             case 2:
-                GroupActivityFragment groupFragment = new GroupActivityFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, groupFragment)
-                        .commit();
+                list_type = "groups";
                 break;
             case 3:
-                AddDataFragment dataFragment = new AddDataFragment();
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                AddDataFragment add_data = new AddDataFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, dataFragment)
+                        .replace(R.id.content_frame, add_data)
                         .commit();
-                break;
+                mDrawerList.setItemChecked(position, true);
+                mDrawerLayout.closeDrawer(mDrawerList);
+                return;
         }
 
-        // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
+
+        Intent intent = new Intent(this.getApplicationContext(), ListActivity.class)
+                .putExtra("list_type", list_type);
+        this.startActivity(intent);
     }
 
     /* Called whenever we call invalidateOptionsMenu() */

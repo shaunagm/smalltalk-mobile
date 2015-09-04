@@ -11,8 +11,8 @@ import android.widget.CursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkContract.ContactEntry;
 import com.example.android.smalltalk.R;
 
-public class ContactCursorAdapter extends CursorAdapter {
-    public ContactCursorAdapter(Context context, Cursor cursor, int flags) {
+public class ObjectCursorAdapter extends CursorAdapter {
+    public ObjectCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
     }
 
@@ -20,7 +20,7 @@ public class ContactCursorAdapter extends CursorAdapter {
     // you don't bind any data to the view at this point.
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.list_item_contact, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.list_item_object, parent, false);
     }
 
     // The bindView method is used to bind all data to a given view
@@ -28,14 +28,14 @@ public class ContactCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        TextView contactName = (TextView) view.findViewById(R.id.list_item_contact_textview);
-        TextView contactDetails = (TextView) view.findViewById(R.id.list_item_contact_details_textview);
+        TextView objectName = (TextView) view.findViewById(R.id.list_item_name_textview);
+        TextView objectDetails = (TextView) view.findViewById(R.id.list_item_details_textview);
 
-        String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_CONTACT_NAME));
-        String details = cursor.getString(cursor.getColumnIndexOrThrow(ContactEntry.COLUMN_CONTACT_DETAILS));
+        String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+        String details = cursor.getString(cursor.getColumnIndexOrThrow("details"));
 
-        contactName.setText(name);
-        contactDetails.setText(details);
+        objectName.setText(name);
+        objectDetails.setText(details);
     }
 
 }

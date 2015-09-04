@@ -2,35 +2,21 @@ package com.example.android.smalltalk;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-import com.example.android.smalltalk.data.ContactCursorAdapter;
 import com.example.android.smalltalk.data.ExpandableCheckboxAdapter;
-import com.example.android.smalltalk.data.GroupCursorAdapter;
-import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
-import com.example.android.smalltalk.data.TopicCursorAdapter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,9 +24,6 @@ import java.util.List;
 public class DetailActivityFragment extends Fragment {
 
     SmalltalkDBHelper mdbHelper;
-    ContactCursorAdapter mContactAdapter;
-    TopicCursorAdapter mTopicAdapter;
-    GroupCursorAdapter mGroupAdapter;
     ExpandableListView mExpandableListView;
     ExpandableCheckboxAdapter mExpandableCheckboxAdapter;
 
@@ -57,9 +40,12 @@ public class DetailActivityFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra("item_type") && intent.hasExtra("item_id")) {
 
-            String item_type = intent.getStringExtra("item_type");
-            String item_id = intent.getStringExtra("item_id");
-            SmalltalkObject current_object = new SmalltalkObject(getActivity(), item_id, item_type);
+            final int show_archived = intent.getIntExtra("show_archived", 0);
+            final int show_through = intent.getIntExtra("show_through", 0);
+
+            final String item_type = intent.getStringExtra("item_type");
+            final String item_id = intent.getStringExtra("item_id");
+            SmalltalkObject current_object = new SmalltalkObject(getActivity(), item_id, item_type, show_archived);
             Cursor cursor = current_object.getRowCursor();
             cursor.moveToNext();
 
@@ -72,12 +58,49 @@ public class DetailActivityFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.detail_item_id_secret))
                     .setText(item_id);
 
+            Button show_archive_button = (Button) rootView.findViewById(R.id.show_archived_relationships);
+            if (show_archived == 1) {
+                show_archive_button.setText("Hide archived relationships");
+            }
+            show_archive_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), DetailActivity.class)
+                            .putExtra("item_type", item_type)
+                            .putExtra("item_id", item_id)
+                            .putExtra("show_archived", 1 - show_archived)
+                            .putExtra("show_through", show_through);
+                    startActivity(intent);
+                }
+            });
+
+            if (item_type.equals("contact")) {
+                Button show_through_button = (Button) rootView.findViewById(R.id.show_through_relationships);
+                show_through_button.setVisibility(View.VISIBLE);
+                if (show_through == 1) {
+                    show_through_button.setText("Exclude topics through groups");
+                }
+                show_through_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), DetailActivity.class)
+                                .putExtra("item_type", item_type)
+                                .putExtra("item_id", item_id)
+                                .putExtra("show_archived", show_archived)
+                                .putExtra("show_through", 1 - show_through);
+                        startActivity(intent);
+                    }
+                });
+            }
+
             if (item_type.equals("topic")) {
+
                 ImageButton star_button = (ImageButton) rootView.findViewById(R.id.star_button);
                 star_button.setVisibility(View.VISIBLE);
                 if (current_object.getStarStatus() == 1) {
                     star_button.setImageResource(R.drawable.star_on);
                 }
+
                 ImageButton archive_button = (ImageButton) rootView.findViewById(R.id.archive_button);
                 archive_button.setVisibility(View.VISIBLE);
                 if (current_object.getArchiveStatus() == 1) {
@@ -100,7 +123,7 @@ public class DetailActivityFragment extends Fragment {
             }
 
             mExpandableListView = (ExpandableListView) rootView.findViewById(R.id.expandable_list_view);
-            mExpandableCheckboxAdapter = new ExpandableCheckboxAdapter(this.getActivity(), current_object, false);
+            mExpandableCheckboxAdapter = new ExpandableCheckboxAdapter(this.getActivity(), current_object, false, show_archived, show_through);
             mExpandableListView.setAdapter(mExpandableCheckboxAdapter);
 
             mExpandableListView.setOnChildClickListener(new OnChildClickListener() {

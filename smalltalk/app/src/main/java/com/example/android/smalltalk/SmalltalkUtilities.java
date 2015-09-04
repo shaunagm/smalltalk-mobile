@@ -174,18 +174,17 @@ public class SmalltalkUtilities {
         context.startActivity(intent);
     }
 
-    public static void goToDetailViewGivenNameAndType(Context context, String item_name, String item_type) {
-        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
-        Cursor cursor = getItemCursorGivenTypeAndName(context, item_type, item_name);
-        cursor.moveToNext();
-        goToDetailView(context, cursor, item_type.replace("s",""));
-    }
-
-    public static Cursor getItemCursorGivenTypeAndName(Context context, String item_type, String name) {
+    public static Cursor getListCursorGivenType(Context context, String item_type, int show_archived) {
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        String queryString = String.format("SELECT * FROM %s WHERE name = '%s' LIMIT 1;",
-                item_type.toLowerCase(), name);
+        String baseString;
+        if (item_type.equals("topics") && (show_archived == 0)) {
+            baseString = "SELECT * FROM %s WHERE archive = 0 ORDER BY name ASC;";
+        } else {
+            baseString = "SELECT * FROM %s ORDER BY name ASC;";
+        }
+
+        String queryString = String.format(baseString, item_type);
         return readDb.rawQuery(queryString, new String[]{});
     }
 

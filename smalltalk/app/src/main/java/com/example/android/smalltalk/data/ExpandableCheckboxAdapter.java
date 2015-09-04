@@ -1,6 +1,7 @@
 package com.example.android.smalltalk.data;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +36,13 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> mChildIDs; // Hashmap of child IDs
     private HashMap<String, boolean[]> mCheckStates; // Hashmap for checkbox check states
 
-    public ExpandableCheckboxAdapter(Context context, SmalltalkObject current_object, Boolean is_edit_view) {
+
+    public ExpandableCheckboxAdapter(Context context, SmalltalkObject current_object, Boolean is_edit_view,
+                                     int show_archive, int through_group) {
 
         mContext = context;
         mObject = current_object;
         mEditViewBoolean = is_edit_view;
-
         mGroupNames = new ArrayList<String>(Arrays.asList(mObject.getRelatedHeaders()));
 
         // Initialize!
@@ -48,28 +50,37 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
         mChildIDs = new HashMap<String, List<String>>();
         mCheckStates = new HashMap<String, boolean[]>();
 
+        // There are a number of different variables/states which influence what gets shown here.
 
-        if (!mEditViewBoolean) {
-
-            for (String group : mGroupNames) {
-                Pair names_and_ids = mObject.getRelatedNamesAndIDs(group);
-                ArrayList<String> child_names = (ArrayList<String>) names_and_ids.first;
-                ArrayList<String> child_ids = (ArrayList<String>) names_and_ids.second;
-                mChildNames.put(group, child_names);
-                mChildIDs.put(group, child_ids);
-            }
-
+        int show_related;
+        if (mEditViewBoolean) {
+            show_related = 0;
         } else {
+            show_related = 1;
+        }
 
-            for (String group : mGroupNames) {
-                Pair names_and_ids = mObject.getAllItemsNamesAndIDs(group);
+        for (String group : mGroupNames) {
+
+            if (!(mEditViewBoolean)) {
+
+                Cursor cursor = mObject.getConditionalRowsCursor(group, show_related, show_archive, through_group);
+                Pair names_and_ids = mObject.getItemInfoPair(cursor);
                 ArrayList<String> child_names = (ArrayList<String>) names_and_ids.first;
                 ArrayList<String> child_ids = (ArrayList<String>) names_and_ids.second;
                 mChildNames.put(group, child_names);
                 mChildIDs.put(group, child_ids);
 
-                // Compare related names with all names to get a boolean of checked states
-                List<String> related_names = mObject.getRelatedNames(group);
+            } else {
+
+                Cursor cursor = mObject.getConditionalRowsCursor(group, 0, 1, 0);
+                Pair names_and_ids = mObject.getItemInfoPair(cursor);
+                ArrayList<String> child_names = (ArrayList<String>) names_and_ids.first;
+                ArrayList<String> child_ids = (ArrayList<String>) names_and_ids.second;
+                mChildNames.put(group, child_names);
+                mChildIDs.put(group, child_ids);
+
+                Cursor related_cursor = mObject.getConditionalRowsCursor(group, 1, 1, 0);
+                List<String> related_names = mObject.getItemInfoArray(related_cursor, "name");
                 boolean[] is_checked_array = new boolean[child_names.size()];
                 for (int i = 0; i < child_names.size(); i++) {
                     if (related_names.contains(child_names.get(i))) {
@@ -80,8 +91,10 @@ public class ExpandableCheckboxAdapter extends BaseExpandableListAdapter {
                 }
                 mCheckStates.put(group, is_checked_array);
             }
+
         }
     }
+
 
     @Override
     public int getGroupCount() {
