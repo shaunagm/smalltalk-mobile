@@ -1,15 +1,7 @@
 package com.example.android.smalltalk;
 
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Spinner;
-
-import com.example.android.smalltalk.data.SmalltalkContract;
-import com.example.android.smalltalk.data.SmalltalkDBHelper;
+import com.example.android.smalltalk.SmalltalkUtilities.fixture_utils;
 
 public class MainActivity extends BaseActivity {
 
@@ -20,9 +12,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.base_layout);
         super.onCreateDrawer();
 
-//        SmalltalkUtilities.exportDB(this); // For debug purposes, because adb doesn't let you view databases with unrooted phones! >:(
+//        fixture_utils.exportDB(this);
 //        this.deleteDatabase("smalltalk.db");
-//        SmalltalkUtilities.populateDB(this);
+//        fixture_utils.populateDB(this);
 
         // If no previous state, start with Topic View
         if (savedInstanceState == null) {

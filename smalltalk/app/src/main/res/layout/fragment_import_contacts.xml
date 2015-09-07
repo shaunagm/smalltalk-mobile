@@ -1,0 +1,55 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.smalltalk.ImportContactsFragment"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1">
+        <TextView
+            android:text="@string/import_contacts_explanation"
+            android:id="@+id/import_contacts_explanation"
+            android:layout_height="fill_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.8"/>
+        <Button
+            android:text="save"
+            android:id="@+id/import_contacts_save"
+            android:layout_height="fill_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"/>
+    </LinearLayout>
+
+    <TextView
+        android:text="CONTACTS"
+        android:id="@+id/import_contacts_header"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05" />
+
+    <ListView
+        android:id="@+id/listview_import_contacts"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4" />
+
+    <TextView
+        android:text="GROUPS"
+        android:id="@+id/import_groups_header"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05" />
+
+    <ListView
+        android:id="@+id/listview_import_groups"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".4" />
+
+</LinearLayout>

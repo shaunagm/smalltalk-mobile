@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.smalltalk.R;
-import com.example.android.smalltalk.SmalltalkUtilities;
 
 import java.util.ArrayList;
 import java.util.Arrays;

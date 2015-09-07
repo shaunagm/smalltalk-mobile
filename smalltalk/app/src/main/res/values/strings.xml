@@ -16,6 +16,9 @@
     <string name="dialog_proceed">Go ahead.</string>
     <string name="dialog_exceptions">Select exceptions.</string>
 
+    <string name="import_contacts_explanation">Select contacts and groups to import, and press "save"
+        when you\'re ready.</string>
+
 
     <!-- New item form inputs -->
     <string name="new_item_form_title">Add An Item</string>
@@ -31,5 +34,8 @@
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_list">ListActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

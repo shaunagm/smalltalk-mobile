@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
+import com.example.android.smalltalk.SmalltalkUtilities.misc_utils;
 import com.example.android.smalltalk.data.ObjectCursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 
@@ -35,7 +37,7 @@ public class ListActivityFragment extends Fragment {
         // Get data from database
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(getActivity());
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        Cursor cursor = SmalltalkUtilities.getListCursorGivenType(getActivity(), list_type, show_archived);
+        Cursor cursor = db_utils.getListCursorGivenType(getActivity(), list_type, show_archived);
 
         // Views!
         View rootView = inflater.inflate(R.layout.fragment_list_activity, container, false);
@@ -64,7 +66,7 @@ public class ListActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor row_cursor = (Cursor) adapter.getItem(position);
-                SmalltalkUtilities.goToDetailView(view.getContext(), row_cursor, list_type.replace("s",""));
+                misc_utils.goToDetailView(view.getContext(), row_cursor, list_type.replace("s", ""));
             }
         });
 

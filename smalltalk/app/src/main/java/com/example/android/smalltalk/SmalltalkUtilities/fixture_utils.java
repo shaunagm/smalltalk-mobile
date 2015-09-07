@@ -1,9 +1,7 @@
-package com.example.android.smalltalk;
+package com.example.android.smalltalk.SmalltalkUtilities;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.widget.Toast;
@@ -16,12 +14,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 
 /**
- * Created by shauna on 8/20/15.
+ * Created by shauna on 9/7/15.
  */
-public class SmalltalkUtilities {
+public class fixture_utils {
 
     static String[ ] mContactNames = {
             "Buffy Summers",
@@ -70,8 +67,6 @@ public class SmalltalkUtilities {
 
     static Integer[] mTGJTopics = { 1, 2 };
     static Integer[] mTGJGroups = { 1, 1 };
-
-
 
     public static void exportDB(Context context) {
 
@@ -164,28 +159,6 @@ public class SmalltalkUtilities {
             values.put(SmalltalkContract.TopicGroupJunction.COLUMN_GROUP_KEY, mTGJGroups[i]);
             long newID = db.insert(SmalltalkContract.TopicGroupJunction.TABLE_NAME, null, values);
         }
-    }
-
-    public static void goToDetailView(Context context, Cursor row_cursor, String item_type) {
-        int item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow("_id"));
-        Intent intent = new Intent(context, DetailActivity.class)
-                .putExtra("item_id", Integer.toString(item_id))
-                .putExtra("item_type", item_type.toLowerCase());
-        context.startActivity(intent);
-    }
-
-    public static Cursor getListCursorGivenType(Context context, String item_type, int show_archived) {
-        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
-        SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        String baseString;
-        if (item_type.equals("topics") && (show_archived == 0)) {
-            baseString = "SELECT * FROM %s WHERE archive = 0 ORDER BY name ASC;";
-        } else {
-            baseString = "SELECT * FROM %s ORDER BY name ASC;";
-        }
-
-        String queryString = String.format(baseString, item_type);
-        return readDb.rawQuery(queryString, new String[]{});
     }
 
 

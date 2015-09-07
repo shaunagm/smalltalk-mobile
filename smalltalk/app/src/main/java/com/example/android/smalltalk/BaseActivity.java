@@ -3,8 +3,10 @@ package com.example.android.smalltalk;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -60,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mDrawerOptions = new String[] {"Topics", "Contacts", "Groups", "Add New"};
+        mDrawerOptions = new String[] {"Topics", "Contacts", "Groups", "Add New", "Import Contacts"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -81,6 +83,7 @@ public class BaseActivity extends AppCompatActivity {
     public void selectItem(int position) {
 
         String list_type = "";
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         switch (position) {
             case 0:
@@ -93,10 +96,17 @@ public class BaseActivity extends AppCompatActivity {
                 list_type = "groups";
                 break;
             case 3:
-                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 AddDataFragment add_data = new AddDataFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, add_data)
+                        .commit();
+                mDrawerList.setItemChecked(position, true);
+                mDrawerLayout.closeDrawer(mDrawerList);
+                return;
+            case 4:
+                ImportContactsFragment import_contacts = new ImportContactsFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, import_contacts)
                         .commit();
                 mDrawerList.setItemChecked(position, true);
                 mDrawerLayout.closeDrawer(mDrawerList);
@@ -184,8 +194,6 @@ public class BaseActivity extends AppCompatActivity {
         toggle(view, "archive");
     }
 
-
-
     public void add_new_item(View view) {
 
         mdbHelper = SmalltalkDBHelper.getInstance(this);
@@ -232,6 +240,10 @@ public class BaseActivity extends AppCompatActivity {
                 .putExtra("item_type", item_type.toLowerCase());
         startActivity(intent);
 
+    }
+
+    public void import_contacts(View view) {
+        Toast.makeText(getApplicationContext(), "IMPORT ME", Toast.LENGTH_SHORT).show();
     }
 
 }
