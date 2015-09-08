@@ -24,17 +24,29 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_import_contacts, container, false);
 
-        Cursor cursor = import_utils.getPhoneContacts(this.getActivity());
+        View rootView = inflater.inflate(R.layout.import_contacts_layout, container, false);
+
+        Bundle bundle = this.getArguments();
+        String type = bundle.getString("type", "all");
+        Boolean include_groups = bundle.getBoolean("groups");
+
+        Cursor cursor = import_utils.getAndroidContacts(this.getActivity(), type);
         final ImportContactCursorAdapter contact_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "contact");
         ListView contacts = (ListView) rootView.findViewById(R.id.listview_import_contacts);
         contacts.setAdapter(contact_adapter);
 
-        cursor = import_utils.getPhoneGroups(this.getActivity());
-        final ImportContactCursorAdapter group_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "group");
-        ListView groups = (ListView) rootView.findViewById(R.id.listview_import_groups);
-        groups.setAdapter(group_adapter);
+        final ImportContactCursorAdapter group_adapter;
+        if (include_groups) {
+            cursor = import_utils.getPhoneGroups(this.getActivity());
+            group_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "group");
+            ListView groups = (ListView) rootView.findViewById(R.id.listview_import_groups);
+            groups.setVisibility(View.VISIBLE);
+            groups.setAdapter(group_adapter);
+            rootView.findViewById(R.id.import_groups_header).setVisibility(View.VISIBLE);
+        } else {
+            group_adapter = null; // need to initialize this so we can pass it to save_imports
+        }
 
         // Save button!
         Button save_button = (Button) rootView.findViewById(R.id.import_contacts_save);
@@ -64,17 +76,19 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
             }
         }
 
-        // Goes through groups.  If checked, create the group, temporarily storing the smalltalk ID
-        // for the group.  Then get list of contact ids in the group.  If any match contact_ids, check
-        // smalltalk_contact_ids for their ID.  If the number is not 0, create a relationship.
-        for (int j = 0; j < group_adapter.names.length; j++) {
-            if (group_adapter.itemChecked[j] == true) {
-                String smalltalk_group_id = db_utils.getOrCreate(this.getActivity(), "groups", group_adapter.names[j]);
-                String[] contact_names = import_utils.getContactNamesGivenGroup(this.getActivity(), group_adapter.itemID[j]);
-                for (int k = 0; k < contact_names.length; k++) {
-                    if (Arrays.asList(smalltalk_contact_names).contains(contact_names[k])) {
-                        int index = Arrays.asList(smalltalk_contact_names).indexOf(contact_names[k]);
-                        db_utils.createContactGroupRelationship(this.getActivity(), smalltalk_contact_ids[index], smalltalk_group_id);
+        if (!(group_adapter == null)) {
+            // Goes through groups.  If checked, create the group, temporarily storing the smalltalk ID
+            // for the group.  Then get list of contact ids in the group.  If any match contact_ids, check
+            // smalltalk_contact_ids for their ID.  If the number is not 0, create a relationship.
+            for (int j = 0; j < group_adapter.names.length; j++) {
+                if (group_adapter.itemChecked[j] == true) {
+                    String smalltalk_group_id = db_utils.getOrCreate(this.getActivity(), "groups", group_adapter.names[j]);
+                    String[] contact_names = import_utils.getContactNamesGivenGroup(this.getActivity(), group_adapter.itemID[j]);
+                    for (int k = 0; k < contact_names.length; k++) {
+                        if (Arrays.asList(smalltalk_contact_names).contains(contact_names[k])) {
+                            int index = Arrays.asList(smalltalk_contact_names).indexOf(contact_names[k]);
+                            db_utils.createContactGroupRelationship(this.getActivity(), smalltalk_contact_ids[index], smalltalk_group_id);
+                        }
                     }
                 }
             }

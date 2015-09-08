@@ -40,7 +40,7 @@ public class ListActivityFragment extends Fragment {
         Cursor cursor = db_utils.getListCursorGivenType(getActivity(), list_type, show_archived);
 
         // Views!
-        View rootView = inflater.inflate(R.layout.fragment_list_activity, container, false);
+        View rootView = inflater.inflate(R.layout.list_activity_layout, container, false);
 
         if (list_type.equals("topics")) {
             final Button show_archived_button = (Button) rootView.findViewById(R.id.listview_show_archived);

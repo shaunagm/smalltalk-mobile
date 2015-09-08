@@ -1,0 +1,28 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.smalltalk.ImportContactsFragment"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp">
+
+    <TextView
+        android:text="@string/import_contacts_intro"
+        android:id="@+id/import_contacts_explanation"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" />
+
+    <CheckBox
+        android:labelFor="@string/import_contacts_group_option_label"
+        android:id="@+id/contact_options_group_option_checkbox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:checked="true" />
+
+    <ListView
+        android:id="@+id/contact_options_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

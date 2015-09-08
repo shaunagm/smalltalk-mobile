@@ -5,62 +5,58 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/new_item_form_title"
+        android:id="@+id/edit_form_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/edit_item_form_title"
-        android:textSize="10pt">
-    </TextView>
+        android:textSize="10pt" />
 
     <Button
-        android:id="@+id/new_item_save_button"
+        android:id="@+id/edit_save_button"
         android:layout_height="wrap_content"
         android:text="@string/new_item_save_button"
-        android:onClick="update_item"
-        android:layout_width="match_parent">
-    </Button>
+        android:onClick="add_item"
+        android:layout_width="match_parent" />
 
     <TextView
         android:text="None"
-        android:id="@+id/detail_item_id_secret"
+        android:id="@+id/edit_item_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"/>
 
-    <TextView
-        android:text="None"
-        android:id="@+id/detail_item_type_secret"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/edit_item_type"
         android:layout_height="wrap_content"
-        android:visibility="invisible"/>
+        android:prompt="@string/new_item_type_prompt"
+        android:layout_width="match_parent"
+        android:entries="@array/new_item_type"
+        android:spinnerMode="dropdown" />
 
     <EditText
-        android:id="@+id/new_item_form_name"
+        android:id="@+id/edit_item_name"
         android:layout_height="wrap_content"
         android:hint="@string/new_item_form_name_hint"
         android:inputType="textPersonName"
         android:layout_width="fill_parent"
-        android:maxLength="100">
-    </EditText>
+        android:maxLength="100" />
 
     <EditText
-        android:id="@+id/new_item_form_uri"
+        android:id="@+id/edit_item_uri"
         android:layout_height="wrap_content"
         android:hint="@string/new_item_form_name_hint"
         android:inputType="textUri"
         android:layout_width="fill_parent"
-        android:maxLength="100">
-    </EditText>
+        android:maxLength="100" />
 
     <EditText
-        android:id="@+id/new_item_form_details"
+        android:id="@+id/edit_item_details"
         android:layout_height="wrap_content"
         android:hint="@string/new_item_form_details_hint"
         android:inputType="textMultiLine"
         android:lines="5"
         android:layout_width="fill_parent"
-        android:gravity="bottom">
-    </EditText>
+        android:gravity="bottom" />
 
     <ExpandableListView
         android:id="@+id/expandable_list_view"
@@ -68,6 +64,7 @@
         android:layout_width="match_parent"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:divider="#A4C739"
-        android:dividerHeight="0.5dp" />
+        android:dividerHeight="0.5dp"
+        android:visibility="invisible" />
 
 </LinearLayout>

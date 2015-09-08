@@ -114,6 +114,8 @@ public class SmalltalkObject {
         return this.URI;
     }
 
+    public String getID() { return this.id; }
+
     public Integer getStarStatus() {
         return this.star;
     }

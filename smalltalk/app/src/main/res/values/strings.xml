@@ -8,17 +8,16 @@
     <string name="drawer_close">A wild drawer closes.</string>
     <string name="title_activity_contact">ContactActivity</string>
 
-
     <string name="edit_item_button">Edit</string>
     <string name="edit_item_form_title">Edit Item</string>
 
-    <string name="dont_show_message">Don\'t show this dialog again.</string>
-    <string name="dialog_proceed">Go ahead.</string>
-    <string name="dialog_exceptions">Select exceptions.</string>
-
+    <!-- Import Contacts strings -->
+    <string name="import_contacts_intro">You can import contacts and groups from your phone by
+        viewing lists and selecting which to import. You may want to filter the contacts you are
+        choosing from. To do so, select one of the options below, or choose "all".</string>
+    <string name="import_contacts_group_option_label">Add groups as well as contacts</string>
     <string name="import_contacts_explanation">Select contacts and groups to import, and press "save"
         when you\'re ready.</string>
-
 
     <!-- New item form inputs -->
     <string name="new_item_form_title">Add An Item</string>

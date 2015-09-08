@@ -5,12 +5,25 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 
 /**
  * Created by shauna on 9/7/15.
  */
 public class db_utils {
+
+    public static long createObject(Context context, String type, String name, String details, String uri) {
+        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
+        SQLiteDatabase writeDB = mdbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("details", details);
+        if (type.equals("topic")) {
+            values.put("URI", uri);
+        }
+        return writeDB.insert(type.toLowerCase() + "s", null, values);
+    }
 
     public static void createContactGroupRelationship(Context context, String contact_id, String group_id){
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);

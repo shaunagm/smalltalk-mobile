@@ -8,11 +8,46 @@ import android.provider.ContactsContract;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by shauna on 9/7/15.
  */
 public class import_utils {
+
+    static String phoneSelection = ContactsContract.Contacts.HAS_PHONE_NUMBER + "=1";
+    static String starSelection = ContactsContract.Contacts.STARRED + "=1";
+    static String fiveSelection = ContactsContract.Contacts.TIMES_CONTACTED + ">4";
+
+    // Gets cursor for Contacts
+    public static Cursor getAndroidContacts(Context context, String type) {
+        Uri URI = ContactsContract.Contacts.CONTENT_URI;
+        String[] projection = {ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME};
+        String selection = "";
+        switch(type){
+            case "phone":
+                selection = phoneSelection;
+                break;
+            case "star":
+                selection = starSelection;
+                break;
+            case "year":
+                Long timestamp = System.currentTimeMillis(); // Current date in milliseconds
+                timestamp = timestamp - (365 * 24 * 60 * 60 * 1000);
+                selection = ContactsContract.Contacts.LAST_TIME_CONTACTED + ">" + timestamp;
+                break;
+            case "five":
+                selection = fiveSelection;
+                break;
+        }
+        return context.getContentResolver().query(URI, projection, selection, null,  ContactsContract.Contacts.DISPLAY_NAME + " ASC");
+      }
+
+    public static String getAndroidContactsCount(Context context, String type) {
+        Cursor cursor = getAndroidContacts(context, type);
+        return String.valueOf(cursor.getCount());
+    }
 
     // Get contacts from phone
     public static Cursor getPhoneContacts(Context context) {

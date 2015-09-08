@@ -96,15 +96,14 @@ public class BaseActivity extends AppCompatActivity {
                 list_type = "groups";
                 break;
             case 3:
-                AddDataFragment add_data = new AddDataFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, add_data)
-                        .commit();
+                Intent intent = new Intent(this.getApplicationContext(), EditActivity.class)
+                        .putExtra("list_type", list_type);
+                this.startActivity(intent);
                 mDrawerList.setItemChecked(position, true);
                 mDrawerLayout.closeDrawer(mDrawerList);
                 return;
             case 4:
-                ImportContactsFragment import_contacts = new ImportContactsFragment();
+                ImportContactsIntroFragment import_contacts = new ImportContactsIntroFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, import_contacts)
                         .commit();
@@ -192,54 +191,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public void toggle_archive(View view) {
         toggle(view, "archive");
-    }
-
-    public void add_new_item(View view) {
-
-        mdbHelper = SmalltalkDBHelper.getInstance(this);
-
-        final Spinner typeSpinner = (Spinner) findViewById(R.id.new_item_type_spinner);
-        String item_type = typeSpinner.getSelectedItem().toString();
-
-        final EditText nameField = (EditText) findViewById(R.id.new_item_form_name);
-        String item_name = nameField.getText().toString();
-
-        final EditText detailsField = (EditText) findViewById(R.id.new_item_form_details);
-        String item_details = detailsField.getText().toString();
-
-        SQLiteDatabase db = mdbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        long newID = 0;
-
-        switch (item_type) {
-            case "Contact":
-                values.put(SmalltalkContract.ContactEntry.COLUMN_CONTACT_NAME, item_name);
-                values.put(SmalltalkContract.ContactEntry.COLUMN_CONTACT_DETAILS, item_details);
-                newID = db.insert(SmalltalkContract.ContactEntry.TABLE_NAME, null, values);
-                db.close();
-                break;
-            case "Group":
-                values.put(SmalltalkContract.GroupEntry.COLUMN_GROUP_NAME, item_name);
-                values.put(SmalltalkContract.GroupEntry.COLUMN_GROUP_DETAILS, item_details);
-                newID = db.insert(SmalltalkContract.GroupEntry.TABLE_NAME, null, values);
-                db.close();
-                break;
-            case "Topic":
-                final EditText uriField= (EditText) findViewById(R.id.new_item_form_uri);
-                String item_uri = uriField.getText().toString();
-                values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_URI, item_uri);
-                values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_NAME, item_name);
-                values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_DETAILS, item_details);
-                newID = db.insert(SmalltalkContract.TopicEntry.TABLE_NAME, null, values);
-                db.close();
-                break;
-        }
-
-        Intent intent = new Intent(this, DetailActivity.class)
-                .putExtra("item_id", Long.toString(newID))
-                .putExtra("item_type", item_type.toLowerCase());
-        startActivity(intent);
-
     }
 
     public void import_contacts(View view) {

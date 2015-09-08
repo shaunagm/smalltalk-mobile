@@ -1,7 +1,14 @@
 package com.example.android.smalltalk;
 
+import android.content.Intent;
 import android.os.Bundle;
-import com.example.android.smalltalk.SmalltalkUtilities.fixture_utils;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends BaseActivity {
 
