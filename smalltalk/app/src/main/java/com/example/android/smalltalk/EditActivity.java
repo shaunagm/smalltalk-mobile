@@ -42,10 +42,7 @@ public class EditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_layout);
-        super.onCreateDrawer();
-        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.content_frame);
-        viewGroup.addView(View.inflate(this, R.layout.edit_data_form, null));
+        setContentView(R.layout.edit_data_form);
 
         // (Note: may be able to differently construct Smalltalk Object, allowing
         // for expanderlistview in import/add.)

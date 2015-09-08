@@ -24,7 +24,6 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootView = inflater.inflate(R.layout.import_contacts_layout, container, false);
 
         Bundle bundle = this.getArguments();

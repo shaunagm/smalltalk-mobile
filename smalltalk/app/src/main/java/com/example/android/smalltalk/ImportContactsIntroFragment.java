@@ -68,7 +68,7 @@ public class ImportContactsIntroFragment extends android.support.v4.app.Fragment
                 ImportContactsFragment import_contacts = new ImportContactsFragment();
                 import_contacts.setArguments(bundle);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, import_contacts)
+                        .replace(R.id.main_layout_content, import_contacts)
                         .commit();
             }
         });

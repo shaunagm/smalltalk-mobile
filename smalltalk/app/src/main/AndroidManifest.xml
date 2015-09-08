@@ -33,13 +33,19 @@
             android:label="SmallTalk" >
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ListActivity"
             android:label="@string/title_activity_list" >
+        </activity>
+        <activity
+            android:name=".ImportContactsActivity"
+            android:label="@string/title_activity_import_contacts" >
         </activity>
     </application>
 

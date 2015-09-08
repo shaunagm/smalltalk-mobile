@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:id="@+id/action_new"
+        android:title="Add New"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/import_contacts"
+        android:title="Import Contacts"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/list_contacts"
+        android:title="Show all contacts"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/list_groups"
+        android:title="Show all groups"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/list_topics"
+        android:title="Show all topics"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="ifRoom" />
+
+</menu>

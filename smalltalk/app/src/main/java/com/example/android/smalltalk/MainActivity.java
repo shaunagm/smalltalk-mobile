@@ -16,8 +16,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_layout);
-        super.onCreateDrawer();
+        setContentView(R.layout.main_layout);
 
 //        fixture_utils.exportDB(this);
 //        this.deleteDatabase("smalltalk.db");
@@ -25,7 +24,7 @@ public class MainActivity extends BaseActivity {
 
         // If no previous state, start with Topic View
         if (savedInstanceState == null) {
-            super.selectItem(0);
+            // Select Topic View via action bar?
         }
 
     }

@@ -12,11 +12,11 @@
     <string name="edit_item_form_title">Edit Item</string>
 
     <!-- Import Contacts strings -->
-    <string name="import_contacts_intro">You can import contacts and groups from your phone by
+    <string name="import_contacts_intro_explanation">You can import contacts and groups from your phone by
         viewing lists and selecting which to import. You may want to filter the contacts you are
         choosing from. To do so, select one of the options below, or choose "all".</string>
     <string name="import_contacts_group_option_label">Add groups as well as contacts</string>
-    <string name="import_contacts_explanation">Select contacts and groups to import, and press "save"
+    <string name="import_contacts_selection_explanation">Select contacts and groups to import, and press "save"
         when you\'re ready.</string>
 
     <!-- New item form inputs -->
@@ -36,5 +36,6 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_import_contacts">ImportContactsActivity</string>
 
 </resources>
