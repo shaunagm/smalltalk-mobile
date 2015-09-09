@@ -1,7 +1,11 @@
 package com.example.android.smalltalk;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +16,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +33,8 @@ import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
 
+import java.util.List;
+
 public class BaseActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
@@ -40,11 +47,18 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_actionbar, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        ComponentName cn = new ComponentName(this, SearchActivity.class);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(cn));
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_new:
@@ -73,6 +87,7 @@ public class BaseActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     public SmalltalkObject getObjectFromView(View view) {

@@ -66,4 +66,12 @@ public class db_utils {
         return readDb.rawQuery(queryString, new String[]{});
     }
 
+    public static Cursor searchQuery(Context context, String search_type, String query) {
+        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
+        SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
+        String queryString = "SELECT * FROM " + search_type + " WHERE " + search_type + ".'name' LIKE " +
+                "'%" + query + "%' OR " + search_type + ".'details' LIKE '%" + query + "%' COLLATE utf8_general_ci;";
+        return readDb.rawQuery(queryString, new String[]{});
+    }
+
 }
