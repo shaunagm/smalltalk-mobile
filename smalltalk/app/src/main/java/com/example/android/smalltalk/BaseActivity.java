@@ -1,39 +1,22 @@
 package com.example.android.smalltalk;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.SearchManager;
-import android.app.SearchableInfo;
 import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.android.smalltalk.data.SmalltalkContract;
-import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
-
-import java.util.List;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -48,12 +31,13 @@ public class BaseActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_actionbar, menu);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         ComponentName cn = new ComponentName(this, SearchActivity.class);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(cn));
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -85,51 +69,15 @@ public class BaseActivity extends AppCompatActivity {
                 this.startActivity(import_intent);
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
-    public SmalltalkObject getObjectFromView(View view) {
-        TextView item_id_view = (TextView) findViewById(R.id.detail_item_id_secret);
-        String item_id = item_id_view.getText().toString();
-
-        TextView item_type_view = (TextView) findViewById(R.id.detail_item_type);
-        String item_type = item_type_view.getText().toString();
-
-        return new SmalltalkObject(this, item_id, item_type);
-    }
-
-    public void toggle(View view, String type) {
-
-        SmalltalkObject current_object = getObjectFromView(view);
-        int status = current_object.toggleStatus(type);
-        switch (type) {
-            case "star":
-                ImageButton sButton = (ImageButton) view.findViewById(R.id.star_button);
-                if (status == 1) {
-                    sButton.setImageResource(R.drawable.star_on);
-                } else {
-                    sButton.setImageResource(R.drawable.star_off);
-                }
-                break;
-            case "archive":
-                ImageButton aButton = (ImageButton) view.findViewById(R.id.archive_button);
-                if (status == 1) {
-                    aButton.setImageResource(R.drawable.archive_on);
-                } else {
-                    aButton.setImageResource(R.drawable.archive_off);
-                }
                 break;
         }
+        return false; // If an item selection is not handled by the main options, passes it on to fragment
+
     }
 
-    public void toggle_star(View view) {
-        toggle(view, "star");
-    }
-
-    public void toggle_archive(View view) {
-        toggle(view, "archive");
+    public static int getContentViewCompat() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ?
+                android.R.id.content : R.id.action_bar_activity_content;
     }
 
 }

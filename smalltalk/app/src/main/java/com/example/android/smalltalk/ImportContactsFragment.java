@@ -2,6 +2,8 @@ package com.example.android.smalltalk;
 
 import java.util.Arrays;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 
 import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
 import com.example.android.smalltalk.SmalltalkUtilities.import_utils;
+import com.example.android.smalltalk.data.ContactOptionsAdapter;
 import com.example.android.smalltalk.data.ImportContactCursorAdapter;
 
 
@@ -24,11 +27,22 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.import_contacts_layout, container, false);
+        Intent intent = getActivity().getIntent();
 
-        Bundle bundle = this.getArguments();
-        String type = bundle.getString("type", "all");
-        Boolean include_groups = bundle.getBoolean("groups");
+        // If no intent, do intro
+        if (!(intent.hasExtra("type"))) {
+            View rootView = inflater.inflate(R.layout.import_contacts_intro, container, false);
+            Context context = container.getContext();
+            ListView listView = (ListView) rootView.findViewById(R.id.contact_options_list);
+            ContactOptionsAdapter optionsAdapter = new ContactOptionsAdapter(this.getActivity());
+            listView.setAdapter(optionsAdapter);
+            return rootView;
+        }
+
+        String type = intent.getStringExtra("type");
+        Boolean include_groups = intent.getBooleanExtra("groups", false);
+
+        View rootView = inflater.inflate(R.layout.import_contacts_layout, container, false);
 
         Cursor cursor = import_utils.getAndroidContacts(this.getActivity(), type);
         final ImportContactCursorAdapter contact_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "contact");
@@ -57,6 +71,7 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
         });
 
         return rootView;
+
     }
 
     public void save_imports(ImportContactCursorAdapter contact_adapter, ImportContactCursorAdapter group_adapter) {

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!-- These items show in the toolbar itself. -->
+
+    <item android:id="@+id/edit_action"
+        android:title="Edit"
+        android:icon="@drawable/ic_create_black_48dp"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/archive_action"
+        android:title="Archive"
+        android:icon="@drawable/ic_create_black_48dp"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/star_action"
+        android:title="Star"
+        android:icon="@drawable/ic_create_black_48dp"
+        app:showAsAction="always" />
+
+    <!-- These items will always show only in the overflow menu. -->
+
+
+    <item android:id="@+id/action_new"
+        android:title="Add New"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/import_contacts"
+        android:title="Import Contacts"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/list_contacts"
+        android:title="Show all contacts"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/list_groups"
+        android:title="Show all groups"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/list_topics"
+        android:title="Show all topics"
+        android:icon="@drawable/small_archive_off"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/search"
+        android:title="Search"
+        android:icon="@drawable/ic_menu_search"
+        app:showAsAction="collapseActionView|never"
+        app:actionViewClass="android.widget.SearchView" />
+
+
+
+</menu>

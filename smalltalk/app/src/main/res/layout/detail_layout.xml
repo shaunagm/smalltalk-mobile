@@ -1,90 +1,32 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.smalltalk.DetailActivityFragment"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/detail_fragment_container"
-    android:paddingLeft="16dp">
+    style="@style/SmallTalkTheme.BaseLayout.CustomActionBarLayout">
 
     <TextView
-        android:text="None"
+        android:id="@+id/detail_item_name"
+        style="@style/SmallTalkTheme.PageHeading" />
+
+    <TextView
+        android:id="@+id/detail_item_details"
+        style="@style/SmallTalkTheme.TextView" />
+
+    <TextView
+        android:id="@+id/detail_item_uri"
+        style="@style/SmallTalkTheme.TextView"
+        android:visibility="gone"/>
+
+    <ExpandableListView
+        android:id="@+id/relationship_list"
+        style="@style/SmallTalkTheme.RelationshipListView" />
+
+    <TextView
         android:id="@+id/detail_item_id_secret"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/SmallTalkTheme.TextView"
         android:visibility="invisible"/>
 
     <TextView
-        android:text="AHHHA"
-        android:id="@+id/detail_item_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <ImageButton
-        android:id="@+id/star_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/star_off"
-        android:onClick="toggle_star"
-        android:visibility="gone"/>
-
-    <ImageButton
-        android:id="@+id/archive_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/archive_off"
-        android:onClick="toggle_archive"
-        android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/edit_item_button"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_item_button"
-        android:onClick="edit_item"
-        android:layout_width="match_parent">
-    </Button>
-
-    <Button
-        android:id="@+id/show_archived_relationships"
-        android:layout_height="wrap_content"
-        android:text="Show archived relationships"
-        android:layout_width="match_parent">
-    </Button>
-
-    <Button
-        android:id="@+id/show_through_relationships"
-        android:layout_height="wrap_content"
-        android:text="Include topics through groups"
-        android:layout_width="match_parent"
-        android:visibility="gone">
-    </Button>
-
-    <TextView
-        android:text="BOOOO"
-        android:id="@+id/detail_item_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:text="BOOOO"
-        android:id="@+id/detail_item_uri"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
-
-    <TextView
-        android:text="BOOOO"
-        android:id="@+id/detail_item_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <ExpandableListView
-        android:id="@+id/expandable_list_view"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-        android:divider="#A4C739"
-        android:dividerHeight="0.5dp" />
+        android:id="@+id/detail_item_type_secret"
+        style="@style/SmallTalkTheme.TextView"
+        android:visibility="invisible"/>
 
 </LinearLayout>

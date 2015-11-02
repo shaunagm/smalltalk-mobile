@@ -1,37 +1,22 @@
 package com.example.android.smalltalk;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
-import com.example.android.smalltalk.data.ExpandableCheckboxAdapter;
-import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class EditActivity extends BaseActivity {
@@ -43,9 +28,6 @@ public class EditActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data_form);
-
-        // (Note: may be able to differently construct Smalltalk Object, allowing
-        // for expanderlistview in import/add.)
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -71,11 +53,10 @@ public class EditActivity extends BaseActivity {
 
     public void populate_share_view(String name, String details, URL url) {
 
-        // ID is already invisible, and unnecessary here
-
-        Spinner secret_type_view = (Spinner) findViewById(R.id.edit_item_type);
-        secret_type_view.setSelection(2); // shared items are always topics
-        secret_type_view.setVisibility(View.INVISIBLE);
+        // shared items are always topics
+        RadioButton item_type = (RadioButton) findViewById(R.id.edit_item_type_topic);
+        item_type.setChecked(true);
+        item_type.setVisibility(View.GONE);
 
         EditText nameField = (EditText) findViewById(R.id.edit_item_name);
         nameField.setText(name);
@@ -88,8 +69,6 @@ public class EditActivity extends BaseActivity {
         EditText detailsField = (EditText) findViewById(R.id.edit_item_details);
         detailsField.setText(details);
 
-        // ExpanderListView is already invisible, and unnecessary here
-
     }
 
     // Go through and adapt to edit_data_form and the default of
@@ -98,10 +77,16 @@ public class EditActivity extends BaseActivity {
         TextView secret_id_view = (TextView) findViewById(R.id.edit_item_id);
         secret_id_view.setText(current_object.getID());
 
-        List<String> options = Arrays.asList("contact", "group", "topic");
-        Spinner secret_type_view = (Spinner) findViewById(R.id.edit_item_type);
-        secret_type_view.setSelection(options.indexOf(current_object.getType()));
-        secret_type_view.setVisibility(View.INVISIBLE);
+        RadioButton item_type;
+        if (current_object.getType().equals("contact")) {
+            item_type = (RadioButton) findViewById(R.id.edit_item_type_contact);
+        } else if (current_object.getType().equals("group")) {
+            item_type = (RadioButton) findViewById(R.id.edit_item_type_group);
+        } else {
+            item_type = (RadioButton) findViewById(R.id.edit_item_type_topic);
+        }
+        item_type.setChecked(true);
+        item_type.setVisibility(View.GONE);
 
         EditText nameField = (EditText) findViewById(R.id.edit_item_name);
         nameField.setText(current_object.getName());
@@ -115,11 +100,6 @@ public class EditActivity extends BaseActivity {
 
         EditText detailsField = (EditText) findViewById(R.id.edit_item_details);
         detailsField.setText(current_object.getDetails());
-
-        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view);
-        expandableListView.setVisibility(View.VISIBLE);
-        ExpandableCheckboxAdapter eCA = new ExpandableCheckboxAdapter(this, current_object, true, 0, 0);
-        expandableListView.setAdapter(eCA);
 
         Button edit_button = (Button) findViewById(R.id.edit_save_button);
         edit_button.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +123,9 @@ public class EditActivity extends BaseActivity {
         final EditText uriField = (EditText) findViewById(R.id.edit_item_uri);
         String item_uri = uriField.getText().toString();
 
-        final Spinner typeSpinner = (Spinner) findViewById(R.id.edit_item_type);
-        String item_type = typeSpinner.getSelectedItem().toString().toLowerCase();
+        RadioGroup item_type_options = (RadioGroup) view.findViewById(R.id.edit_item_type);
+        RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
+        String item_type = (String) selected_item_view.getText();
 
         long id = db_utils.createObject(this, item_type, item_name, item_details, item_uri);
 
@@ -162,8 +143,9 @@ public class EditActivity extends BaseActivity {
         final EditText detailsField = (EditText) findViewById(R.id.edit_item_details);
         String item_details = detailsField.getText().toString();
 
-        final Spinner typeSpinner = (Spinner) findViewById(R.id.edit_item_type);
-        String item_type = typeSpinner.getSelectedItem().toString().toLowerCase();
+        RadioGroup item_type_options = (RadioGroup) view.findViewById(R.id.edit_item_type);
+        RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
+        String item_type = (String) selected_item_view.getText();
 
         final TextView idField = (TextView) findViewById(R.id.edit_item_id);
         String item_id = idField.getText().toString();

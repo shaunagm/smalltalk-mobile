@@ -42,11 +42,11 @@ public class ListActivityFragment extends Fragment {
         // Views!
         View rootView = inflater.inflate(R.layout.list_activity_layout, container, false);
 
+        // Show archived button
+        Button show_archived_button = (Button) rootView.findViewById(R.id.listview_show_archived);
         if (list_type.equals("topics")) {
-            final Button show_archived_button = (Button) rootView.findViewById(R.id.listview_show_archived);
-            show_archived_button.setVisibility(View.VISIBLE);
             if (show_archived == 1) {
-                show_archived_button.setText("Hide archived topics.");
+                show_archived_button.setText("Hide archived topics");
             }
             show_archived_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -57,6 +57,8 @@ public class ListActivityFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+        } else {
+            show_archived_button.setVisibility(View.GONE);
         }
 
         ListView object_list = (ListView) rootView.findViewById(R.id.listview_objects);

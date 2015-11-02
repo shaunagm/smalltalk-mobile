@@ -13,7 +13,7 @@
     <item android:id="@+id/action_new"
         android:title="Add New"
         android:icon="@drawable/small_archive_off"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item android:id="@+id/import_contacts"
         android:title="Import Contacts"
@@ -34,5 +34,25 @@
         android:title="Show all topics"
         android:icon="@drawable/small_archive_off"
         app:showAsAction="ifRoom" />
+
+    <!-- These are the main actions for the Detail ActionBar, but are hidden by default -->
+    <item android:id="@+id/edit_action"
+        android:title="edit"
+        android:icon="@drawable/ic_create_black_48dp"
+        app:showAsAction="always"
+        android:visible="false"/>
+
+    <item android:id="@+id/archive_action"
+        android:title="archive"
+        android:icon="@drawable/ic_archive_black_48dp"
+        app:showAsAction="always"
+        android:visible="false"/>
+
+    <item android:id="@+id/star_action"
+        android:title="star"
+        android:icon="@drawable/ic_star_border_black_48dp"
+        app:showAsAction="always"
+        android:visible="false"/>
+
 
 </menu>

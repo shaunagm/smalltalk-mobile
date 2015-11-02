@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SmallTalkTheme.RelationshipItem">
+
+    <TextView
+        android:id="@+id/expandable_list_item_name"
+        style="@style/SmallTalkTheme.ListItemCondensedHeading" />
+
+    <TextView
+        android:id="@+id/expandable_list_item_details"
+        style="@style/SmallTalkTheme.TextView"
+        android:layout_toRightOf="@+id/expandable_list_item_name"
+        android:paddingLeft="@dimen/default_object_margin"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/expandable_list_item_edit_secret_id"
+        style="@style/SmallTalkTheme.TextView"
+        android:visibility="gone"/>
+
+</RelativeLayout>
+

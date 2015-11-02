@@ -11,7 +11,6 @@ import com.example.android.smalltalk.DetailActivity;
  */
 public class misc_utils {
 
-
     public static void goToDetailView(Context context, Cursor row_cursor, String item_type) {
         int item_id = row_cursor.getInt(row_cursor.getColumnIndexOrThrow("_id"));
         Intent intent = new Intent(context, DetailActivity.class)

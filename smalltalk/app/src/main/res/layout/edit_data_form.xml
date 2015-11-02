@@ -1,70 +1,69 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" style="@style/SmallTalkTheme.BaseLayout">
 
-    <TextView
-        android:id="@+id/edit_form_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_item_form_title"
-        android:textSize="10pt" />
-
-    <Button
-        android:id="@+id/edit_save_button"
-        android:layout_height="wrap_content"
-        android:text="@string/new_item_save_button"
-        android:onClick="add_item"
-        android:layout_width="match_parent" />
-
-    <TextView
-        android:text="None"
-        android:id="@+id/edit_item_id"
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"/>
-
-    <Spinner
-        android:id="@+id/edit_item_type"
-        android:layout_height="wrap_content"
-        android:prompt="@string/new_item_type_prompt"
-        android:layout_width="match_parent"
-        android:entries="@array/new_item_type"
-        android:spinnerMode="dropdown" />
+        android:orientation="horizontal"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/default_object_margin"
+        android:id="@+id/edit_item_type">
+        <RadioButton
+            android:id="@+id/edit_item_type_contact"
+            style="@style/SmallTalkTheme.RadioButton"
+            android:text="contact"/>
+        <RadioButton
+            android:id="@+id/edit_item_type_group"
+            style="@style/SmallTalkTheme.RadioButton"
+            android:text="group"/>
+        <RadioButton
+            android:id="@+id/edit_item_type_topic"
+            style="@style/SmallTalkTheme.RadioButton"
+            android:text="topic"/>
+    </RadioGroup>
 
     <EditText
         android:id="@+id/edit_item_name"
-        android:layout_height="wrap_content"
-        android:hint="@string/new_item_form_name_hint"
+        style="@style/SmallTalkTheme.EditText"
+        android:hint="Name"
         android:inputType="textPersonName"
-        android:layout_width="fill_parent"
-        android:maxLength="100" />
+        android:maxLength="100"
+        android:layout_marginTop="@dimen/default_object_margin"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edit_item_type"/>
 
     <EditText
         android:id="@+id/edit_item_uri"
-        android:layout_height="wrap_content"
-        android:hint="@string/new_item_form_name_hint"
+        style="@style/SmallTalkTheme.EditText"
+        android:hint="Url"
         android:inputType="textUri"
-        android:layout_width="fill_parent"
-        android:maxLength="100" />
+        android:maxLength="100"
+        android:layout_below="@+id/edit_item_name"/>
 
     <EditText
         android:id="@+id/edit_item_details"
-        android:layout_height="wrap_content"
-        android:hint="@string/new_item_form_details_hint"
+        style="@style/SmallTalkTheme.EditText"
+        android:hint="Description"
         android:inputType="textMultiLine"
-        android:lines="5"
-        android:layout_width="fill_parent"
-        android:gravity="bottom" />
+        android:lines="8"
+        android:gravity="bottom"
+        android:layout_below="@+id/edit_item_uri"/>
 
-    <ExpandableListView
-        android:id="@+id/expandable_list_view"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-        android:divider="#A4C739"
-        android:dividerHeight="0.5dp"
-        android:visibility="invisible" />
+    <Button
+        android:id="@+id/edit_save_button"
+        style="@style/SmallTalkTheme.Button"
+        android:text="@string/new_item_save_button"
+        android:onClick="add_item"
+        android:layout_below="@+id/edit_item_details"
+        android:layout_marginTop="@dimen/default_object_margin" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/edit_item_id"
+        style="@style/SmallTalkTheme.EditText"
+        android:visibility="invisible"/>
+
+</RelativeLayout>
+
+
+
+
+

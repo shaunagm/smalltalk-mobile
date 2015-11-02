@@ -56,7 +56,7 @@ public class fixture_utils {
 
     static String[] mTopicDetails = {
             "We\'ve all been there",
-            "What are they"
+            "I am a very long detail segment.  I am a very long detail segment.  I am a very long detail segment."
     };
 
     static Integer[] mCGJContacts = { 1, 2, 3, 1, 4 };

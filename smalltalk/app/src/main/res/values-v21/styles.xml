@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="SmallTalkTheme" parent="SmallTalkTheme.Base">
+        <!--  Add material-theme customizations that only work for v21 and higher.. -->
+    </style>
+
+</resources>

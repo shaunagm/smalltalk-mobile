@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/import_contact_option_label"
+        style="@style/SmallTalkTheme.TextView"
+        android:layout_marginTop="@dimen/default_object_margin"
+        android:layout_marginBottom="@dimen/default_object_margin"
+        android:clickable="false" />
+
+    <TextView
+        android:id="@+id/import_contact_invisible_shortname"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:visibility="gone"/>
+
+</LinearLayout>

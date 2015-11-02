@@ -1,8 +1,200 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="SmallTalkTheme" parent="SmallTalkTheme.Base"/>
+    <style name="SmallTalkTheme.Base" parent="Theme.AppCompat.Light">->
     </style>
+
+    <!-- ********** -->
+    <!-- Base Style -->
+    <!-- ********** -->
+
+    <style name="SmallTalkTheme.BaseStyle">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
+
+    <!-- ******************* -->
+    <!-- Text Styles & Views -->
+    <!-- ******************* -->
+
+    <style name="SmallTalkTheme.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="SmallTalkTheme.FullWidthTextView" parent="SmallTalkTheme.TextView">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!-- Base Heading Style -->
+    <style name="SmallTalkTheme.BaseHeading">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+    </style>
+
+    <!-- Page Heading Style -->
+    <style name="SmallTalkTheme.PageHeading" parent="SmallTalkTheme.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/default_object_margin</item>
+    </style>
+
+    <!-- Edit Text View -->
+    <style name="SmallTalkTheme.EditText" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="SmallTalkTheme.SmallTextView" parent="SmallTalkTheme.FullWidthTextView">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+    </style>
+
+
+
+    <!-- *********************** -->
+    <!-- Styles for Reused Items -->
+    <!-- *********************** -->
+
+    <!-- ~~~~~ SINGLE VIEWS ~~~~ -->
+
+    <!-- Base Button Style -->
+    <style name="SmallTalkTheme.Button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">?android:attr/colorPrimaryDark</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium.Inverse</item>
+        <item name="android:padding">@dimen/default_object_margin</item>
+    </style>
+
+    <!-- Image-Button Style -->
+    <style name="SmallTalkTheme.ImageButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Relationship Image-Button Style -->
+    <style name="SmallTalkTheme.RelationshipImageButton" parent="SmallTalkTheme.ImageButton">
+        <item name="android:layout_width">@dimen/relationship_image_dimen</item>
+        <item name="android:layout_height">@dimen/relationship_image_dimen</item>
+        <item name="android:layout_marginLeft">5dp</item>
+    </style>
+
+    <!-- Radio Buttons -->
+    <style name="SmallTalkTheme.RadioButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:layout_marginRight">@dimen/default_object_margin</item>
+    </style>
+
+    <!-- Spinner -->
+    <style name="SmallTalkTheme.Spinner">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <!-- Match to button appearance -->
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">88dip</item>
+        <item name="android:background">?android:attr/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/abc_text_size_medium_material</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium.Inverse</item>
+    </style>
+
+
+    <!-- ~~~~~ VIEWGROUPS ~~~~ -->
+
+    <!-- Regular List Styles -->
+    <style name="SmallTalkTheme.DefaultListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">@dimen/activity_horizontal_margin</item> <!-- Horizontal & vertical currently the same -->
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- Regular List Items -->
+    <style name="SmallTalkTheme.DefaultListItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+
+    <!-- *************************** -->
+    <!-- Styles for Specific Layouts -->
+    <!-- *************************** -->
+
+    <!-- Base layout style -->
+    <style name="SmallTalkTheme.BaseLayout" parent="SmallTalkTheme.BaseStyle">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- ActionBar style -->
+    <style name="SmallTalkTheme.BaseLayout.CustomActionBarLayout" parent="SmallTalkTheme.BaseLayout">
+        <item name="android:paddingTop">?android:attr/actionBarSize</item>
+    </style>
+
+    <!-- Relationship List Styles -->
+    <style name="SmallTalkTheme.RelationshipListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginTop">@dimen/default_object_margin</item>
+        <item name="android:childDivider">#00000000</item>
+    </style>
+
+    <style name="SmallTalkTheme.RelationshipListHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="SmallTalkTheme.Icon">
+        <item name="android:layout_height">@dimen/default_icon_dimen</item>
+        <item name="android:layout_width">@dimen/default_icon_dimen</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="SmallTalkTheme.ListHeading" parent="SmallTalkTheme.BaseHeading">
+        <item name="android:layout_marginLeft">@dimen/default_object_margin</item>
+        <item name="android:layout_height">@dimen/default_icon_dimen</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">@dimen/list_heading_height</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SmallTalkTheme.CheckBox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dip</item>
+        <item name="android:checked">false</item>
+        <item name="android:textSize">@dimen/default_text_height</item>
+    </style>
+
+    <style name="SmallTalkTheme.RelationshipItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">@dimen/list_indentation</item>
+        <item name="android:paddingRight">@dimen/list_indentation</item>
+    </style>
+
+    <style name="SmallTalkTheme.ListItemHeading" parent="SmallTalkTheme.BaseHeading">
+        <item name="android:textSize">@dimen/list_item_heading_height</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SmallTalkTheme.ListItemCondensedHeading" parent="SmallTalkTheme.ListItemHeading">
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+
+
 
 </resources>

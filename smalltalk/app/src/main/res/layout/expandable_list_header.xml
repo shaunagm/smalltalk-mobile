@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SmallTalkTheme.RelationshipListHeader">
+
+    <!-- Group or contacts icon-->
+
+    <ImageView
+        android:id="@+id/header_name_icon"
+        style="@style/SmallTalkTheme.Icon" />
+
+    <TextView
+        android:id="@+id/header_name"
+        style="@style/SmallTalkTheme.ListHeading"
+        android:layout_toRightOf="@+id/header_name_icon"
+        android:layout_alignTop="@+id/header_name_icon"/>
+
+    <CheckBox
+        android:id="@+id/show_archived_relationships"
+        android:text="archived topics"
+        style="@style/SmallTalkTheme.CheckBox"
+        android:layout_below="@+id/header_name_icon"
+        android:visibility="gone"/>
+
+    <CheckBox
+        android:id="@+id/show_through_relationships"
+        android:text="topics via tags"
+        style="@style/SmallTalkTheme.CheckBox"
+        android:layout_toRightOf="@+id/show_archived_relationships"
+        android:layout_alignBottom="@+id/show_archived_relationships"
+        android:visibility="gone"/>
+
+</RelativeLayout>

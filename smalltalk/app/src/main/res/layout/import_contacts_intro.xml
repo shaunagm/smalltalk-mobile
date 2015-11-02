@@ -1,29 +1,35 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.smalltalk.ImportContactsFragment"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="16dp"
+    style="@style/SmallTalkTheme.BaseLayout"
     android:id="@+id/import_contacts_intro_fragment" >
+
+    <TextView
+        android:text="Import contacts"
+        style="@style/SmallTalkTheme.BaseHeading"
+        android:layout_marginTop="@dimen/default_object_margin"
+        android:gravity="center"/>
 
     <TextView
         android:text="@string/import_contacts_intro_explanation"
         android:id="@+id/import_contacts_intro_explanation"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
+        android:layout_marginTop="@dimen/default_object_margin"
+        android:layout_marginBottom="@dimen/default_object_margin"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
 
     <CheckBox
-        android:labelFor="@string/import_contacts_group_option_label"
+        android:text="@string/import_contacts_group_option_label"
         android:id="@+id/contact_options_group_option_checkbox"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/SmallTalkTheme.FullWidthTextView"
+        android:layout_margin="0dp"
+        android:padding="0dp"
         android:checked="true" />
 
     <ListView
         android:id="@+id/contact_options_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:layout_marginTop="@dimen/default_object_margin" />
 
 </LinearLayout>

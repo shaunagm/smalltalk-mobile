@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SmallTalkTheme.RelationshipItem">
+
+    <!-- On the left is the topic name & details-->
+    <TextView
+        android:id="@+id/expandable_list_item_name"
+        style="@style/SmallTalkTheme.ListItemCondensedHeading" />
+    <TextView
+        android:id="@+id/expandable_list_item_details"
+        android:layout_height="wrap_content"
+        android:layout_width="@dimen/eighty_percent_of_screen"
+        android:layout_below="@+id/expandable_list_item_name" />
+
+    <!-- On the right are the buttons -->
+    <ImageButton
+        android:id="@+id/star_button"
+        android:src="@drawable/ic_star_border_black_48dp"
+        style="@style/SmallTalkTheme.RelationshipImageButton"
+        android:layout_toRightOf="@+id/expandable_list_item_details"/>
+
+    <ImageButton
+        android:id="@+id/archive_button"
+        style="@style/SmallTalkTheme.RelationshipImageButton"
+        android:src="@drawable/ic_archive_black_48dp"
+        android:layout_toRightOf="@+id/star_button"/>
+
+    <TextView
+        android:id="@+id/expandable_list_item_edit_secret_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+</RelativeLayout>

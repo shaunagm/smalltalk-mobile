@@ -31,16 +31,17 @@ public class SmalltalkObject {
     String URI;
     Integer star;
     Integer archive;
-    Integer show_archive;
+    Boolean show_archive;
     Context mContext;
     SmalltalkDBHelper mdbHelper;
     SQLiteDatabase mWriteDb;
     SQLiteDatabase mReadDb;
     HashMap<String, int[][]> mResourceIDs;
     CachedStatus mCachedStatus;
+    relatedObjects mRelatedObjects;
 
     // Constructors
-    public SmalltalkObject(Context context, String id, String object_type, int show_archived) {
+    public SmalltalkObject(Context context, String id, String object_type, boolean show_archived) {
         mContext = context;
         mdbHelper = SmalltalkDBHelper.getInstance(mContext);
         mWriteDb = mdbHelper.getWritableDatabase();
@@ -65,18 +66,18 @@ public class SmalltalkObject {
 
         mResourceIDs = new HashMap<String, int[][]>();
         mResourceIDs.put("star", new int[][]{
-                {R.drawable.small_star_off_unlocked, R.drawable.small_star_off_locked},
-                {R.drawable.small_star_on_unlocked, R.drawable.small_star_on_locked}});
+                {R.drawable.ic_star_border_black_48dp, R.drawable.small_star_off_locked},
+                {R.drawable.ic_star_black_48dp, R.drawable.small_star_on_locked}});
         mResourceIDs.put("archive", new int[][]{
-                {R.drawable.small_archive_off_unlocked, R.drawable.small_archive_off_locked},
-                {R.drawable.small_archive_on_unlocked, R.drawable.small_archive_on_locked}});
+                {R.drawable.ic_archive_black_48dp, R.drawable.small_archive_off_locked},
+                {R.drawable.ic_archive_black_48dp, R.drawable.small_archive_on_locked}});
     }
 
     public SmalltalkObject(Context context, String id, String object_type) {
-        this(context, id, object_type, 0);
+        this(context, id, object_type, false);
     }
 
-    // Private class used for quick toggling.
+    // Class used for quick toggling.
     public final class CachedStatus {
         String type = "";
         String id = "";
@@ -93,6 +94,29 @@ public class SmalltalkObject {
             this.star_lock_status = star_lock_status;
             this.archive_status = archive_status;
             this.archive_lock_status = archive_lock_status;
+        }
+    }
+
+    // Class used for populating lists of related items.
+    public class relatedObjects {
+
+        String type;
+        ArrayList<String> names;
+        ArrayList<String> details;
+        ArrayList<String> IDs;
+
+        public relatedObjects(String type, boolean show_archive, boolean through_group) {
+            this.type = type;
+            this.names = new ArrayList<String>();
+            this.details = new ArrayList<String>();
+            this.IDs = new ArrayList<String>();
+            Cursor cursor =  getConditionalRowsCursor(type, true, show_archive, through_group);
+            cursor.moveToPosition(-1); // Need to move cursor back before first row so the while loop works
+            while(cursor.moveToNext()) {
+                this.names.add(cursor.getString(cursor.getColumnIndex("name")));
+                this.details.add(cursor.getString(cursor.getColumnIndex("details")));
+                this.IDs.add(cursor.getString(cursor.getColumnIndex("_id")));
+            }
         }
     }
 
@@ -116,29 +140,14 @@ public class SmalltalkObject {
 
     public String getID() { return this.id; }
 
-    public Integer getStarStatus() {
-        return this.star;
+    public relatedObjects getRelatedObjects(String type, boolean show_archive, boolean through_group) {
+        mRelatedObjects = new relatedObjects(type, show_archive, through_group);
+        return mRelatedObjects;
     }
 
-    public Integer getArchiveStatus() {
-        return this.archive;
-    }
+    public Integer getStarStatus() { return this.star; }
 
-    public String[] getRelatedHeaders() {
-        String[] headers = new String[2];
-        switch (this.object_type) {
-            case "contact":
-                headers = new String[]{"Groups", "Topics"};
-                break;
-            case "group":
-                headers = new String[]{"Contacts", "Topics"};
-                break;
-            case "topic":
-                headers = new String[]{"Contacts", "Groups"};
-                break;
-        };
-        return headers;
-    }
+    public Integer getArchiveStatus() { return this.archive; }
 
     public ArrayList<String> getItemInfoArray(Cursor cursor, String return_type) {
         ArrayList<String> items = new ArrayList<String>();
@@ -151,8 +160,8 @@ public class SmalltalkObject {
     }
 
     public Pair getItemInfoPair(Cursor cursor) {
-        ArrayList<String> names = new ArrayList<String>();
-        ArrayList<String> IDs = new ArrayList<String>();
+        List<String> names = new ArrayList<String>();
+        List<String> IDs = new ArrayList<String>();
         int nameIndex = cursor.getColumnIndex("name");
         int idIndex = cursor.getColumnIndex("_id");
         cursor.moveToPosition(-1); // Need to move cursor back before first row so the while loop works
@@ -160,7 +169,8 @@ public class SmalltalkObject {
             names.add(cursor.getString(nameIndex));
             IDs.add(cursor.getString(idIndex));
         }
-        Pair names_and_IDs = new Pair(names, IDs);
+        Pair names_and_IDs = new Pair(names.toArray(new String[names.size()]),
+                IDs.toArray(new String[IDs.size()]));
         return names_and_IDs;
     }
 
@@ -214,10 +224,10 @@ public class SmalltalkObject {
         return getPrimedCursor(queryString);
     }
 
-    public Cursor getAllRelationshipsCursor(String related_type, int show_archive) {
+    public Cursor getAllRelationshipsCursor(String related_type, boolean show_archive) {
         related_type = related_type.toLowerCase().replace("s","");
         String archive_fragment = "";
-        if (show_archive == 0 && (related_type.equals("topic") || this.object_type.equals("topic"))) {
+        if (!show_archive && (related_type.equals("topic") || this.object_type.equals("topic"))) {
             archive_fragment = "AND archive = 0";
         }
         String queryString = String.format("SELECT * FROM %ss WHERE _ID IN ( SELECT %s_id FROM %s WHERE %s_id = %s %s);",
@@ -225,39 +235,49 @@ public class SmalltalkObject {
         return getPrimedCursor(queryString);
     }
 
-    public Cursor getConditionalRowsCursor(String related_type, int show_related, int show_archive, int through_group) {
+    public Cursor getConditionalRowsCursor(String related_type, boolean show_related, boolean show_archive, boolean through_group) {
         related_type = related_type.toLowerCase().replace("s","");
-        StringBuilder sb = new StringBuilder(200);
-        sb.append("SELECT * FROM ").append(related_type).append("s");
-        // Special - get topics through groups
-        if (through_group == 1 && this.object_type.equals("contact") && related_type.equals("topic")) {
-            sb.append(" WHERE _id IN (").append(getTopicsThroughGroups(show_archive)).append(")");
-        } else {
-            if ((show_archive == 0 && related_type.equals("topic")) || (show_related == 1)) {
-                sb.append(" WHERE");
-            }
-            if (show_archive == 0 && related_type.equals("topic")) {
-                sb.append(" archive = 0 AND");
-            }
-            if (show_related == 1) {
-                String select_string = String.format(" _ID IN ( SELECT %s_id FROM %s WHERE %s_id = %s",
-                        related_type, getRelationshipTableName(related_type), this.object_type, this.id);
-                sb.append(select_string);
-                if (show_archive == 0 && (related_type.equals("topic") || this.object_type.equals("topic"))) {
-                    sb.append(" AND archive = 0");
-                }
-                sb.append(")");
-            }
+
+        String through_group_string = "", main_archive_string = "", show_related_string = "";
+        String base_string = "SELECT * FROM " + related_type + "s ";
+
+        if (through_group && this.object_type.equals("contact") && related_type.equals("topic")) {
+            through_group_string = " _id IN (" + getTopicsThroughGroups(show_archive) + ") ";
         }
-        sb.append(";");
-        return getPrimedCursor(sb.toString());
+
+        if (!show_archive && related_type.equals("topic")) {
+            main_archive_string = " archive = 0 ";
+        }
+
+        if (show_related) {
+            show_related_string = String.format(" _ID IN ( SELECT %s_id FROM %s WHERE %s_id = %s",
+                    related_type, getRelationshipTableName(related_type), this.object_type, this.id);
+            if (!show_archive && (related_type.equals("topic") || this.object_type.equals("topic"))) {
+                show_related_string += " AND archive = 0";
+            }
+            show_related_string += ")";
+        }
+
+        if (through_group_string.length() > 0) {
+            return getPrimedCursor(base_string + "WHERE" + through_group_string + ";");
+        } else {
+            String and_string = "", where_string = "";
+            int string_count = (main_archive_string.isEmpty() ? 0:1) + (show_related_string.isEmpty() ? 0:1);
+            if (string_count > 0) {
+                where_string = "WHERE";
+            }
+            if (string_count > 1) {
+                and_string = "AND";
+            }
+            return getPrimedCursor(base_string + where_string + main_archive_string + and_string + show_related_string + ";");
+        }
     }
 
-    public String getTopicsThroughGroups(int show_archive) {
+    public String getTopicsThroughGroups(boolean show_archive) {
 
         // Initialize fragment string for use below.
         String archive_fragment = "";
-        if (show_archive == 0) {
+        if (!show_archive) {
             archive_fragment = "AND archive = 0";
         }
 
@@ -271,7 +291,7 @@ public class SmalltalkObject {
         // Get list of topics
         ArrayList<String> archived_topics = new ArrayList<String>();
         ArrayList<String> unarchived_topics = new ArrayList<String>();
-        cursor = getAllRelationshipsCursor("topic", 1);  // Get archived topics so we can throw out group_topics that have an override
+        cursor = getAllRelationshipsCursor("topic", true);  // Get archived topics so we can throw out group_topics that have an override
         cursor.moveToPosition(-1); // sometimes I wonder about my life choices
         while(cursor.moveToNext()) {
             if (cursor.getInt(cursor.getColumnIndex("archive")) == 0) {
