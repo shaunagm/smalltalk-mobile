@@ -121,6 +121,8 @@ public class DetailActivityFragment extends Fragment {
                         current_item.setVisible(true);
                     }
                     break;
+                case R.id.search:
+                    current_item.setVisible(false);
                 default:
                     current_item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             }
