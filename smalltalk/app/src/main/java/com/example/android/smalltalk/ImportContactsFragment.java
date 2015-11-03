@@ -164,6 +164,12 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
                 }
             }
         }
+
+        Intent intent = new Intent(getActivity(), ListActivity.class)
+                .putExtra("list_type", "contacts")
+                .putExtra("show_archived", 0);
+        startActivity(intent);
+
     }
 
 }
