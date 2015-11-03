@@ -8,7 +8,7 @@ import android.os.Build;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.SearchView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +32,7 @@ public class BaseActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_actionbar, menu);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
