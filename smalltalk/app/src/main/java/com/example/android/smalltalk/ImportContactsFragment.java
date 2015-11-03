@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
 import com.example.android.smalltalk.SmalltalkUtilities.import_utils;
@@ -39,39 +40,95 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
             return rootView;
         }
 
+        // Otherwise, show import screen
         String type = intent.getStringExtra("type");
         Boolean include_groups = intent.getBooleanExtra("groups", false);
+        final View rootView = inflater.inflate(R.layout.import_contacts_layout, container, false);
 
-        View rootView = inflater.inflate(R.layout.import_contacts_layout, container, false);
-
-        Cursor cursor = import_utils.getAndroidContacts(this.getActivity(), type);
-        final ImportContactCursorAdapter contact_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "contact");
+        // Make contacts listview, assign adapter
         ListView contacts = (ListView) rootView.findViewById(R.id.listview_import_contacts);
+        Cursor cursor = import_utils.getAndroidContacts(this.getActivity(), type);
+        final ImportContactCursorAdapter contact_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "contact", contacts);
         contacts.setAdapter(contact_adapter);
+
+        // Make groups listview if necessary
 
         final ImportContactCursorAdapter group_adapter;
         if (include_groups) {
-            cursor = import_utils.getPhoneGroups(this.getActivity());
-            group_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "group");
+            // Make groups listview, set header, assign adapter
             ListView groups = (ListView) rootView.findViewById(R.id.listview_import_groups);
-            groups.setVisibility(View.VISIBLE);
+            cursor = import_utils.getPhoneGroups(this.getActivity());
+            group_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "group", groups);
             groups.setAdapter(group_adapter);
-            rootView.findViewById(R.id.import_groups_header).setVisibility(View.VISIBLE);
         } else {
             group_adapter = null; // need to initialize this so we can pass it to save_imports
         }
 
-        // Save button!
+        // Toggle group-type buttons
+        Button toggle_type = (Button) rootView.findViewById(R.id.import_contacts_toggle_type);
+        toggle_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleType();
+            }
+        });
+
+        // Select button
+        final Button toggle_select = (Button) rootView.findViewById(R.id.import_contacts_toggle_select);
+        toggle_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleSelect();
+            }
+        });
+
+        // Save button
         Button save_button = (Button) rootView.findViewById(R.id.import_contacts_save);
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 save_imports(contact_adapter, group_adapter);
             }
         });
 
         return rootView;
 
+    }
+
+    // Allows users to toggle between viewing groups and contacts
+    public void toggleType() {
+
+        ListView contacts = (ListView) this.getActivity().findViewById(R.id.listview_import_contacts);
+        ListView groups = (ListView) this.getActivity().findViewById(R.id.listview_import_groups);
+        TextView header = (TextView) this.getActivity().findViewById(R.id.listview_header);
+        Button toggle_type = (Button) this.getActivity().findViewById(R.id.import_contacts_toggle_type);
+
+        if (contacts.getVisibility() == View.VISIBLE) {
+            contacts.setVisibility(View.GONE);
+            groups.setVisibility(View.VISIBLE);
+            header.setText("Groups");
+            toggle_type.setText("view contacts");
+        } else {
+            contacts.setVisibility(View.VISIBLE);
+            groups.setVisibility(View.GONE);
+            header.setText("Contacts");
+            toggle_type.setText("view groups");
+        }
+    }
+
+    public void toggleSelect() {
+
+        Button toggle_type = (Button) this.getActivity().findViewById(R.id.import_contacts_toggle_type);
+        ListView listView;
+        if (toggle_type.getText().equals("view contacts")) {
+            listView = (ListView) this.getActivity().findViewById(R.id.listview_import_groups);
+        } else {
+            listView = (ListView) this.getActivity().findViewById(R.id.listview_import_contacts);
+        }
+
+        Button toggle_select = (Button) this.getActivity().findViewById(R.id.import_contacts_toggle_select);
+        ImportContactCursorAdapter listAdapter = (ImportContactCursorAdapter) listView.getAdapter();
+        listAdapter.selectAllToggle();
     }
 
     public void save_imports(ImportContactCursorAdapter contact_adapter, ImportContactCursorAdapter group_adapter) {
@@ -108,4 +165,6 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
             }
         }
     }
+
 }
+

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.smalltalk.R;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 
 public class ImportContactCursorAdapter extends CursorAdapter {
 
+    ListView mListView;
     Context mContext;
     Cursor mCursor;
     String mNameField;
@@ -26,10 +28,12 @@ public class ImportContactCursorAdapter extends CursorAdapter {
     public Boolean[] itemChecked;
     public String[] itemID;
 
-    public ImportContactCursorAdapter(Context context, Cursor cursor, int flags, String type) {
+
+    public ImportContactCursorAdapter(Context context, Cursor cursor, int flags, String type, ListView listView) {
         super(context, cursor, 0);
         this.mContext = context;
         this.mCursor = cursor;
+        this.mListView = listView;
         if (type.equals("contact")) {
             this.mNameField = ContactsContract.Contacts.DISPLAY_NAME;
         } else {
@@ -84,4 +88,24 @@ public class ImportContactCursorAdapter extends CursorAdapter {
         });
         checkbox.setChecked(itemChecked[position]);
     }
+
+    public void selectAllToggle() {
+
+        Boolean newValue;
+        if (itemChecked[0] == false ) {
+            newValue = true;
+        } else {
+            newValue = false;
+        }
+
+        for ( int j = 0; j < mCursor.getCount(); j++ ) {
+            itemChecked[j] = newValue;
+            if (j < mListView.getChildCount()) {
+            View childView = mListView.getChildAt(j);
+            CheckBox checkbox = (CheckBox) childView.findViewById(R.id.import_contact_checkbox);
+            checkbox.setChecked(newValue);
+            }
+        }
+    }
+
 }
