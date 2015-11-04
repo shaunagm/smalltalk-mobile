@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Often-used Colors-->
+    <color name="darkPrimaryColor">#0097a7</color>
+    <color name="accentColor">#ffc107</color>
+    <color name="primaryText">#727272</color>
+    <color name="secondaryText">#B6B6B6</color>
+    <color name="defaultBackgroundColor">#ffffff</color>
+
+
+    <color name="lightPrimaryColor">#b2ebf2</color>
+    <color name="primaryColor">#00bcd4</color>
+    <color name="blackText">#212121</color>
+
+</resources>

@@ -1,8 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/list_activity"
-    style="@style/SmallTalkTheme.DefaultListView"
-    android:gravity="center">
+    style="@style/SmallTalkTheme.BaseLayout">
 
     <Button
         android:id="@+id/listview_show_archived"
@@ -11,8 +11,7 @@
 
     <ListView
         android:id="@+id/listview_objects"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/SmallTalkTheme.MatchWidthMatchHeight"
         android:layout_weight="1"/>
 
     <com.google.android.gms.ads.AdView

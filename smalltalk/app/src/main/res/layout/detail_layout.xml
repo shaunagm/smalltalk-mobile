@@ -1,11 +1,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    style="@style/SmallTalkTheme.BaseLayout.CustomActionBarLayout">
+    style="@style/SmallTalkTheme.BaseLayout">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/SmallTalkTheme.MatchWidthMatchHeight"
+        android:orientation="vertical"
         android:layout_weight="1">
 
         <TextView
@@ -14,12 +14,12 @@
 
         <TextView
             android:id="@+id/detail_item_details"
-            style="@style/SmallTalkTheme.TextView" />
+            style="@style/SmallTalkTheme.FullWidthTextView" />
 
         <TextView
             android:id="@+id/detail_item_uri"
-            style="@style/SmallTalkTheme.TextView"
-            android:visibility="gone"/>
+            style="@style/SmallTalkTheme.FullWidthTextView"
+            android:visibility="visible"/>
 
         <ExpandableListView
             android:id="@+id/relationship_list"

@@ -9,17 +9,17 @@
         <Button
             android:text="Topics"
             android:id="@+id/search_show_topics"
-            style="@style/SmallTalkTheme.ImportContactsButton" />
+            style="@style/SmallTalkTheme.ThirdsButton" />
 
         <Button
             android:text="Contacts"
             android:id="@+id/search_show_contacts"
-            style="@style/SmallTalkTheme.ImportContactsButton" />
+            style="@style/SmallTalkTheme.ThirdsButton" />
 
         <Button
             android:text="Groups"
             android:id="@+id/search_show_groups"
-            style="@style/SmallTalkTheme.ImportContactsButton" />
+            style="@style/SmallTalkTheme.ThirdsButton" />
 
     </LinearLayout>
 

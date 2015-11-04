@@ -11,17 +11,17 @@
         <Button
             android:text="view groups"
             android:id="@+id/import_contacts_toggle_type"
-            style="@style/SmallTalkTheme.ImportContactsButton" />
+            style="@style/SmallTalkTheme.ThirdsButton" />
 
         <Button
             android:text="select all/none"
             android:id="@+id/import_contacts_toggle_select"
-            style="@style/SmallTalkTheme.ImportContactsButton" />
+            style="@style/SmallTalkTheme.ThirdsButton" />
 
         <Button
             android:text="add selections"
             android:id="@+id/import_contacts_save"
-            style="@style/SmallTalkTheme.ImportContactsButton" />
+            style="@style/SmallTalkTheme.ThirdsButton" />
 
     </LinearLayout>
 

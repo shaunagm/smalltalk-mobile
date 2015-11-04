@@ -5,7 +5,7 @@
 
     <TextView
         android:text="Import contacts"
-        style="@style/SmallTalkTheme.BaseHeading"
+        style="@style/SmallTalkTheme.PageHeading"
         android:layout_marginTop="@dimen/default_object_margin"
         android:gravity="center"/>
 

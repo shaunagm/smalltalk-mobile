@@ -1,15 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/SmallTalkTheme.RelationshipListHeader">
+    style="@style/SmallTalkTheme.RelationshipListHeading">
 
     <!-- Group or contacts icon-->
 
     <ImageView
         android:id="@+id/header_name_icon"
-        style="@style/SmallTalkTheme.Icon" />
+        style="@style/SmallTalkTheme.DataTypeIcon" />
 
     <TextView
         android:id="@+id/header_name"
-        style="@style/SmallTalkTheme.ListHeading"
+        style="@style/SmallTalkTheme.RelationshipListHeading"
         android:layout_toRightOf="@+id/header_name_icon"
         android:layout_alignTop="@+id/header_name_icon"/>
 
