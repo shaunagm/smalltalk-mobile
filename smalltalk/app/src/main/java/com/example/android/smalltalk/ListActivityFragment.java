@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
 import com.example.android.smalltalk.SmalltalkUtilities.misc_utils;
@@ -43,6 +44,9 @@ public class ListActivityFragment extends Fragment {
 
         // Views!
         View rootView = inflater.inflate(R.layout.list_activity_layout, container, false);
+
+        TextView header = (TextView) rootView.findViewById(R.id.listview_header);
+        header.setText(list_type);
 
         AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();

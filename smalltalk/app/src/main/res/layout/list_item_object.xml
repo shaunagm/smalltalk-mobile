@@ -2,18 +2,20 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/SmallTalkTheme.MatchWidthWrapHeight"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp" >
 
     <TextView
         android:id="@+id/list_item_name_textview"
         style="@style/SmallTalkTheme.FullWidthTextView"
         android:textStyle="bold"
-        android:paddingTop="@dimen/activity_horizontal_margin"/>
+        android:textColor="@color/primaryText"/>
 
     <TextView
         android:id="@+id/list_item_details_textview"
         style="@style/SmallTalkTheme.FullWidthTextView"
-        android:maxLines="2"
-        android:paddingBottom="@dimen/activity_horizontal_margin"/>
+        android:textColor="@color/secondaryText"
+        android:maxLines="2" />
 
 </LinearLayout>

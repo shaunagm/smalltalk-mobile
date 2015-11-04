@@ -2,17 +2,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/list_activity"
-    style="@style/SmallTalkTheme.BaseLayout">
+    style="@style/SmallTalkTheme.BaseLayout"
+    android:paddingTop="0dp"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:text="Topics"
+        android:id="@+id/listview_header"
+        style="@style/SmallTalkTheme.ListHeading"
+        android:textAllCaps="true" />
 
     <Button
         android:id="@+id/listview_show_archived"
-        style="@style/SmallTalkTheme.Button"
+        style="@style/SmallTalkTheme.SingleButton"
         android:text="Show archived topics" />
 
     <ListView
         android:id="@+id/listview_objects"
         style="@style/SmallTalkTheme.MatchWidthMatchHeight"
-        android:layout_weight="1"/>
+        android:divider="@color/lightPrimaryColor"
+        android:dividerHeight="1px"
+        android:layout_weight="1" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
