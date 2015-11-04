@@ -1,32 +1,52 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     style="@style/SmallTalkTheme.BaseLayout.CustomActionBarLayout">
 
-    <TextView
-        android:id="@+id/detail_item_name"
-        style="@style/SmallTalkTheme.PageHeading" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/detail_item_details"
-        style="@style/SmallTalkTheme.TextView" />
+        <TextView
+            android:id="@+id/detail_item_name"
+            style="@style/SmallTalkTheme.PageHeading" />
 
-    <TextView
-        android:id="@+id/detail_item_uri"
-        style="@style/SmallTalkTheme.TextView"
-        android:visibility="gone"/>
+        <TextView
+            android:id="@+id/detail_item_details"
+            style="@style/SmallTalkTheme.TextView" />
 
-    <ExpandableListView
-        android:id="@+id/relationship_list"
-        style="@style/SmallTalkTheme.RelationshipListView" />
+        <TextView
+            android:id="@+id/detail_item_uri"
+            style="@style/SmallTalkTheme.TextView"
+            android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/detail_item_id_secret"
-        style="@style/SmallTalkTheme.TextView"
-        android:visibility="invisible"/>
+        <ExpandableListView
+            android:id="@+id/relationship_list"
+            style="@style/SmallTalkTheme.RelationshipListView" />
 
-    <TextView
-        android:id="@+id/detail_item_type_secret"
-        style="@style/SmallTalkTheme.TextView"
-        android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/detail_item_id_secret"
+            style="@style/SmallTalkTheme.TextView"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/detail_item_type_secret"
+            style="@style/SmallTalkTheme.TextView"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
 
 </LinearLayout>

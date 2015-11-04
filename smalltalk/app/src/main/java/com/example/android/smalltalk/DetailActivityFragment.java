@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.example.android.smalltalk.data.RelationshipAdapter;
 import com.example.android.smalltalk.data.SmalltalkObject;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class DetailActivityFragment extends Fragment {
 
@@ -35,6 +37,10 @@ public class DetailActivityFragment extends Fragment {
         setHasOptionsMenu(true); // Make sure we use our detailactivity-specific actionbar
 
         View rootView = inflater.inflate(R.layout.detail_layout, container, false);
+
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra("item_type") && intent.hasExtra("item_id")) {

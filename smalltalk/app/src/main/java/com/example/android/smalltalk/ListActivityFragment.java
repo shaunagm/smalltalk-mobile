@@ -16,6 +16,8 @@ import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
 import com.example.android.smalltalk.SmalltalkUtilities.misc_utils;
 import com.example.android.smalltalk.data.ObjectCursorAdapter;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -41,6 +43,10 @@ public class ListActivityFragment extends Fragment {
 
         // Views!
         View rootView = inflater.inflate(R.layout.list_activity_layout, container, false);
+
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         // Show archived button
         Button show_archived_button = (Button) rootView.findViewById(R.id.listview_show_archived);
