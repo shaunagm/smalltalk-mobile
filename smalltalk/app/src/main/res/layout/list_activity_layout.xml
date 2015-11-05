@@ -12,7 +12,7 @@
 
     <Button
         android:id="@+id/listview_show_archived"
-        style="@style/SmallTalkTheme.SingleButton"
+        style="@style/SmallTalkTheme.Button"
         android:text="Show archived topics" />
 
     <ListView

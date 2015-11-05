@@ -19,19 +19,12 @@
     <CheckBox
         android:text="@string/import_contacts_group_option_label"
         android:id="@+id/contact_options_group_option_checkbox"
-        style="@style/SmallTalkTheme.FullWidthTextView"
-        android:layout_margin="0dp"
-        android:padding="0dp"
+        style="@style/SmallTalkTheme.CheckBox"
+        android:gravity="left"
         android:checked="true" />
 
     <ListView
         android:id="@+id/contact_options_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="0dp"
-        android:divider="@null"
-        android:layout_margin="0dp"
-        android:padding="0dp"
-        android:layout_marginTop="@dimen/default_object_margin" />
+        style="@style/SmallTalkTheme.ImportListView" />
 
 </LinearLayout>
