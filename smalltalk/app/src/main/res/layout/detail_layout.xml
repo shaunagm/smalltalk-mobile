@@ -1,7 +1,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    style="@style/SmallTalkTheme.BaseLayout">
+    style="@style/SmallTalkTheme.BaseLayout"
+    android:paddingTop="0dp"
+    android:paddingBottom="30dp"
+    android:gravity="center_horizontal">
 
     <LinearLayout
         style="@style/SmallTalkTheme.MatchWidthMatchHeight"

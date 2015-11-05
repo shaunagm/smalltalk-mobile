@@ -112,7 +112,7 @@ public class DetailActivityFragment extends Fragment {
                 case R.id.star_action:
                     if (current_object.getType().equals("topic")) {
                         if (current_object.getStarStatus() == 1) {
-                            current_item.setIcon(R.drawable.ic_star_black_48dp);
+                            current_item.setIcon(R.drawable.star_white_full);
                             current_item.setTitle("un-star");
                         }
                         current_item.setVisible(true);
@@ -121,7 +121,7 @@ public class DetailActivityFragment extends Fragment {
                 case R.id.archive_action:
                     if (current_object.getType().equals("topic")) {
                         if (current_object.getArchiveStatus() == 1) {
-                            current_item.setIcon(R.drawable.ic_archive_black_48dp);
+                            current_item.setIcon(R.drawable.hide_white);
                             current_item.setTitle("restore");
                         }
                         current_item.setVisible(true);

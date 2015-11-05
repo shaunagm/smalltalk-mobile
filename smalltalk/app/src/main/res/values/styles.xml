@@ -1,12 +1,21 @@
 <resources>
 
-    <style name="SmallTalkTheme" parent="Theme.AppCompat.Light">
+    <style name="SmallTalkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowContentOverlay">@drawable/dropshadow</item>
+        <item name="android:windowActionBarOverlay">@drawable/dropshadow</item>
         <item name="android:textColor">@color/primaryColor</item>
         <item name="android:windowBackground">@color/defaultBackgroundColor</item>
+        <item name="android:actionBarStyle">@style/SmallTalkTheme.ActionBarStyle</item>
+        <item name="actionBarStyle">@style/SmallTalkTheme.ActionBarStyle</item>
+        <item name="android:dropDownListViewStyle">@style/SmallTalkTheme.ActionBarStyle</item>
+        <item name="dropDownListViewStyle">@style/SmallTalkTheme.ActionBarStyle</item>
+        <!-- Overflow menu text coloring, took absurdly long to find this: -->
+        <item name="android:itemTextAppearance">@style/SmallTalkTheme.ActionBarTextStyle</item>
     </style>
 
 
-    <!-- *********** -->
+
+<!-- *********** -->
     <!-- Base Styles -->
     <!-- *********** -->
 
@@ -18,7 +27,6 @@
         <item name="android:orientation">vertical</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
         <item name="android:textSize">@dimen/default_text_height</item>
-        <item name="android:paddingTop">?android:attr/actionBarSize</item>
     </style>
 
 
@@ -180,14 +188,23 @@
     </style>
 
 
-    <!-- ****************************** -->
-    <!-- Styles for Misc Activities -->
-    <!-- ****************************** -->
+    <!-- *************************** -->
+    <!-- Styles for Misc Activities  -->
+    <!-- *************************** -->
 
     <!-- ActionBar style -->
-    <style name="SmallTalkTheme.ActionBarStyle" parent="SmallTalkTheme.BaseLayout">
+    <style name="SmallTalkTheme.ActionBarStyle" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@color/darkPrimaryColor</item>
         <item name="android:background">@color/darkPrimaryColor</item>
+        <item name="color">@color/defaultBackgroundColor</item>
+        <item name="selectableItemBackground">@color/darkPrimaryColor</item>
+    </style>
+
+    <style name="SmallTalkTheme.ActionBarTextStyle" parent="TextAppearance.AppCompat.Widget.DropDownItem">
         <item name="android:color">@color/defaultBackgroundColor</item>
+        <item name="android:textColor">@color/defaultBackgroundColor</item>
+        <item name="android:textColorPrimary">@color/defaultBackgroundColor</item>
+        <item name="android:textColorSecondary">@color/defaultBackgroundColor</item>
     </style>
 
     <!-- Show Archived button -->

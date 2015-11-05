@@ -36,6 +36,13 @@ public class ObjectCursorAdapter extends CursorAdapter {
 
         objectName.setText(name);
         objectDetails.setText(details);
+
+        if (details.isEmpty()) {
+            objectDetails.setVisibility(View.GONE);
+        } else {
+            objectDetails.setVisibility(View.VISIBLE);
+        }
+
     }
 
 }

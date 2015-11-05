@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/SmallTalkTheme.ActionBarStyle">
 
 
     <item android:id="@+id/search"
         android:title="Search"
-        android:icon="@drawable/ic_menu_search"
+        android:icon="@drawable/search_white"
         app:showAsAction="collapseActionView|always"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
     <item android:id="@+id/action_new"
         android:title="Add New"
-        android:icon="@drawable/small_archive_off"
+        android:icon="@drawable/add_new_white"
         app:showAsAction="always" />
 
     <item android:id="@+id/import_contacts"
@@ -39,19 +38,19 @@
     <!-- These are the main actions for the Detail ActionBar, but are hidden by default -->
     <item android:id="@+id/edit_action"
         android:title="edit"
-        android:icon="@drawable/ic_create_black_48dp"
+        android:icon="@drawable/edit_white"
         app:showAsAction="always"
         android:visible="false"/>
 
     <item android:id="@+id/archive_action"
         android:title="archive"
-        android:icon="@drawable/ic_archive_black_48dp"
+        android:icon="@drawable/show_white"
         app:showAsAction="always"
         android:visible="false"/>
 
     <item android:id="@+id/star_action"
         android:title="star"
-        android:icon="@drawable/ic_star_border_black_48dp"
+        android:icon="@drawable/star_white"
         app:showAsAction="always"
         android:visible="false"/>
 
