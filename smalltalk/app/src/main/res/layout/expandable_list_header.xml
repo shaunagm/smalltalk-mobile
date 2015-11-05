@@ -16,14 +16,14 @@
     <CheckBox
         android:id="@+id/show_archived_relationships"
         android:text="archived topics"
-        style="@style/SmallTalkTheme.CheckBox"
+        style="@style/SmallTalkTheme.RelationshipCheckBox"
         android:layout_below="@+id/header_name_icon"
         android:visibility="gone"/>
 
     <CheckBox
         android:id="@+id/show_through_relationships"
         android:text="topics via tags"
-        style="@style/SmallTalkTheme.CheckBox"
+        style="@style/SmallTalkTheme.RelationshipCheckBox"
         android:layout_toRightOf="@+id/show_archived_relationships"
         android:layout_alignBottom="@+id/show_archived_relationships"
         android:visibility="gone"/>

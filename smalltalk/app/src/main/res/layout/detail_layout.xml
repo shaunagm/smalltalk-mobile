@@ -1,31 +1,32 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    style="@style/SmallTalkTheme.BaseLayout"
-    android:paddingTop="0dp"
-    android:paddingBottom="30dp"
-    android:gravity="center_horizontal">
+    style="@style/SmallTalkTheme.BaseLayout">
 
     <LinearLayout
         style="@style/SmallTalkTheme.MatchWidthMatchHeight"
         android:orientation="vertical"
+        android:paddingTop="?android:attr/actionBarSize"
         android:layout_weight="1">
 
         <TextView
             android:id="@+id/detail_item_name"
-            style="@style/SmallTalkTheme.PageHeading" />
+            style="@style/SmallTalkTheme.DetailHeading" />
 
         <TextView
             android:id="@+id/detail_item_details"
-            style="@style/SmallTalkTheme.FullWidthTextView" />
+            style="@style/SmallTalkTheme.FullWidthTextView"
+            android:textColor="@color/secondaryText" />
 
         <TextView
             android:id="@+id/detail_item_uri"
             style="@style/SmallTalkTheme.FullWidthTextView"
-            android:visibility="visible"/>
+            android:textColor="@color/secondaryText" />
 
         <ExpandableListView
             android:id="@+id/relationship_list"
+            android:dividerHeight="0dp"
+            android:divider="@null"
             style="@style/SmallTalkTheme.RelationshipListView" />
 
         <TextView

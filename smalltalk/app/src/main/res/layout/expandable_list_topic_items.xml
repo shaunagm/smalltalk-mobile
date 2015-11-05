@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/SmallTalkTheme.RelationshipItem">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SmallTalkTheme.MatchWidthWrapHeight"
+    android:paddingLeft="@dimen/list_indentation"
+    android:paddingRight="@dimen/list_indentation"
+    android:paddingBottom="10dip">
 
-    <!-- On the left is the topic name & details-->
-    <TextView
-        android:id="@+id/expandable_list_item_name"
-        style="@style/SmallTalkTheme.ListItemCondensedHeading" />
+    <!-- Top level is topic name & buttons -->
+    <LinearLayout
+        android:id="@+id/expandable_list_row"
+        style="@style/SmallTalkTheme.MatchWidthWrapHeight"
+        android:orientation="horizontal"
+        android:gravity="left">
+
+        <TextView
+            android:id="@+id/expandable_list_item_name"
+            style="@style/SmallTalkTheme.RelatedNameHeading"
+            android:layout_weight=".8" />
+
+        <!-- On the right are the buttons -->
+        <ImageButton
+            android:id="@+id/star_button"
+            android:src="@drawable/star_color"
+            style="@style/SmallTalkTheme.RelationshipImageButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_weight=".1"/>
+
+        <ImageButton
+            android:id="@+id/archive_button"
+            android:src="@drawable/show_color"
+            style="@style/SmallTalkTheme.RelationshipImageButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_weight=".1"/>
+
+    </LinearLayout>
+
+    <!-- Second level is detail -->
+
     <TextView
         android:id="@+id/expandable_list_item_details"
-        android:layout_height="wrap_content"
-        android:layout_width="@dimen/eighty_percent_of_screen"
-        android:layout_below="@+id/expandable_list_item_name" />
-
-    <!-- On the right are the buttons -->
-    <ImageButton
-        android:id="@+id/star_button"
-        android:src="@drawable/ic_star_border_black_48dp"
-        style="@style/SmallTalkTheme.RelationshipImageButton"
-        android:layout_toRightOf="@+id/expandable_list_item_details"/>
-
-    <ImageButton
-        android:id="@+id/archive_button"
-        style="@style/SmallTalkTheme.RelationshipImageButton"
-        android:src="@drawable/ic_archive_black_48dp"
-        android:layout_toRightOf="@+id/star_button"/>
+        style="@style/SmallTalkTheme.MatchWidthWrapHeight"
+        android:layout_below="@+id/expandable_list_row"
+        android:layout_alignLeft="@+id/expandable_list_row"/>
 
     <TextView
         android:id="@+id/expandable_list_item_edit_secret_id"

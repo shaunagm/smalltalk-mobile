@@ -3,7 +3,7 @@
     <style name="SmallTalkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowContentOverlay">@drawable/dropshadow</item>
         <item name="android:windowActionBarOverlay">@drawable/dropshadow</item>
-        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:textColor">@color/primaryText</item>
         <item name="android:windowBackground">@color/defaultBackgroundColor</item>
         <item name="android:actionBarStyle">@style/SmallTalkTheme.ActionBarStyle</item>
         <item name="actionBarStyle">@style/SmallTalkTheme.ActionBarStyle</item>
@@ -27,6 +27,8 @@
         <item name="android:orientation">vertical</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
         <item name="android:textSize">@dimen/default_text_height</item>
+        <item name="android:paddingBottom">?android:attr/actionBarSize</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
 
@@ -90,12 +92,16 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
         <item name="android:color">@color/darkPrimaryColor</item>
         <item name="android:textSize">@dimen/main_heading_height</item>
+        <item name="android:padding">@dimen/default_object_margin</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
 
     <!-- Base Subheading Style -->
     <style name="SmallTalkTheme.PageSubHeading" parent="SmallTalkTheme.PageHeading">
         <item name="android:textSize">@dimen/list_heading_height</item>
         <item name="android:color">@color/primaryText</item>
+        <item name="android:gravity">left</item>
     </style>
 
     <!-- *** BUTTONS *** -->
@@ -121,7 +127,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">10dip</item>
         <item name="android:checked">false</item>
-        <item name="android:textSize">@dimen/default_text_height</item>
+        <item name="android:buttonTint">@color/darkPrimaryColor</item>
     </style>
 
     <!-- Base Image Button Style -->
@@ -144,6 +150,11 @@
     <!-- Styles for Detail Activity -->
     <!-- ****************************** -->
 
+    <!-- Base Heading Style -->
+    <style name="SmallTalkTheme.DetailHeading" parent="SmallTalkTheme.PageHeading">
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
     <!-- Styling for "Group", "Topic" and "Contact" icons -->
     <style name="SmallTalkTheme.DataTypeIcon">
         <item name="android:layout_height">@dimen/default_icon_dimen</item>
@@ -162,7 +173,6 @@
     <style name="SmallTalkTheme.RelationshipListView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_marginTop">@dimen/default_object_margin</item>
         <item name="android:childDivider">#00000000</item>
     </style>
 
@@ -170,6 +180,15 @@
     <style name="SmallTalkTheme.RelationshipListHeading" parent="SmallTalkTheme.PageSubHeading">
         <item name="android:layout_height">@dimen/default_icon_dimen</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <!-- Checkbox in the header for relationship views (Topic+Contact, etc) -->
+    <style name="SmallTalkTheme.RelationshipCheckBox" parent="SmallTalkTheme.CheckBox">
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:color">@color/primaryText</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <!-- Relationship List Item styling -->
@@ -181,10 +200,10 @@
     </style>
 
     <!-- TextView for name of related items -->
-    <style name="SmallTalkTheme.ListItemCondensedHeading" parent="SmallTalkTheme.PageHeading">
-        <item name="android:textSize">@dimen/list_item_heading_height</item>
+    <style name="SmallTalkTheme.RelatedNameHeading">
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 

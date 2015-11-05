@@ -66,11 +66,11 @@ public class SmalltalkObject {
 
         mResourceIDs = new HashMap<String, int[][]>();
         mResourceIDs.put("star", new int[][]{
-                {R.drawable.ic_star_border_black_48dp, R.drawable.small_star_off_locked},
-                {R.drawable.ic_star_black_48dp, R.drawable.small_star_on_locked}});
+                {R.drawable.star_color, R.drawable.star_color_locked},
+                {R.drawable.star_full_color, R.drawable.star_full_color_locked}});
         mResourceIDs.put("archive", new int[][]{
-                {R.drawable.ic_archive_black_48dp, R.drawable.small_archive_off_locked},
-                {R.drawable.ic_archive_black_48dp, R.drawable.small_archive_on_locked}});
+                {R.drawable.show_color, R.drawable.show_color_locked},
+                {R.drawable.hide_color, R.drawable.hide_color_locked}});
     }
 
     public SmalltalkObject(Context context, String id, String object_type) {

@@ -58,18 +58,18 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
         if (!(mObject.getType().equals("contact"))) {
             groupNames.add("contact");
             mRelatedObjects.put("contact", mObject.getRelatedObjects("contact", mShowArchive, mThroughGroup));
-            imageIDs.put("contact", R.drawable.ic_person_black_48dp);
+            imageIDs.put("contact", R.drawable.contact_color);
         }
         if (!(mObject.getType().equals("group"))) {
             groupNames.add("group");
             mRelatedObjects.put("group", mObject.getRelatedObjects("group", mShowArchive, mThroughGroup));
-            imageIDs.put("group", R.drawable.ic_people_black_48dp);
+            imageIDs.put("group", R.drawable.tag_color);
 
         }
         if (!(mObject.getType().equals("topic"))) {
             groupNames.add("topic");
             mRelatedObjects.put("topic", mObject.getRelatedObjects("topic", mShowArchive, mThroughGroup));
-            imageIDs.put("topic", R.drawable.topic);
+            imageIDs.put("topic", R.drawable.topic_color);
         }
     }
 
