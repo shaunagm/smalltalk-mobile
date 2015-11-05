@@ -19,7 +19,7 @@
             style="@style/SmallTalkTheme.ThirdsButton" />
 
         <Button
-            android:text="add selections"
+            android:text="add selected"
             android:id="@+id/import_contacts_save"
             style="@style/SmallTalkTheme.ThirdsButton" />
 
