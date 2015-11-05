@@ -29,7 +29,7 @@
     <string name="new_item_type_2">Group</string>
     <string name="new_item_type_3">Topic</string>
 
-    <string name="new_item_save_button">Save item!</string>
+    <string name="new_item_save_button">Save</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_list">ListActivity</string>

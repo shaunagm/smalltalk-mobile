@@ -86,7 +86,8 @@ public class EditActivity extends BaseActivity {
             item_type = (RadioButton) findViewById(R.id.edit_item_type_topic);
         }
         item_type.setChecked(true);
-        item_type.setVisibility(View.GONE);
+        RadioGroup typeSet = (RadioGroup) findViewById(R.id.edit_item_type);
+        typeSet.setVisibility(View.GONE);
 
         EditText nameField = (EditText) findViewById(R.id.edit_item_name);
         nameField.setText(current_object.getName());

@@ -118,9 +118,11 @@
     </style>
 
     <!-- Base Radio Buttons -->
-    <style name="SmallTalkTheme.RadioButton" parent="SmallTalkTheme.Button">
+    <style name="SmallTalkTheme.RadioButton" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
         <item name="android:layout_marginRight">@dimen/default_object_margin</item>
+        <item name="android:buttonTint">@color/darkPrimaryColor</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <!-- Base checkbox -->
