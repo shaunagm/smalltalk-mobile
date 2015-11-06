@@ -124,7 +124,7 @@ public class EditActivity extends BaseActivity {
         final EditText uriField = (EditText) findViewById(R.id.edit_item_uri);
         String item_uri = uriField.getText().toString();
 
-        RadioGroup item_type_options = (RadioGroup) view.findViewById(R.id.edit_item_type);
+        RadioGroup item_type_options = (RadioGroup) findViewById(R.id.edit_item_type);
         RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
         String item_type = (String) selected_item_view.getText();
 
