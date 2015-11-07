@@ -2,8 +2,10 @@ package com.example.android.smalltalk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -49,14 +51,30 @@ public class EditActivity extends BaseActivity {
             // If neither share nor add matches, or if in fact intent is null, will show a regular
             // "Add new data" form by default.
         }
+
+
+        // For views where you can choose type, hide/show URI when topic is deselected/selected.
+        RadioGroup item_type = (RadioGroup) findViewById(R.id.edit_item_type);
+        if (item_type.getVisibility() == View.VISIBLE) {
+            item_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    EditText uriField = (EditText) findViewById(R.id.edit_item_uri);
+                    if (checkedId == R.id.edit_item_type_topic) {
+                        uriField.setVisibility(View.VISIBLE);
+                    } else {
+                        uriField.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
     }
 
     public void populate_share_view(String name, String details, URL url) {
 
-        // shared items are always topics
+        // shared items are usually topics, so select by default
         RadioButton item_type = (RadioButton) findViewById(R.id.edit_item_type_topic);
         item_type.setChecked(true);
-        item_type.setVisibility(View.GONE);
 
         EditText nameField = (EditText) findViewById(R.id.edit_item_name);
         nameField.setText(name);
@@ -144,7 +162,7 @@ public class EditActivity extends BaseActivity {
         final EditText detailsField = (EditText) findViewById(R.id.edit_item_details);
         String item_details = detailsField.getText().toString();
 
-        RadioGroup item_type_options = (RadioGroup) view.findViewById(R.id.edit_item_type);
+        RadioGroup item_type_options = (RadioGroup) findViewById(R.id.edit_item_type);
         RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
         String item_type = (String) selected_item_view.getText();
 
