@@ -2,7 +2,10 @@ package com.example.android.smalltalk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -17,19 +20,39 @@ import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditActivity extends BaseActivity {
 
     SmalltalkDBHelper mdbHelper;
+    Boolean[] errors;
+    String[] warnings;
+
+    // There are three situations in which this fragment may run:
+    //      1) to add new items
+    //      2) to create new items from the share intent
+    //      3) to edit an existing item
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data_form);
+
+        errors = new Boolean[]{false, false, false};
+        warnings = new String[]{"Name is a required field. ",
+                "You already have an item by that name. ",
+                "That is not a valid URI. "};
+
+        // shared items are usually topics, so select by default
+        RadioButton default_type = (RadioButton) findViewById(R.id.edit_item_type_topic);
+        default_type.setChecked(true);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -52,6 +75,27 @@ public class EditActivity extends BaseActivity {
             // "Add new data" form by default.
         }
 
+        // Add listener+validator to name & uri fields
+        EditText nameField = (EditText) findViewById(R.id.edit_item_name);
+        nameField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!(hasFocus)) {
+                    textValidator(view, "name"); // Check text once user is done typing.
+                }
+            }
+        });
+
+        EditText uriField = (EditText) findViewById(R.id.edit_item_uri);
+        uriField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!(hasFocus)) {
+                    // Check text once user is done typing.
+                    textValidator(view, "uri");
+                }
+            }
+        });
 
         // For views where you can choose type, hide/show URI when topic is deselected/selected.
         RadioGroup item_type = (RadioGroup) findViewById(R.id.edit_item_type);
@@ -71,10 +115,6 @@ public class EditActivity extends BaseActivity {
     }
 
     public void populate_share_view(String name, String details, URL url) {
-
-        // shared items are usually topics, so select by default
-        RadioButton item_type = (RadioButton) findViewById(R.id.edit_item_type_topic);
-        item_type.setChecked(true);
 
         EditText nameField = (EditText) findViewById(R.id.edit_item_name);
         nameField.setText(name);
@@ -185,4 +225,100 @@ public class EditActivity extends BaseActivity {
         startActivity(intent);
 
     }
+
+    public void textValidator(View view, String text_type) {
+
+        if (text_type.equals("name")) {
+
+            EditText nameField = (EditText) findViewById(R.id.edit_item_name);
+            String nameText = nameField.getText().toString();
+
+            if (nameText.length() == 0) {
+                errors[0] = true;
+                errors[1] = false;
+            } else {
+                errors[0] = false;
+
+                // Find the item type selected
+                RadioGroup item_type_options = (RadioGroup) findViewById(R.id.edit_item_type);
+                RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
+                String item_type = (String) selected_item_view.getText();
+                // Query to see if there's a duplicate.  If yes, warn user.
+                String id = db_utils.checkExists(getApplicationContext(), nameText, item_type + "s");
+
+                if (id.equals("0")) {
+                    // if there's no duplicate, yay!
+                    errors[1] = false;
+                } else {
+                    // Check that it's not an edited item matching its own name
+                    TextView secret_id_view = (TextView) findViewById(R.id.edit_item_id);
+                    if (id.equals(secret_id_view.getText().toString())) {
+                        errors[1] = false;
+                    } else {
+                        errors[1] = true;
+                    }
+                }
+            }
+
+        } else {
+
+            EditText uriField = (EditText) findViewById(R.id.edit_item_uri);
+            String uri = uriField.getText().toString();
+
+            if (uri.toString().length() == 0) {
+                errors[2] = false;
+            } else {
+
+                // Check for scheme & add it if missing
+                String newUrl = uri;
+                Pattern scheme = Pattern.compile("((?:(http|https|Http|Https|HTTP|HTTPS):\\/{1,2}?)).+?");
+                if (!(scheme.matcher(uri).matches())) {
+                    newUrl = "http://".concat(uri);
+                }
+
+                // If URI now passes, update field and set errors to none.
+                if (Patterns.WEB_URL.matcher(newUrl).matches()) {
+                    uriField.setText(newUrl, TextView.BufferType.EDITABLE);
+                    errors[2] = false;
+                } else {
+                    errors[2] = true; // Something else wrong with the URI :(
+                }
+            }
+        }
+
+        // Allow user to press "save" button only if all fields are valid.
+        Button saveButton = (Button) findViewById(R.id.edit_save_button);
+        TextView warningField = (TextView) findViewById(R.id.edit_warnings);
+        if (validationWarnings().length() == 0) {
+            saveButton.setClickable(true);
+            warningField.setText(validationWarnings());
+            warningField.setVisibility(View.GONE);
+        } else {
+            saveButton.setClickable(false);
+            warningField.setText(validationWarnings());
+            warningField.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
+    public String validationWarnings() {
+
+        // Checks to see if form is ready to be submitted & returns warnings if not.
+        String warningString = "";
+        if (errors[0]) {
+            warningString = warningString.concat(warnings[0]);
+        }
+        if (errors[1]) {
+            warningString = warningString.concat(warnings[1]);
+        }
+        EditText uriField = (EditText) findViewById(R.id.edit_item_uri);
+        if ((errors[2]) && (uriField.getVisibility() == View.VISIBLE)) {
+            warningString = warningString.concat(warnings[2]);
+        }
+
+        return warningString;
+
+    }
+
 }

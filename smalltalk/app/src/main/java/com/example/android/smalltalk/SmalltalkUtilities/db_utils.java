@@ -34,7 +34,22 @@ public class db_utils {
         writeDB.insert("contact_group", null, values);
     }
 
-    // Checks that an object exists in the database and, if it does, returns the row_id. Otherwise, returns 0.
+    // Checks if an object exists.  Returns ID or empty string.
+    public static String checkExists(Context context, String name, String item_type) {
+        SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
+        SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
+        String queryString = String.format("SELECT * FROM %s WHERE name = '%s' COLLATE NOCASE;", item_type, name);
+        Cursor cursor = readDb.rawQuery(queryString, new String[]{});
+        if (cursor.getCount() == 0) {
+            return "0";  // Don't return "", since that will match an empty id textfield
+        } else {
+            cursor.moveToNext();
+            return cursor.getString(cursor.getColumnIndex("_id"));
+        }
+    }
+
+
+    // Checks that an object exists in the database and, if it does, returns the row_id. Otherwise, creates it..
     public static String getOrCreate(Context context, String item_type, String name) {
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();

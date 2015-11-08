@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" style="@style/SmallTalkTheme.BaseLayout">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" style="@style/SmallTalkTheme.BaseLayout">
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -21,6 +21,15 @@
             android:text="topic"/>
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/edit_warnings"
+        style="@style/SmallTalkTheme.FullWidthTextView"
+        android:layout_margin="10dip"
+        android:padding="5dip"
+        android:background="@color/accentColor"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+
     <EditText
         android:id="@+id/edit_item_name"
         style="@style/SmallTalkTheme.EditText"
@@ -28,8 +37,7 @@
         android:inputType="textPersonName"
         android:maxLength="100"
         android:layout_marginTop="@dimen/default_object_margin"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/edit_item_type"/>
+        android:digits="@string/allowable_name_characters"/>
 
     <EditText
         android:id="@+id/edit_item_uri"
@@ -45,8 +53,10 @@
         android:hint="Description"
         android:inputType="textMultiLine"
         android:lines="8"
+        android:maxLength="2000"
         android:gravity="bottom"
-        android:layout_below="@+id/edit_item_uri"/>
+        android:layout_below="@+id/edit_item_uri"
+        android:digits="@string/allowable_detail_characters" />
 
     <Button
         android:id="@+id/edit_save_button"
@@ -59,9 +69,9 @@
     <TextView
         android:id="@+id/edit_item_id"
         style="@style/SmallTalkTheme.EditText"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
-</RelativeLayout>
+</LinearLayout>
 
 
 

@@ -21,7 +21,8 @@
         <TextView
             android:id="@+id/detail_item_uri"
             style="@style/SmallTalkTheme.FullWidthTextView"
-            android:textColor="@color/secondaryText" />
+            android:textStyle="bold"
+            android:textColor="@color/primaryText" />
 
         <ExpandableListView
             android:id="@+id/relationship_list"
