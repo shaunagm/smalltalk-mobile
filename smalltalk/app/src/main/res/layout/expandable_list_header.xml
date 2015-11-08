@@ -15,7 +15,7 @@
 
     <CheckBox
         android:id="@+id/show_archived_relationships"
-        android:text="archived topics"
+        android:text="show archived"
         style="@style/SmallTalkTheme.RelationshipCheckBox"
         android:layout_below="@+id/header_name_icon"
         android:visibility="gone"/>
