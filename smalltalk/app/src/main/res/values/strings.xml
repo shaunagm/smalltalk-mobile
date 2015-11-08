@@ -4,12 +4,20 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
 
+    <string name="landing_activity_detail">LandingActivity</string>
+
     <string name="drawer_open">A wild drawer opens!</string>
     <string name="drawer_close">A wild drawer closes.</string>
     <string name="title_activity_contact">ContactActivity</string>
 
     <string name="edit_item_button">Edit</string>
     <string name="edit_item_form_title">Edit Item</string>
+
+
+    <string name="landing_intro_text">Smalltalk is an app to help you keep track of the things you want to talk
+    about with friends, family, colleagues, and even strangers. \n \nThis landing page has some tips on how to use
+    the app.  When you\'re done, press the "finished" button at the bottom.  Don\'t worry, you can always
+    view this screen again through the drop down menu at the top right of your screen.</string>
 
     <!-- Import Contacts strings -->
     <string name="import_contacts_intro_explanation">You can import contacts from your phone by selecting

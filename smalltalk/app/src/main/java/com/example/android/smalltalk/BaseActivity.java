@@ -69,6 +69,10 @@ public class BaseActivity extends AppCompatActivity {
                 Intent import_intent = new Intent(this.getApplicationContext(), ImportContactsActivity.class);
                 this.startActivity(import_intent);
                 return true;
+            case R.id.show_help:
+                Intent help_intent = new Intent(this.getApplicationContext(), LandingActivity.class);
+                this.startActivity(help_intent);
+                return true;
             default:
                 break;
         }

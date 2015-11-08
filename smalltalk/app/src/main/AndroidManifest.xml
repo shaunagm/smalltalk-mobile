@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".LandingActivity"
+            android:label="@string/landing_activity_detail">
+        </activity>
+        <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail">
         </activity>

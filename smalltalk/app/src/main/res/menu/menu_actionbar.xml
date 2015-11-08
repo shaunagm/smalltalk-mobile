@@ -35,6 +35,11 @@
         android:icon="@drawable/small_archive_off"
         app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/show_help"
+        android:title="Help"
+        app:showAsAction="never" />
+
+
     <!-- These are the main actions for the Detail ActionBar, but are hidden by default -->
     <item android:id="@+id/edit_action"
         android:title="edit"
