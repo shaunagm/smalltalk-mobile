@@ -1,10 +1,12 @@
 package com.example.android.smalltalk;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.smalltalk.data.RelationshipAdapter;
 import com.example.android.smalltalk.data.SmalltalkObject;
@@ -74,7 +77,15 @@ public class DetailActivityFragment extends Fragment {
                         TextView URIField = (TextView) v.findViewById(R.id.detail_item_uri);
                         Uri webpage = Uri.parse(URIField.getText().toString());
                         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                        startActivity(intent);
+                        try
+                        { startActivity(intent); }
+                        catch (ActivityNotFoundException e)
+                        {
+                            Toast toast = Toast.makeText(getActivity(),"There was a problem with your URL.", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+
                     }
                 });
             }
