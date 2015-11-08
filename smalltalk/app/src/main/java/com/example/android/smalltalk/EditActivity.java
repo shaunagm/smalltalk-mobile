@@ -1,11 +1,14 @@
 package com.example.android.smalltalk;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -14,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
@@ -29,6 +33,7 @@ import java.util.regex.Pattern;
 
 public class EditActivity extends BaseActivity {
 
+    SmalltalkObject current_object;
     SmalltalkDBHelper mdbHelper;
     Boolean[] errors;
     String[] warnings;
@@ -60,8 +65,8 @@ public class EditActivity extends BaseActivity {
                 // edit item
                 String item_type = intent.getStringExtra("item_type");
                 String item_id = intent.getStringExtra("item_id");
-                SmalltalkObject current_object = new SmalltalkObject(this, item_id, item_type);
-                populate_edit_view(current_object);
+                current_object = new SmalltalkObject(this, item_id, item_type);
+                populate_edit_view();
             } else if (!(intent.getType() == null) && intent.getType().equals("text/plain")) {
                 // add item from share
                 String name = intent.getStringExtra(Intent.EXTRA_TITLE);
@@ -130,7 +135,7 @@ public class EditActivity extends BaseActivity {
     }
 
     // Go through and adapt to edit_data_form and the default of
-    public void populate_edit_view(SmalltalkObject current_object) {
+    public void populate_edit_view() {
 
         TextView secret_id_view = (TextView) findViewById(R.id.edit_item_id);
         secret_id_view.setText(current_object.getID());
@@ -160,6 +165,9 @@ public class EditActivity extends BaseActivity {
         EditText detailsField = (EditText) findViewById(R.id.edit_item_details);
         detailsField.setText(current_object.getDetails());
 
+        Button delete_button = (Button) findViewById(R.id.edit_delete_button);
+        delete_button.setVisibility(View.VISIBLE);
+
         Button edit_button = (Button) findViewById(R.id.edit_save_button);
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +190,7 @@ public class EditActivity extends BaseActivity {
         final EditText uriField = (EditText) findViewById(R.id.edit_item_uri);
         String item_uri = uriField.getText().toString();
 
+
         RadioGroup item_type_options = (RadioGroup) findViewById(R.id.edit_item_type);
         RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
         String item_type = (String) selected_item_view.getText();
@@ -192,6 +201,39 @@ public class EditActivity extends BaseActivity {
                 .putExtra("item_id", Long.toString(id))
                 .putExtra("item_type", item_type);
         startActivity(intent);
+    }
+
+    public void delete_item(View view) {
+        EditText name = (EditText) view.getRootView().findViewById(R.id.edit_item_name);
+        String nameText = name.getText().toString();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
+
+        builder.setTitle("Delete " + nameText + "?");
+
+        builder.setPositiveButton("Yes, delete this", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Boolean success = current_object.removeSelf();
+
+                if (!success) {
+                    Toast toast = Toast.makeText(EditActivity.this, "There was a problem deleting this item. Please contact the app developer.", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                } else {
+                    Intent list_contact_intent = new Intent(getApplicationContext(), ListActivity.class)
+                            .putExtra("list_type", current_object.getType() + "s");
+                    startActivity(list_contact_intent);
+                }
+            }
+        });
+        builder.setNegativeButton("No, go back", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void update_item(View view) {

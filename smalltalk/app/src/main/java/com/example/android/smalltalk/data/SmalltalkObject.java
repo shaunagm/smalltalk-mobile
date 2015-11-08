@@ -140,6 +140,19 @@ public class SmalltalkObject {
 
     public String getID() { return this.id; }
 
+    public String[] get_related_types() {
+        switch(this.object_type) {
+            case "topic":
+                return new String[]{"contacts", "groups"};
+            case "contact":
+                return new String[]{"groups", "topics"};
+            case "group":
+                return new String[]{"contacts", "topics"};
+            default:
+                return new String[]{"error in get_related_types", ""};
+        }
+    }
+
     public relatedObjects getRelatedObjects(String type, boolean show_archive, boolean through_group) {
         mRelatedObjects = new relatedObjects(type, show_archive, through_group);
         return mRelatedObjects;
@@ -362,6 +375,30 @@ public class SmalltalkObject {
         // Allows us to call updateObject on non-topic objects, which have no URI field to update.
         updateObject(name, details, "null");
     }
+
+    public boolean removeSelf() {
+
+        // First remove relationships
+        String[] related_types = this.get_related_types();
+        for (String type: related_types) {
+            mWriteDb.delete(getRelationshipTableName(type),
+                    this.object_type + "_id = ? ;",
+                    new String[]{this.id});
+        }
+
+        // Then remove object itself.
+        int row = mWriteDb.delete(this.object_type_plural,
+                "_id = ? ;",
+                new String[]{this.id});
+
+        if (row > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 
     public void removeRelationship(String related_type, String related_item_id) {
         related_type = related_type.toLowerCase().replace("s","");

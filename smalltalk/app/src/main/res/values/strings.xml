@@ -30,6 +30,9 @@
     <string name="new_item_type_3">Topic</string>
 
     <string name="new_item_save_button">Save</string>
+    <string name="item_delete_button">Delete</string>
+
+
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_list">ListActivity</string>

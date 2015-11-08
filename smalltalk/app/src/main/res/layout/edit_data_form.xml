@@ -63,7 +63,14 @@
         style="@style/SmallTalkTheme.Button"
         android:text="@string/new_item_save_button"
         android:onClick="add_item"
-        android:layout_below="@+id/edit_item_details"
+        android:layout_marginTop="@dimen/default_object_margin" />
+
+    <Button
+        android:id="@+id/edit_delete_button"
+        style="@style/SmallTalkTheme.Button"
+        android:text="@string/item_delete_button"
+        android:onClick="delete_item"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/default_object_margin" />
 
     <TextView
