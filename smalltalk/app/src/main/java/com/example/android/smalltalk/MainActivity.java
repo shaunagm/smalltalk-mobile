@@ -17,7 +17,7 @@ public class MainActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
-
+//
 //        fixture_utils.exportDB(this);
 //        this.deleteDatabase("smalltalk.db");
 //        fixture_utils.populateDB(this);

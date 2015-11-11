@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/smalltalk-mobile.iml" filepath="$PROJECT_DIR$/.idea/smalltalk-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/1.0.1.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.android.support/multidex/1.0.1/1.0.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/22.2.1.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/22.2.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/22.2.1.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/22.2.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.1.0/8.1.0.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.1.0/8.1.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.1.0/8.1.0.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.1.0/8.1.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/8.1.0.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/8.1.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/generated/source/buildConfig/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/generated/source/buildConfig/androidTest/androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/src/androidTest/androidTest1.iml" filepath="$PROJECT_DIR$/smalltalk/app/src/androidTest/androidTest1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/generated/source/buildConfig/buildConfig.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/generated/source/buildConfig/buildConfig.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/manifests/androidTest/debug/debug.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/manifests/androidTest/debug/debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/intermediates/manifests/full/debug/debug.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/intermediates/manifests/full/debug/debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/src/main/main.iml" filepath="$PROJECT_DIR$/smalltalk/app/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smalltalk/app/build/generated/source/r/r.iml" filepath="$PROJECT_DIR$/smalltalk/app/build/generated/source/r/r.iml" />
     </modules>
   </component>
 </project>
