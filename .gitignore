@@ -1,2 +1,8 @@
 *~
 *.log
+*.idea*
+local.properties
+out/
+smalltalk/gradlew
+smalltalk/smalltalk.iml
+
