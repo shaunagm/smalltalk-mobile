@@ -8,13 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.smalltalk.R;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ImportContactCursorAdapter extends CursorAdapter {
@@ -49,7 +47,7 @@ public class ImportContactCursorAdapter extends CursorAdapter {
     // The newView method is used to inflate a new view and return it,
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.import_contact_list_item, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.checkbox_list_item, parent, false);
     }
 
     // The bindView method is used to bind all data to a given view
