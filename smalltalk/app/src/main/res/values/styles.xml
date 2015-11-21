@@ -104,6 +104,15 @@
         <item name="android:gravity">left</item>
     </style>
 
+    <style name="SmallTalkTheme.LandingHeading" parent="SmallTalkTheme.PageSubHeading">
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_marginTop">@dimen/default_object_margin</item>
+        <item name="android:layout_marginBottom">@dimen/default_object_margin</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+
+
     <!-- *** BUTTONS *** -->
 
     <!-- Base Button Style -->
@@ -176,6 +185,15 @@
         <item name="android:layout_width">@dimen/relationship_image_dimen</item>
         <item name="android:layout_height">@dimen/relationship_image_dimen</item>
         <item name="android:layout_marginLeft">5dp</item>
+    </style>
+
+    <!-- Relationship Image Button ("star", "archive", etc) Style -->
+    <style name="SmallTalkTheme.RelationshipImageButtonLargeScreen" parent="SmallTalkTheme.ImageButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">.5</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 
     <!-- Style for listview of related items -->

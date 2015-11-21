@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -18,8 +16,6 @@ import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.android.smalltalk.DetailActivity;
@@ -28,7 +24,6 @@ import com.example.android.smalltalk.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Adapted from https://gist.github.com/Psest328/8762232 by shauna on 8/26/15.
@@ -41,6 +36,7 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
     private ExpandableListView mListView;
     private boolean mShowArchive;
     private boolean mThroughGroup;
+    private int relationshipID;
 
     private List<String> groupNames = new ArrayList<String>();
     private HashMap<String,SmalltalkObject.relatedObjects> mRelatedObjects = new HashMap<>();
@@ -71,6 +67,16 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
             mRelatedObjects.put("topic", mObject.getRelatedObjects("topic", mShowArchive, mThroughGroup));
             imageIDs.put("topic", R.drawable.topic_color);
         }
+
+        // Decide what relationship layout to use
+        HashMap screenAdaptations = com.example.android.smalltalk.SmalltalkUtilities.misc_utils.getScreenAdaption(context);
+        if (screenAdaptations.get("customRelationship") == true) {
+            relationshipID = R.layout.expandable_list_topic_items_large_screens;
+        } else {
+            relationshipID = R.layout.expandable_list_topic_items;
+        }
+
+
     }
 
 
@@ -103,7 +109,11 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() { return false; }
 
     public String groupName(GroupViewHolder view) {
-        return view.hGroupName.getText().toString().replace("s","");
+        String tempName = view.hGroupName.getText().toString().replace("s","");
+        if (tempName.equals("tag")) {
+            tempName = "group";
+        }
+        return tempName;
     }
 
     public boolean isTopicType(GroupViewHolder group_holder) {
@@ -165,7 +175,14 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
 
         // Set display fields
         final String groupName = groupNames.get(groupPosition);
-        group_holder.hGroupName.setText(groupName + "s");
+        String displayName;
+        if (groupName.equals("group")) {
+             displayName = "tag";
+        } else {
+             displayName = groupName;
+        }
+
+        group_holder.hGroupName.setText(displayName + "s");
         group_holder.hGroupIcon.setImageResource(imageIDs.get(groupName));
 
 
@@ -208,7 +225,7 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                
+
                 AlertDialog.Builder editRelationshipBuilder = new AlertDialog.Builder(mContext);
                 editRelationshipBuilder.setTitle("Add and remove " + groupName + " from " + mObject.getName());
 
@@ -222,11 +239,7 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
                 refreshRelatedObjects(groupName);
 
                 for (int i = 0; i < names.length; i++) {
-                    if (mRelatedObjects.get(groupName).names.contains(names[i])) {
-                        selectedItems[i] = true;
-                    } else {
-                        selectedItems[i] = false;
-                    }
+                    selectedItems[i] = mRelatedObjects.get(groupName).names.contains(names[i]);
                 }
 
                 editRelationshipBuilder.setMultiChoiceItems(names, selectedItems, new DialogInterface.OnMultiChoiceClickListener() {
@@ -246,11 +259,6 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
             }
         });
 
-//        if (mAdapterType.equals("topics")) {
-//            mListView.expandGroup(0);
-//            toggleTopicControls(group_holder, View.VISIBLE);
-//        }
-
         return convertView;
     }
 
@@ -260,7 +268,7 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
         View convertView;
 
         if (useTopicType) {
-            convertView = inflater.inflate(R.layout.expandable_list_topic_items, null);
+            convertView = inflater.inflate(relationshipID, null);
             childViewHolder.mStar = (ImageButton) convertView.findViewById(R.id.star_button);
             childViewHolder.mArchive = (ImageButton) convertView.findViewById(R.id.archive_button);
         } else {

@@ -5,15 +5,21 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.CursorAdapter;
+import android.widget.TextView;
 
-import com.example.android.smalltalk.data.SmalltalkContract.ContactEntry;
 import com.example.android.smalltalk.R;
+import com.example.android.smalltalk.SmalltalkUtilities.misc_utils;
+
+import java.util.HashMap;
 
 public class ObjectCursorAdapter extends CursorAdapter {
-    public ObjectCursorAdapter(Context context, Cursor cursor, int flags) {
+    HashMap screenAdaptation;
+
+
+    public ObjectCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
+        screenAdaptation = misc_utils.getScreenAdaption(context);
     }
 
     // The newView method is used to inflate a new view and return it,

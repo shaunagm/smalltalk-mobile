@@ -1,30 +1,19 @@
 package com.example.android.smalltalk.data;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.DetailActivity;
-import com.example.android.smalltalk.DetailActivityFragment;
 import com.example.android.smalltalk.ImportContactsActivity;
-import com.example.android.smalltalk.ImportContactsFragment;
 import com.example.android.smalltalk.R;
 import com.example.android.smalltalk.SmalltalkUtilities.import_utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

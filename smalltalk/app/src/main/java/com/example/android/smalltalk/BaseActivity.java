@@ -5,26 +5,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.example.android.smalltalk.data.SmalltalkObject;
 
 public class BaseActivity extends AppCompatActivity {
-
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private String[] mDrawerOptions;
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

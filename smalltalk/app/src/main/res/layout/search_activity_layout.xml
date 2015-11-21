@@ -18,7 +18,7 @@
             style="@style/SmallTalkTheme.ThirdsButton" />
 
         <Button
-            android:text="Groups"
+            android:text="Tags"
             android:id="@+id/search_show_groups"
             style="@style/SmallTalkTheme.ThirdsButton" />
 

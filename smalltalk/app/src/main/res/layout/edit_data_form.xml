@@ -14,7 +14,7 @@
         <RadioButton
             android:id="@+id/edit_item_type_group"
             style="@style/SmallTalkTheme.RadioButton"
-            android:text="group"/>
+            android:text="tag"/>
         <RadioButton
             android:id="@+id/edit_item_type_topic"
             style="@style/SmallTalkTheme.RadioButton"

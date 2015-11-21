@@ -9,18 +9,13 @@ import android.text.TextUtils;
 
 import com.example.android.smalltalk.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
-/**
- * Created by shauna on 8/27/15.
- */
 public class SmalltalkObject {
 
     String name;
@@ -391,12 +386,7 @@ public class SmalltalkObject {
                 "_id = ? ;",
                 new String[]{this.id});
 
-        if (row > 0) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return (row > 0);
     }
 
 

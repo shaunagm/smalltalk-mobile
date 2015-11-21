@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:text="view groups"
+            android:text="view groups/tags"
             android:id="@+id/import_contacts_toggle_type"
             style="@style/SmallTalkTheme.ThirdsButton" />
 

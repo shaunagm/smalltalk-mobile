@@ -15,9 +15,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-/**
- * Created by shauna on 9/7/15.
- */
 public class fixture_utils {
 
     static String[ ] mContactNames = {
@@ -108,7 +105,7 @@ public class fixture_utils {
             ContentValues values = new ContentValues();
             values.put(SmalltalkContract.ContactEntry.COLUMN_CONTACT_NAME, mContactNames[i]);
             values.put(SmalltalkContract.ContactEntry.COLUMN_CONTACT_DETAILS, mContactDetails[i]);
-            long newID = db.insert(SmalltalkContract.ContactEntry.TABLE_NAME, null, values);
+            db.insert(SmalltalkContract.ContactEntry.TABLE_NAME, null, values);
         }
     }
 
@@ -117,7 +114,7 @@ public class fixture_utils {
             ContentValues values = new ContentValues();
             values.put(SmalltalkContract.GroupEntry.COLUMN_GROUP_NAME, mGroupNames[i]);
             values.put(SmalltalkContract.GroupEntry.COLUMN_GROUP_DETAILS, mGroupDetails[i]);
-            long newID = db.insert(SmalltalkContract.GroupEntry.TABLE_NAME, null, values);
+            db.insert(SmalltalkContract.GroupEntry.TABLE_NAME, null, values);
         }
     }
 
@@ -128,7 +125,7 @@ public class fixture_utils {
             values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_NAME, mTopicNames[i]);
             values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_DETAILS, mTopicDetails[i]);
             values.put(SmalltalkContract.TopicEntry.COLUMN_TOPIC_URI, "http://www.whatever.com");
-            long newID = db.insert(SmalltalkContract.TopicEntry.TABLE_NAME, null, values);
+            db.insert(SmalltalkContract.TopicEntry.TABLE_NAME, null, values);
         }
     }
 
@@ -137,7 +134,7 @@ public class fixture_utils {
             ContentValues values = new ContentValues();
             values.put(SmalltalkContract.ContactGroupJunction.COLUMN_CONTACT_KEY, mCGJContacts[i]);
             values.put(SmalltalkContract.ContactGroupJunction.COLUMN_GROUP_KEY, mCGJGroups[i]);
-            long newID = db.insert(SmalltalkContract.ContactGroupJunction.TABLE_NAME, null, values);
+            db.insert(SmalltalkContract.ContactGroupJunction.TABLE_NAME, null, values);
         }
     }
 
@@ -148,7 +145,7 @@ public class fixture_utils {
             values.put(SmalltalkContract.TopicContactJunction.COLUMN_STAR, false);
             values.put(SmalltalkContract.TopicContactJunction.COLUMN_TOPIC_KEY, mTCJTopics[i]);
             values.put(SmalltalkContract.TopicContactJunction.COLUMN_CONTACT_KEY, mTCJContacts[i]);
-            long newID = db.insert(SmalltalkContract.TopicContactJunction.TABLE_NAME, null, values);
+            db.insert(SmalltalkContract.TopicContactJunction.TABLE_NAME, null, values);
         }
     }
 
@@ -157,7 +154,7 @@ public class fixture_utils {
             ContentValues values = new ContentValues();
             values.put(SmalltalkContract.TopicGroupJunction.COLUMN_TOPIC_KEY, mTGJTopics[i]);
             values.put(SmalltalkContract.TopicGroupJunction.COLUMN_GROUP_KEY, mTGJGroups[i]);
-            long newID = db.insert(SmalltalkContract.TopicGroupJunction.TABLE_NAME, null, values);
+            db.insert(SmalltalkContract.TopicGroupJunction.TABLE_NAME, null, values);
         }
     }
 

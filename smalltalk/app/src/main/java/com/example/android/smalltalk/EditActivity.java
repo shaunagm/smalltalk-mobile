@@ -4,37 +4,26 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
-import com.example.android.smalltalk.data.SmalltalkDBHelper;
 import com.example.android.smalltalk.data.SmalltalkObject;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EditActivity extends BaseActivity {
 
     SmalltalkObject current_object;
-    SmalltalkDBHelper mdbHelper;
     Boolean[] errors;
     String[] warnings;
 
@@ -195,6 +184,10 @@ public class EditActivity extends BaseActivity {
         RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
         String item_type = (String) selected_item_view.getText();
 
+        if (item_type.equals(("tag"))) {
+            item_type = "group";  // Change from user-visible name to database name.
+        }
+
         long id = db_utils.createObject(this, item_type, item_name, item_details, item_uri);
 
         Intent intent = new Intent(this, DetailActivity.class)
@@ -294,11 +287,7 @@ public class EditActivity extends BaseActivity {
                 } else {
                     // Check that it's not an edited item matching its own name
                     TextView secret_id_view = (TextView) findViewById(R.id.edit_item_id);
-                    if (id.equals(secret_id_view.getText().toString())) {
-                        errors[1] = false;
-                    } else {
-                        errors[1] = true;
-                    }
+                    errors[1] = !id.equals(secret_id_view.getText().toString());
                 }
             }
 

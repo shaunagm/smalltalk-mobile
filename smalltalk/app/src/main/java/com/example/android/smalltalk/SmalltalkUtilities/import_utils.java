@@ -1,19 +1,12 @@
 package com.example.android.smalltalk.SmalltalkUtilities;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
-/**
- * Created by shauna on 9/7/15.
- */
 public class import_utils {
 
     static String phoneSelection = ContactsContract.Contacts.HAS_PHONE_NUMBER + "=1";

@@ -13,8 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +25,6 @@ import com.google.android.gms.ads.AdView;
 public class DetailActivityFragment extends Fragment {
 
     SmalltalkObject current_object;
-    String first_type;
-    String second_type;
 
     public DetailActivityFragment() {
     }
@@ -99,7 +95,7 @@ public class DetailActivityFragment extends Fragment {
             list.setGroupIndicator(null);
             list.setDividerHeight(5);
 
-        };
+        }
         return rootView;
     }
 

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/default_object_margin">
 
     <TextView
         android:text="Welcome!"
@@ -12,15 +19,126 @@
     <TextView
         android:text="@string/landing_intro_text"
         android:id="@+id/landing_intro_text"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <TextView
+        android:text="@string/basics_header"
+        style="@style/SmallTalkTheme.LandingHeading" />
+
+    <TextView
+        android:text="@string/basics_text_1"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_new_screenshot"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="@string/basics_text_2"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/header_screenshot"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="@string/basics_text_3"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/items_to_connect_screenshot"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="@string/adding_tags_header"
+        style="@style/SmallTalkTheme.LandingHeading" />
+
+    <TextView
+        android:text="@string/adding_tags_text_1"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/topics_via_tags_screenshot"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="@string/archiving_and_starring_header"
+        style="@style/SmallTalkTheme.LandingHeading" />
+
+    <TextView
+        android:text="@string/archiving_and_starring_text_1"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/archive_and_star_icon_screenshot"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="@string/archiving_and_starring_text_2"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/relationship_icon_screenshot"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="@string/archiving_and_starring_text_3"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/locked_icon_screenshot"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:text="@string/archiving_and_starring_text_4"
+        style="@style/SmallTalkTheme.FullWidthTextView" />
+
+    <TextView
+        android:text="@string/misc_header"
+        style="@style/SmallTalkTheme.LandingHeading" />
+
+    <TextView
+        android:text="@string/misc_text"
         style="@style/SmallTalkTheme.FullWidthTextView" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/SmallTalkTheme.Button"
+        android:text="I'm finished"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:onClick="hide_help"
         android:id="@+id/hide_intro" />
 
 
 
 </LinearLayout>
+</ScrollView>

@@ -1,19 +1,14 @@
 package com.example.android.smalltalk.data;
 
-/**
- * Created by shauna on 8/19/15.
- */
-
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.android.smalltalk.data.SmalltalkContract.ContactEntry;
-import com.example.android.smalltalk.data.SmalltalkContract.TopicEntry;
-import com.example.android.smalltalk.data.SmalltalkContract.GroupEntry;
 import com.example.android.smalltalk.data.SmalltalkContract.ContactGroupJunction;
+import com.example.android.smalltalk.data.SmalltalkContract.GroupEntry;
 import com.example.android.smalltalk.data.SmalltalkContract.TopicContactJunction;
+import com.example.android.smalltalk.data.SmalltalkContract.TopicEntry;
 import com.example.android.smalltalk.data.SmalltalkContract.TopicGroupJunction;
 
 

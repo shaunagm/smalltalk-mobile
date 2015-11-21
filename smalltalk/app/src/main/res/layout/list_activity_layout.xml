@@ -10,10 +10,24 @@
         style="@style/SmallTalkTheme.ListHeading"
         android:textAllCaps="true" />
 
-    <Button
-        android:id="@+id/listview_show_archived"
-        style="@style/SmallTalkTheme.Button"
-        android:text="Show archived topics" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/listview_show_archived"
+            style="@style/SmallTalkTheme.Button"
+            android:text="Show archived"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:id="@+id/listview_show_starred_only"
+            style="@style/SmallTalkTheme.Button"
+            android:text="Hide un-starred" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview_objects"

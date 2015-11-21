@@ -1,8 +1,5 @@
 package com.example.android.smalltalk;
 
-import java.util.Arrays;
-
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,6 +14,8 @@ import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
 import com.example.android.smalltalk.SmalltalkUtilities.import_utils;
 import com.example.android.smalltalk.data.ContactOptionsAdapter;
 import com.example.android.smalltalk.data.ImportContactCursorAdapter;
+
+import java.util.Arrays;
 
 
 public class ImportContactsFragment extends android.support.v4.app.Fragment {
@@ -33,7 +32,6 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
         // If no intent, do intro
         if (!(intent.hasExtra("type"))) {
             View rootView = inflater.inflate(R.layout.import_contacts_intro, container, false);
-            Context context = container.getContext();
             ListView listView = (ListView) rootView.findViewById(R.id.contact_options_list);
             ContactOptionsAdapter optionsAdapter = new ContactOptionsAdapter(this.getActivity());
             listView.setAdapter(optionsAdapter);
@@ -48,7 +46,7 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
         // Make contacts listview, assign adapter
         ListView contacts = (ListView) rootView.findViewById(R.id.listview_import_contacts);
         Cursor cursor = import_utils.getAndroidContacts(this.getActivity(), type);
-        final ImportContactCursorAdapter contact_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "contact", contacts);
+        final ImportContactCursorAdapter contact_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, "contact", contacts);
         contacts.setAdapter(contact_adapter);
 
         // Make groups listview if necessary
@@ -58,7 +56,7 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
             // Make groups listview, set header, assign adapter
             ListView groups = (ListView) rootView.findViewById(R.id.listview_import_groups);
             cursor = import_utils.getPhoneGroups(this.getActivity());
-            group_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, 0, "group", groups);
+            group_adapter = new ImportContactCursorAdapter(this.getActivity(), cursor, "group", groups);
             groups.setAdapter(group_adapter);
         } else {
             group_adapter = null; // need to initialize this so we can pass it to save_imports
@@ -106,13 +104,13 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
         if (contacts.getVisibility() == View.VISIBLE) {
             contacts.setVisibility(View.GONE);
             groups.setVisibility(View.VISIBLE);
-            header.setText("Groups");
+            header.setText("Groups/Tags");
             toggle_type.setText("view contacts");
         } else {
             contacts.setVisibility(View.VISIBLE);
             groups.setVisibility(View.GONE);
             header.setText("Contacts");
-            toggle_type.setText("view groups");
+            toggle_type.setText("view groups/tags");
         }
     }
 
@@ -126,7 +124,6 @@ public class ImportContactsFragment extends android.support.v4.app.Fragment {
             listView = (ListView) this.getActivity().findViewById(R.id.listview_import_contacts);
         }
 
-        Button toggle_select = (Button) this.getActivity().findViewById(R.id.import_contacts_toggle_select);
         ImportContactCursorAdapter listAdapter = (ImportContactCursorAdapter) listView.getAdapter();
         listAdapter.selectAllToggle();
     }

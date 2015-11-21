@@ -5,12 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.android.smalltalk.data.SmalltalkContract;
 import com.example.android.smalltalk.data.SmalltalkDBHelper;
 
-/**
- * Created by shauna on 9/7/15.
- */
 public class db_utils {
 
     public static long createObject(Context context, String type, String name, String details, String uri) {
@@ -67,16 +63,25 @@ public class db_utils {
         }
     }
 
-    public static Cursor getListCursorGivenType(Context context, String item_type, int show_archived) {
+    public static Cursor getListCursorGivenType(Context context, String item_type, int show_archived, int show_starred) {
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
-        String baseString;
-        if (item_type.equals("topics") && (show_archived == 0)) {
-            baseString = "SELECT * FROM %s WHERE archive = 0 ORDER BY name ASC;";
-        } else {
-            baseString = "SELECT * FROM %s ORDER BY name ASC;";
+        String whereString = "";
+        if (item_type.equals("topics")) {
+            if (show_archived == 0 || show_starred == 1) {
+                whereString += " WHERE";
+            }
+            if ((show_archived == 0)) {
+                whereString += " archive = 0 ";
+            }
+            if (show_archived == 0 && show_starred == 1) {
+                whereString += "AND";
+            }
+            if ((show_starred == 1)) {
+                whereString += " star = 1 ";
+            }
         }
-
+        String baseString = "SELECT * FROM %s " + whereString + "ORDER BY name ASC;";
         String queryString = String.format(baseString, item_type);
         return readDb.rawQuery(queryString, new String[]{});
     }
@@ -85,7 +90,7 @@ public class db_utils {
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
         String queryString = "SELECT * FROM " + search_type + " WHERE " + search_type + ".'name' LIKE " +
-                "'%" + query + "%' OR " + search_type + ".'details' LIKE '%" + query + "%' COLLATE utf8_general_ci;";
+                "'%" + query + "%' OR " + search_type + ".'details' LIKE '%" + query + "%' COLLATE NOCASE;";
         return readDb.rawQuery(queryString, new String[]{});
     }
 

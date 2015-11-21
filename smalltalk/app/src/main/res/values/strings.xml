@@ -19,12 +19,64 @@
     the app.  When you\'re done, press the "finished" button at the bottom.  Don\'t worry, you can always
     view this screen again through the drop down menu at the top right of your screen.</string>
 
+    <string name="basics_header">The Basics</string>
+
+    <string name="basics_text_1">Smalltalk helps you keep track of topics to talk about and contacts to talk
+        about topics with. You can also use tags to help organize your topics and contacts. To add a new
+        topic, contact, or tag, press the button at the top of your screen which looks like this:
+    </string>
+
+    <string name="basics_text_2">Pick a name and, optionally, some details for each item.  Topics have
+        a special field: a URL. If you add a link in this field, you will be able to access it with a click
+        of a button.\n\nThe page for each item shows their name, URL, details and all of the topics, contacts
+        and tags connected with them. To see connected items, click the header that looks like this:
+    </string>
+
+    <string name="basics_text_3">Of course, you won\'t have any connected items at first.  To add some,
+        press that header for a long moment, and a screen will pop up with a list of items you can
+        connect your item to:
+    </string>
+
+    <string name="adding_tags_header">Using tags</string>
+    <string name="adding_tags_text_1">Tags help you add a topic to many contacts at once. To do this, create
+    a tag and associate it with relevant contacts - for instance, a "family" tag for contacts in your family
+    or a "sports" tag for contacts who like sports.\n\nThen, when you create a sports topic, link it to the
+    "sports" tag instead of to individual contacts.  Now, for those contacts, you can see that topic listed
+    under their topics by selecting the option "topics via tags":</string>
+
+
+    <string name="archiving_and_starring_header">Archiving and starring</string>
+    <string name="archiving_and_starring_text_1">Archiving and starring help you manage your topics.  When
+        you\'re all done with a topic, you can archive it by pressing the button that looks like an eye.  That
+        topic will be hidden by default from now on.  Conversely, starring a topic tells the app that the
+        topic is important. In certain views, you\'ll be able to show only starred topics.  The archive and star
+        icons look like this:</string>
+    <string name="archiving_and_starring_text_2">If you\'re feeling adventurous, you can start archiving and
+    starring topics for individual contacts or groups.  For instance, you might want to hide a topic that
+    you\'ve talked about with one person but keep it visible for everyone else.  To do this, press the star or eye icon
+        next to the related item:</string>
+    <string name="archiving_and_starring_text_3">Press it once to change the state, for instance from shown to
+        archived.  Then press it again, for a little bit longer, to "lock" the relationship in that state.
+        A locked item looks like this:
+        </string>
+    <string name="archiving_and_starring_text_4">"Locking" a relationship means that it will keep that state, regardless of what happens to the topic as a whole.  If you lock a relationship as "shown", that topic will always show up for that contact even if you archive the topic for everyone else.</string>
+    <string name="archiving_and_starring_text_5">Too confusing? Don\'t worry, you can just ignore those
+    buttons too.</string>
+
+    <string name="misc_header">Odds and ends</string>
+    <string name="misc_text">A few more things!  First, you can add new topics, contacts or tags by using the
+        "share" function on your phone. Any text or URL that is shared from another app, such as your
+        web browser, or the Twitter app, can be added - just look for the Smalltalk icon in the share
+        menu.\n\nYou can also add contacts en masse from your phone by going to the "import contacts" option
+        in the dropdown menu.\n\nThat\'s it! Have fun using Smalltalk, and please contact me if you have
+        any questions or issues.</string>
+
     <!-- Import Contacts strings -->
     <string name="import_contacts_intro_explanation">You can import contacts from your phone by selecting
         them from a list shown on the next page. To filter your contacts, select one of the options below,
         or choose "all".</string>
-    <string name="import_contacts_group_option_label">Import groups with contacts</string>
-    <string name="import_contacts_selection_explanation">Select contacts and groups to import, and press "save"
+    <string name="import_contacts_group_option_label">Import groups/tags with contacts</string>
+    <string name="import_contacts_selection_explanation">Select contacts and groups/tags to import, and press "save"
         when you\'re ready.</string>
 
     <!-- New item form inputs -->
@@ -34,7 +86,7 @@
 
     <string name="new_item_type_prompt">What kind of item?</string>
     <string name="new_item_type_1">Contact</string>
-    <string name="new_item_type_2">Group</string>
+    <string name="new_item_type_2">Tag</string>
     <string name="new_item_type_3">Topic</string>
 
     <string name="new_item_save_button">Save</string>

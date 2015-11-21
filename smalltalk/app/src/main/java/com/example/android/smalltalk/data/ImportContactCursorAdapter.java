@@ -27,7 +27,7 @@ public class ImportContactCursorAdapter extends CursorAdapter {
     public String[] itemID;
 
 
-    public ImportContactCursorAdapter(Context context, Cursor cursor, int flags, String type, ListView listView) {
+    public ImportContactCursorAdapter(Context context, Cursor cursor, String type, ListView listView) {
         super(context, cursor, 0);
         this.mContext = context;
         this.mCursor = cursor;
@@ -77,11 +77,7 @@ public class ImportContactCursorAdapter extends CursorAdapter {
             @Override
             public void onClick(View view) {
                 CheckBox checkbox = (CheckBox) view.findViewById(R.id.import_contact_checkbox);
-                if (checkbox.isChecked()) {
-                    itemChecked[position] = true;
-                } else {
-                    itemChecked[position] = false;
-                }
+                itemChecked[position] = checkbox.isChecked();
             }
         });
         checkbox.setChecked(itemChecked[position]);
@@ -90,11 +86,7 @@ public class ImportContactCursorAdapter extends CursorAdapter {
     public void selectAllToggle() {
 
         Boolean newValue;
-        if (itemChecked[0] == false ) {
-            newValue = true;
-        } else {
-            newValue = false;
-        }
+        newValue = !itemChecked[0];
 
         for ( int j = 0; j < mCursor.getCount(); j++ ) {
             itemChecked[j] = newValue;

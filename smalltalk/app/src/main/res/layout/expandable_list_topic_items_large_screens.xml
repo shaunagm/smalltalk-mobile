@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SmallTalkTheme.MatchWidthWrapHeight"
+    android:paddingLeft="@dimen/list_indentation"
+    android:paddingRight="@dimen/list_indentation"
+    android:paddingBottom="10dip"
+    android:orientation="horizontal"
+    android:gravity="left">
+
+    <!-- To the left is name & details -->
+    <LinearLayout
+        android:id="@+id/expandable_list_left"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight=".7">
+
+        <TextView
+            android:id="@+id/expandable_list_item_name"
+            style="@style/SmallTalkTheme.RelatedNameHeading"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/expandable_list_item_details"
+            style="@style/SmallTalkTheme.MatchWidthWrapHeight"/>
+
+        <TextView
+            android:id="@+id/expandable_list_item_edit_secret_id"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <!-- To the right is buttons -->
+
+    <LinearLayout
+        android:id="@+id/expandable_list_right"
+        style="@style/SmallTalkTheme.MatchWidthWrapHeight"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight=".2">
+
+        <ImageButton
+            android:id="@+id/star_button"
+            android:src="@drawable/star_color"
+            style="@style/SmallTalkTheme.RelationshipImageButtonLargeScreen" />
+
+        <ImageButton
+            android:id="@+id/archive_button"
+            android:src="@drawable/show_color"
+            style="@style/SmallTalkTheme.RelationshipImageButtonLargeScreen" />
+
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight=".5"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:adjustViewBounds="true"-->
+
+    </LinearLayout>
+
+</LinearLayout>
