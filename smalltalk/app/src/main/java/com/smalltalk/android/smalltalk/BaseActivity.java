@@ -1,4 +1,4 @@
-package com.example.android.smalltalk;
+package com.smalltalk.android.smalltalk;
 
 import android.app.SearchManager;
 import android.content.ComponentName;

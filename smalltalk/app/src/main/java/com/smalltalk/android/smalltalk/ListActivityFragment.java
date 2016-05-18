@@ -1,4 +1,4 @@
-package com.example.android.smalltalk;
+package com.smalltalk.android.smalltalk;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
-import com.example.android.smalltalk.SmalltalkUtilities.misc_utils;
-import com.example.android.smalltalk.data.ObjectCursorAdapter;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.db_utils;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.misc_utils;
+import com.smalltalk.android.smalltalk.data.ObjectCursorAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 

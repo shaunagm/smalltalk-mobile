@@ -1,4 +1,4 @@
-package com.example.android.smalltalk.data;
+package com.smalltalk.android.smalltalk.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
-import com.example.android.smalltalk.R;
+import com.smalltalk.android.smalltalk.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -267,7 +267,7 @@ public class SmalltalkObject {
         }
 
         if (through_group_string.length() > 0) {
-            return getPrimedCursor(base_string + "WHERE" + through_group_string + ";");
+            return getPrimedCursor(base_string + "WHERE" + through_group_string + " ORDER BY name;");
         } else {
             String and_string = "", where_string = "";
             int string_count = (main_archive_string.isEmpty() ? 0:1) + (show_related_string.isEmpty() ? 0:1);
@@ -277,7 +277,7 @@ public class SmalltalkObject {
             if (string_count > 1) {
                 and_string = "AND";
             }
-            return getPrimedCursor(base_string + where_string + main_archive_string + and_string + show_related_string + ";");
+            return getPrimedCursor(base_string + where_string + main_archive_string + and_string + show_related_string + " ORDER BY name;");
         }
     }
 
@@ -355,7 +355,6 @@ public class SmalltalkObject {
     }
 
     // Database updates
-
     public void updateObject(String name, String details, String URI) {
         ContentValues newValues = new ContentValues();
         newValues.put("name", name);

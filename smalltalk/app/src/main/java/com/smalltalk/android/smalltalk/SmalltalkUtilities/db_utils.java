@@ -1,11 +1,12 @@
-package com.example.android.smalltalk.SmalltalkUtilities;
+package com.smalltalk.android.smalltalk.SmalltalkUtilities;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.android.smalltalk.data.SmalltalkDBHelper;
+import com.smalltalk.android.smalltalk.data.SmalltalkDBHelper;
 
 public class db_utils {
 
@@ -32,6 +33,8 @@ public class db_utils {
 
     // Checks if an object exists.  Returns ID or empty string.
     public static String checkExists(Context context, String name, String item_type) {
+        name = DatabaseUtils.sqlEscapeString(name);
+        name = name.substring(1, name.length()-1);
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
         String queryString = String.format("SELECT * FROM %s WHERE name = '%s' COLLATE NOCASE;", item_type, name);
@@ -47,6 +50,8 @@ public class db_utils {
 
     // Checks that an object exists in the database and, if it does, returns the row_id. Otherwise, creates it..
     public static String getOrCreate(Context context, String item_type, String name) {
+        name = DatabaseUtils.sqlEscapeString(name);
+        name = name.substring(1, name.length()-1);
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
         String queryString = String.format("SELECT * FROM %s WHERE name = '%s' COLLATE NOCASE;", item_type, name);
@@ -87,6 +92,8 @@ public class db_utils {
     }
 
     public static Cursor searchQuery(Context context, String search_type, String query) {
+        query = DatabaseUtils.sqlEscapeString(query);
+        query = query.substring(1, query.length()-1);
         SmalltalkDBHelper mdbHelper = SmalltalkDBHelper.getInstance(context);
         SQLiteDatabase readDb = mdbHelper.getReadableDatabase();
         String queryString = "SELECT * FROM " + search_type + " WHERE " + search_type + ".'name' LIKE " +

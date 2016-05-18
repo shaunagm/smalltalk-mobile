@@ -1,4 +1,4 @@
-package com.example.android.smalltalk.SmalltalkUtilities;
+package com.smalltalk.android.smalltalk.SmalltalkUtilities;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.example.android.smalltalk.data.SmalltalkContract;
-import com.example.android.smalltalk.data.SmalltalkDBHelper;
+import com.smalltalk.android.smalltalk.data.SmalltalkContract;
+import com.smalltalk.android.smalltalk.data.SmalltalkDBHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,15 +35,13 @@ public class fixture_utils {
     static String[] mGroupNames = {
             "Scoobies",
             "Slayers",
-            "Vampires",
-            "Everybody!"
+            "Vampires"
     };
 
     static String[] mGroupDetails = {
             "We fight evil!",
             "The chosen ones",
-            "Grrr arrrgh",
-            "Happy meals with legs"
+            "Grrr arrrgh"
     };
 
     static String[] mTopicNames = {
@@ -53,7 +51,7 @@ public class fixture_utils {
 
     static String[] mTopicDetails = {
             "We\'ve all been there",
-            "I am a very long detail segment.  I am a very long detail segment.  I am a very long detail segment."
+            "Whittle while you work"
     };
 
     static Integer[] mCGJContacts = { 1, 2, 3, 1, 4 };

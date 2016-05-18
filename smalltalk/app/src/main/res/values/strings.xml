@@ -97,10 +97,19 @@
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_list">ListActivity</string>
 
-    <string name="allowable_name_characters">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\'-.!</string>
-    <string name="allowable_detail_characters">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\'"-_.!?)[]$*%@</string>
+    <string name="allowable_name_characters">
+        abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 \'-.!:&amp;+()$*
+    </string>
+    <string name="allowable_detail_characters">
+        abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 \'\"-_.!?()[]$*%@:\\n&amp;+
+    </string>
 
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="listview_banner_ad_unit_ida">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="detailview_banner_ad_unit_ida">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="listview_banner_ad_unit_id">ca-app-pub-7156940048344986/5886174557</string>
+    <string name="detailview_banner_ad_unit_id">ca-app-pub-7156940048344986/2932708157</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

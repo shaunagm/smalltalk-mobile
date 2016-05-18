@@ -1,15 +1,15 @@
-package com.example.android.smalltalk.data;
+package com.smalltalk.android.smalltalk.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.android.smalltalk.data.SmalltalkContract.ContactEntry;
-import com.example.android.smalltalk.data.SmalltalkContract.ContactGroupJunction;
-import com.example.android.smalltalk.data.SmalltalkContract.GroupEntry;
-import com.example.android.smalltalk.data.SmalltalkContract.TopicContactJunction;
-import com.example.android.smalltalk.data.SmalltalkContract.TopicEntry;
-import com.example.android.smalltalk.data.SmalltalkContract.TopicGroupJunction;
+import com.smalltalk.android.smalltalk.data.SmalltalkContract.ContactEntry;
+import com.smalltalk.android.smalltalk.data.SmalltalkContract.ContactGroupJunction;
+import com.smalltalk.android.smalltalk.data.SmalltalkContract.GroupEntry;
+import com.smalltalk.android.smalltalk.data.SmalltalkContract.TopicContactJunction;
+import com.smalltalk.android.smalltalk.data.SmalltalkContract.TopicEntry;
+import com.smalltalk.android.smalltalk.data.SmalltalkContract.TopicGroupJunction;
 
 
 /**

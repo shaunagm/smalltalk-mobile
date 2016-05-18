@@ -1,4 +1,4 @@
-package com.example.android.smalltalk;
+package com.smalltalk.android.smalltalk;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
-import com.example.android.smalltalk.SmalltalkUtilities.import_utils;
-import com.example.android.smalltalk.data.ContactOptionsAdapter;
-import com.example.android.smalltalk.data.ImportContactCursorAdapter;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.db_utils;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.import_utils;
+import com.smalltalk.android.smalltalk.data.ContactOptionsAdapter;
+import com.smalltalk.android.smalltalk.data.ImportContactCursorAdapter;
 
 import java.util.Arrays;
 

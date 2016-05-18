@@ -1,4 +1,4 @@
-package com.example.android.smalltalk.data;
+package com.smalltalk.android.smalltalk.data;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +11,7 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.R;
+import com.smalltalk.android.smalltalk.R;
 
 import java.util.Arrays;
 
@@ -28,20 +28,35 @@ public class ImportContactCursorAdapter extends CursorAdapter {
 
 
     public ImportContactCursorAdapter(Context context, Cursor cursor, String type, ListView listView) {
+
         super(context, cursor, 0);
         this.mContext = context;
         this.mCursor = cursor;
         this.mListView = listView;
+
         if (type.equals("contact")) {
             this.mNameField = ContactsContract.Contacts.DISPLAY_NAME;
         } else {
             this.mNameField = ContactsContract.Groups.TITLE;
             this.mID = ContactsContract.Groups._ID;
-            itemID = new String[this.getCount()];
         }
-        names = new String[this.getCount()];
-        itemChecked = new Boolean[this.getCount()];
+
+        // Add names, IDs and checked status to an array which can be accessed later regardless
+        // of what views are shown.
+        int itemCount = cursor.getCount();
+        names = new String[itemCount];
+        itemID = new String[itemCount];
+        itemChecked = new Boolean[itemCount];
         Arrays.fill(itemChecked, false);
+
+        for (int i = 0; i < itemCount; i++) {
+            cursor.moveToNext();
+            names[i] = cursor.getString(cursor.getColumnIndex(mNameField));
+            if (type.equals("group")) {
+                itemID[i] = cursor.getString(cursor.getColumnIndex(mID));
+            }
+        }
+
     }
 
     // The newView method is used to inflate a new view and return it,
@@ -58,16 +73,12 @@ public class ImportContactCursorAdapter extends CursorAdapter {
         final int position = cursor.getPosition();
 
         TextView name_view = (TextView) view.findViewById(R.id.import_contact_name);
-        String name = cursor.getString(cursor.getColumnIndex(mNameField));
-        name_view.setText(name);
-        names[position] = name;
+        name_view.setText(names[position]);
 
         // Only add ID info for groups.
         if (!(this.mID == null)) {
             TextView id_view = (TextView) view.findViewById(R.id.import_contact_hidden_id);
-            String id = cursor.getString(cursor.getColumnIndex(mID));
-            id_view.setText(id);
-            itemID[position] = id;
+            id_view.setText(itemID[position]);
         }
 
         CheckBox checkbox = (CheckBox) view.findViewById(R.id.import_contact_checkbox);

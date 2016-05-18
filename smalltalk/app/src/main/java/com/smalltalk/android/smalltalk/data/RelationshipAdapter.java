@@ -1,4 +1,4 @@
-package com.example.android.smalltalk.data;
+package com.smalltalk.android.smalltalk.data;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,8 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.DetailActivity;
-import com.example.android.smalltalk.R;
+import com.smalltalk.android.smalltalk.DetailActivity;
+import com.smalltalk.android.smalltalk.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,7 +69,7 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
         }
 
         // Decide what relationship layout to use
-        HashMap screenAdaptations = com.example.android.smalltalk.SmalltalkUtilities.misc_utils.getScreenAdaption(context);
+        HashMap screenAdaptations = com.smalltalk.android.smalltalk.SmalltalkUtilities.misc_utils.getScreenAdaption(context);
         if (screenAdaptations.get("customRelationship") == true) {
             relationshipID = R.layout.expandable_list_topic_items_large_screens;
         } else {
@@ -226,8 +226,15 @@ public class RelationshipAdapter extends BaseExpandableListAdapter {
             @Override
             public boolean onLongClick(View view) {
 
+                String displayName;
+                if (groupName.equals("group")) {
+                    displayName = "tags";
+                } else {
+                    displayName = groupName + "s";
+                }
+
                 AlertDialog.Builder editRelationshipBuilder = new AlertDialog.Builder(mContext);
-                editRelationshipBuilder.setTitle("Add and remove " + groupName + " from " + mObject.getName());
+                editRelationshipBuilder.setTitle("Add and remove " + displayName + " from " + mObject.getName());
 
                 // Get all possible rows (the 0 means don't get related only)
                 Cursor cursor = mObject.getConditionalRowsCursor(groupName, false, mShowArchive, mThroughGroup);

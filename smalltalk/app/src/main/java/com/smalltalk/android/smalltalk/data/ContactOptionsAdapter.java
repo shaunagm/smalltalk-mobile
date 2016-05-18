@@ -1,4 +1,4 @@
-package com.example.android.smalltalk.data;
+package com.smalltalk.android.smalltalk.data;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.ImportContactsActivity;
-import com.example.android.smalltalk.R;
-import com.example.android.smalltalk.SmalltalkUtilities.import_utils;
+import com.smalltalk.android.smalltalk.ImportContactsActivity;
+import com.smalltalk.android.smalltalk.R;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.import_utils;
 
 import java.util.Arrays;
 import java.util.List;

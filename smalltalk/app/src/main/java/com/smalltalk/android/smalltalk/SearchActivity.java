@@ -1,4 +1,4 @@
-package com.example.android.smalltalk;
+package com.smalltalk.android.smalltalk;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
-import com.example.android.smalltalk.SmalltalkUtilities.misc_utils;
-import com.example.android.smalltalk.data.ObjectCursorAdapter;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.db_utils;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.misc_utils;
+import com.smalltalk.android.smalltalk.data.ObjectCursorAdapter;
 
 public class SearchActivity extends BaseActivity {
 
@@ -83,7 +83,13 @@ public class SearchActivity extends BaseActivity {
     public void showType(int position) {
 
         TextView header = (TextView) findViewById(R.id.searchview_header);
-        header.setText(query_type[position]);
+        String headerText;
+        if (query_type[position].equals("groups")) {
+            headerText = "tags";
+        } else {
+            headerText = query_type[position];
+        }
+        header.setText(headerText);
 
         for (int id:type_ids) {
             ListView object_list = (ListView) findViewById(id);

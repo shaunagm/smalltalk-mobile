@@ -1,11 +1,11 @@
-package com.example.android.smalltalk.SmalltalkUtilities;
+package com.smalltalk.android.smalltalk.SmalltalkUtilities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 
-import com.example.android.smalltalk.DetailActivity;
+import com.smalltalk.android.smalltalk.DetailActivity;
 
 import java.util.HashMap;
 

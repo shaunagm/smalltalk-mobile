@@ -1,4 +1,4 @@
-package com.example.android.smalltalk.data;
+package com.smalltalk.android.smalltalk.data;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.example.android.smalltalk.R;
-import com.example.android.smalltalk.SmalltalkUtilities.misc_utils;
+import com.smalltalk.android.smalltalk.R;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.misc_utils;
 
 import java.util.HashMap;
 

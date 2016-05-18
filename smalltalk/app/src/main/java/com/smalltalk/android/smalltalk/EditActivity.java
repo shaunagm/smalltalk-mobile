@@ -1,4 +1,4 @@
-package com.example.android.smalltalk;
+package com.smalltalk.android.smalltalk;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,8 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.smalltalk.SmalltalkUtilities.db_utils;
-import com.example.android.smalltalk.data.SmalltalkObject;
+import com.smalltalk.android.smalltalk.SmalltalkUtilities.db_utils;
+import com.smalltalk.android.smalltalk.data.SmalltalkObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -244,6 +244,10 @@ public class EditActivity extends BaseActivity {
         final TextView idField = (TextView) findViewById(R.id.edit_item_id);
         String item_id = idField.getText().toString();
 
+        if (item_type.equals(("tag"))) {
+            item_type = "group";  // Change from user-visible name to database name.
+        }
+
         SmalltalkObject object_to_update = new SmalltalkObject(this, item_id, item_type);
 
         if (item_type.equals("topic")) {
@@ -278,6 +282,9 @@ public class EditActivity extends BaseActivity {
                 RadioGroup item_type_options = (RadioGroup) findViewById(R.id.edit_item_type);
                 RadioButton selected_item_view = (RadioButton) item_type_options.findViewById(item_type_options.getCheckedRadioButtonId());
                 String item_type = (String) selected_item_view.getText();
+                if (item_type.equals(("tag"))) {
+                    item_type = "group";  // Change from user-visible name to database name.
+                }
                 // Query to see if there's a duplicate.  If yes, warn user.
                 String id = db_utils.checkExists(getApplicationContext(), nameText, item_type + "s");
 

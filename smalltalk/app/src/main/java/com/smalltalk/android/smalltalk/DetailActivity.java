@@ -1,4 +1,4 @@
-package com.example.android.smalltalk;
+package com.smalltalk.android.smalltalk;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;

@@ -1,4 +1,4 @@
-package com.example.android.smalltalk;
+package com.smalltalk.android.smalltalk;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -17,8 +17,8 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.smalltalk.data.RelationshipAdapter;
-import com.example.android.smalltalk.data.SmalltalkObject;
+import com.smalltalk.android.smalltalk.data.RelationshipAdapter;
+import com.smalltalk.android.smalltalk.data.SmalltalkObject;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 

@@ -1,4 +1,4 @@
-package com.example.android.smalltalk.SmalltalkUtilities;
+package com.smalltalk.android.smalltalk.SmalltalkUtilities;
 
 import android.content.Context;
 import android.database.Cursor;
